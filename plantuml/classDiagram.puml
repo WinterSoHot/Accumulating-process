@@ -1,0 +1,161 @@
+@startuml Demo Class Diagram
+
+class Class01<? extends Element> <<Serializable>>{
+    - id : Integer 
+    + name : String
+    # age : Integer
+    ~ sex : String
+
+
+    .. Some Setter ..
+    + void setName(name : String)
+
+    .. Some Getter..
+    + String getName()
+
+    ..
+
+    ==
+
+    __
+
+    --
+
+}
+
+note "this is left note." as no1
+Class01 .. no1
+
+note top of Class01 : this is note on the top of the Class.
+
+note top of Class02
+    In java,<size:18>every</size> <u>class</u>
+    <b>extends</b>
+    <i>this</i> one
+    <color:blue>blue<cloor>
+end note
+
+Class01 "1" *-- "many" Class02 : contains
+
+Class03 o-- Class04 : aggregaion
+note on link #red : note that is red
+
+Class05 --> "1" Class06 : deploy
+note right on link#blue
+    this is my note on right link
+    and in blue
+end note
+
+Class07 -- Class08 : contact
+
+Class09 <|-- Class10
+
+Class11 <|.. Class12
+
+
+interface List
+interface Collection <<generic>>
+abstract AbstractList
+abstract AbstractCollection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class ArrayList {
+  Object[] elementData
+  size()
+}
+
+enum TimeUnit {
+  DAYS
+  HOURS
+  MINUTES
+}
+
+annotation SuppressWarnings
+
+class "This is my class" as class1
+class class2 as "It works this way too"
+
+class2 *-- "foo/dummy" : use
+
+
+hide members
+hide <<Serializable>> circle
+show Class01 methods
+show <<Serializable>> fields
+
+hide Class02
+
+
+class System << (S,#FF7700) Singleton >>
+class Date << (D,orchid) >>
+
+package "Classic Collections" #DDDDDD {
+  Object <|-- DemoClass
+}
+
+package net.sourceforge.plantuml {
+  Object <|-- Demo1
+  Demo1 *- Demo2
+}
+
+scale 750 width
+package foo1 <<Node>> {
+  class Class1
+}
+
+package foo2 <<Rectangle>> {
+  class Class2
+}
+
+package foo3 <<Folder>> {
+  class Class3
+}
+
+package foo4 <<Frame>> {
+  class Class4
+}
+
+package foo5 <<Cloud>> {
+  class Class5
+}
+
+package foo6 <<Database>> {
+  class Class6
+}
+
+set namespaceSeparator ::
+class X1::X2::foo {
+  some info
+}
+
+set namespaceSeparator none
+class X1.X2.foo {
+  some info
+}
+
+bar ()- foo
+
+foo -left-> dummyLeft 
+foo -right-> dummyRight 
+foo -up-> dummyUp 
+foo -down-> dummyDown
+
+
+class Student {
+  Name
+}
+Student "0..*" - "1..*" Course
+(Student, Course) .. Enrollment
+
+class Enrollment {
+  drop() 
+  cancel()
+}
+
+@enduml
