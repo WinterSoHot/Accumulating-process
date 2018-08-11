@@ -1,8 +1,4 @@
 # build_layout
 
-A new Flutter project.
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+构建布局
+![布局](layout.png)
