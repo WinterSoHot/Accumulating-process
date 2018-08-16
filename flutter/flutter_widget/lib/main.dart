@@ -7,7 +7,7 @@ void main() {
   //     textDirection: TextDirection.ltr,
   //   ),
   // ));
-  runApp(new MaterialApp(title: 'My app', home: new MyScaffold()));
+  runApp(new MaterialApp(title: 'My app', home: new MyScaffold(),));
 }
 
 class MyAppBar extends StatelessWidget {
