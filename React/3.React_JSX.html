@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React JSX</title>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.min.js"></script>
+    <!-- 引入独立文件 -->
+    <script src="hello_world.js" type="text/babel"></script>
+</head>
+<body>
+    <div id="example1"></div>
+    <div id="example2"></div>
+    <div id="example3"></div>
+    <div id="example4"></div>
+    <div id="example5"></div>
+
+   
+    <script type="text/babel">
+        ReactDOM.render(
+        <div>
+            <h2>React JSX</h2>
+            <p data-myattribute="some value">这是个JS库</p>
+        </div>
+        ,
+        document.getElementById("example1")
+        );
+    </script>
+</body>
+</html>

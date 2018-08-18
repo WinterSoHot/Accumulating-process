@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React 元素渲染</title>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Demo1:将元素渲染到 DOM 中</h1>
+    <div id="example1"></div>
+    <h1>Demo2:更新元素渲染</h1>
+    <div id="example2"></div>
+    <h1>Demo3</h1>
+    <div id="example3"></div>
+    <h1>Demo4</h1>
+    <div id="example4"></div>
+    <h1>Demo5</h1>
+    <div id="example5"></div>
+    <h1>Demo6</h1>
+    <div id="example6"></div>
+    <h1>Demo7</h1>
+    <div id="example7"></div>
+    <h1>Demo8</h1>
+    <div id="example8"></div>
+    <h1>Demo9</h1>
+    <div id="example9"></div>
+    <h1>Demo10</h1>
+    <div id="example10"></div>
+    
+    <script type="text/babel">
+        const element1  = <h1>Hello, World!</h1>;
+        ReactDOM.render(
+            element1,
+            document.getElementById("example1")
+        );
+
+        function tick() {
+            const element2 = <h1>现在是{new Date().toLocaleTimeString()}.</h1>
+            ReactDOM.render(element2,document.getElementById("example2"));
+        }
+        setInterval(tick,1000);
+
+        function Clock(props) {
+            return (
+                 <div>
+                    <h2>现在是 {props.date.toLocaleTimeString()}.</h2>
+                </div>
+            );
+        }
+
+        function tick2(){
+            ReactDOM.render(
+                <Clock date = {new Date()}/>,
+                document.getElementById("example3")
+            )
+        }
+        setInterval(tick2,1000);
+
+        class Clock2 extends React.Component {
+            render(){
+                return ( 
+                <div>
+                    <h2>现在是 {this.props.date.toLocaleTimeString()}.</h2>
+                </div>);
+            }
+        }
+        function tick3(){
+            ReactDOM.render(
+                <Clock2 date = {new Date()}/>,
+                document.getElementById("example4")
+            )
+        }
+        setInterval(tick3,1000);
+
+    </script>
+</body>
+
+</html>
