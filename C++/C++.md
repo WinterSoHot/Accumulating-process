@@ -162,7 +162,7 @@ thread_local 说明符可以与 static 或 extern 合并。
     |=|简单的赋值运算符，把右边操作数的值赋给左边操作数|C = A + B 将把 A + B 的值赋给 C|
     |+=|加且赋值运算符，把右边操作数加上左边操作数的结果赋值给左边操作数|C += A 相当于 C = C + A|
     |-=|减且赋值运算符，把左边操作数减去右边操作数的结果赋值给左边操作数|C -= A 相当于 C = C - A|
-    |*=|乘且赋值运算符，把右边操作数乘以左边操作数的结果赋值给左边操作数|C *= A 相当于 C = C * A|
+    |*=|乘且赋值运算符，把右边操作数乘以左边操作数的结果赋值给左边操作数|C \*= A 相当于 C = C \* A|
     |/=|除且赋值运算符，把左边操作数除以右边操作数的结果赋值给左边操作数|C /= A 相当于 C = C / A|
     |%=|求模且赋值运算符，求两个操作数的模赋值给左边操作数|C %= A 相当于 C = C % A|
     |<<=|左移且赋值运算符|C <<= 2 等同于 C = C << 2|
@@ -307,7 +307,7 @@ Lambda 表达式本质上与函数声明非常类似。Lambda 表达式具体形
 
 C++ 内置了丰富的数学函数，可对各种数字进行运算。下表列出了 C++ 中一些有用的内置的数学函数。
 
-为了利用这些函数，您需要引用数学头文件 <cmath>。
+为了利用这些函数，您需要引用数学头文件 \<cmath>。
 
 |序号|函数 | 描述|
 |---|---|---|
@@ -465,7 +465,7 @@ class Box
 
 关键字 public 确定了类成员的访问属性。在类对象作用域内，公共成员在类的外部是可访问的。您也可以指定类的成员为 private 或protected
 
-### 类成员函数:
+### 类成员函数
 
 > 类的成员函数是指那些把定义和原型写在类定义内部的函数，就像类定义中的其他变量一样。类成员函数是类的一个成员，它可以操作类的任意对象，可以访问对象中的所有成员。
 
@@ -592,7 +592,6 @@ classname (const classname &obj) {
 > 类的友元函数是定义在类外部，但有权访问类的所有私有（private）成员和保护（protected）成员。尽管友元函数的原型有在类的定义中出现过，但是友元函数并不是成员函数。
 > 友元可以是一个函数，该函数被称为友元函数；友元也可以是一个类，该类被称为友元类，在这种情况下，整个类及其所有成员都是友元。
 如果要声明函数为一个类的友元，需要在类定义中该函数原型前使用关键字 friend。
-
 
 ```C++
 class Box
@@ -1085,7 +1084,6 @@ malloc() 函数在 C 语言中就出现了，在 C++ 中仍然存在，但建议
 ```C++
 // 动态分配,数组长度为 m
 int *array=new int [m]；
- 
 //释放内存
 delete [] array;
 ```
@@ -1141,15 +1139,14 @@ delete [] array;
 ```C++
 #include <iostream>
 using namespace std;
- 
 class Box
 {
    public:
       Box() {
-         cout << "调用构造函数！" <<endl; 
+         cout << "调用构造函数！" <<endl;
       }
       ~Box() {
-         cout << "调用析构函数！" <<endl; 
+         cout << "调用析构函数！" <<endl;
       }
 };
 int main( )
@@ -1260,7 +1257,7 @@ int main ()
 
 > 模板是泛型编程的基础，泛型编程即以一种独立于任何特定类型的方式编写代码。
 >模板是创建泛型类或函数的蓝图或公式。库容器，比如迭代器和算法，都是泛型编程的例子，它们都使用了模板的概念。
->每个容器都有一个单一的定义，比如 向量，我们可以定义许多不同类型的向量，比如 vector \<int> 或 vector <string>。
+>每个容器都有一个单一的定义，比如 向量，我们可以定义许多不同类型的向量，比如 vector<int> 或 vector <string>。
 >使用模板来定义函数和类。
 
 ### 函数模板
@@ -1307,7 +1304,7 @@ using namespace std;
 #define PI 3.14159
 int main ()
 {
-    cout << "Value of PI :" << PI << endl; 
+    cout << "Value of PI :" << PI << endl;
     return 0;
 }
 ```
@@ -1355,3 +1352,265 @@ int main ()
 |__DATE__|这会包含一个形式为 month/day/year 的字符串，它表示把源文件转换为目标代码的日期。   |
 |__TIME__|这会包含一个形式为 hour:minute:second 的字符串，它表示程序被编译的时间。|
 
+## 30. 信号处理
+
+> 信号是由操作系统传给进程的中断，会提早终止一个程序。在 UNIX、LINUX、Mac OS X 或 Windows 系统上，可以通过按 Ctrl+C 产生中断。
+> 有些信号不能被程序捕获，但是下表所列信号可以在程序中捕获，并可以基于信号采取适当的动作。这些信号是定义在 C++ 头文件 \<csignal> 中。
+
+|信号|描述|
+|---|---|
+|SIGABRT|程序的异常终止，如调用 abort。|
+|SIGFPE|错误的算术运算，比如除以零或导致溢出的操作。|
+|SIGILL|检测非法指令。|
+|SIGINT|接收到交互注意信号。|
+|SIGSEGV|非法访问内存。|
+|SIGTERM|发送到程序的终止请求。|
+
+### signal() 函数
+
+C++ 信号处理库提供了 signal 函数，用来捕获突发事件。
+
+    void (*signal (int sig, void (*func)(int)))(int); 
+
+这个函数接收两个参数：第一个参数是一个整数，代表了信号的编号；第二个参数是一个指向信号处理函数的指针。
+
+### raise() 函数
+
+您可以使用函数 raise() 生成信号，该函数带有一个整数信号编号作为参数，语法如下：
+
+    int raise(signal sig);
+
+## 31.多线程
+
+> 多线程是多任务处理的一种特殊形式，多任务处理允许让电脑同时运行两个或两个以上的程序。一般情况下，两种类型的多任务处理：基于进程和基于线程。
+
+- 基于进程的多任务处理是程序的并发执行。
+- 基于线程的多任务是同一程序的片段并发执行。
+
+多线程程序包含可以同时运行的两个或多个部分。这样的程序中的每个部分称为一个线程，每个线程定义了一个单独的执行路径。
+
+ Linux 操作系统，我们要使用 POSIX 编写多线程 C++ 程序。POSIX Threads 或 Pthreads 提供的 API 可在多种类 Unix POSIX 系统上可用，比如 FreeBSD、NetBSD、GNU/Linux、Mac OS X 和 Solaris。
+
+### 创建线程
+
+下面的程序，我们可以用它来创建一个 POSIX 线程：
+
+```C++
+#include <pthread.h>
+pthread_create(thread,attr,start_routine,arg);
+```
+
+在这里，pthread_create 创建一个新的线程，并让它可执行。下面是关于参数的说明：
+
+|参数|描述|
+|---|---|
+|thread|指向线程标识符指针。|
+|attr|一个不透明的属性对象，可以被用来设置线程属性。您可以指定线程属性对象，也可以使用默认值 NULL。|
+|start_routine|线程运行函数起始地址，一旦线程被创建就会执行。|
+|arg|运行函数的参数。它必须通过把引用作为指针强制转换为 void 类型进行传递。如果没有传递参数，则使用 NULL。|
+
+创建线程成功时，函数返回 0，若返回值不为 0 则说明创建线程失败。
+
+### 终止线程
+
+    #include <pthread.h>
+    pthread_exit (status)
+
+在这里，pthread_exit 用于显式地退出一个线程。通常情况下，pthread_exit() 函数是在线程完成工作后无需继续存在时被调用。
+
+如果 main() 是在它所创建的线程之前结束，并通过 pthread_exit() 退出，那么其他线程将继续执行。否则，它们将在 main() 结束时自动被终止。
+
+### 向线程传递参数
+
+见 thread_3.cpp
+
+### 连接和分离线程
+
+    pthread_join (threadid, status)
+    pthread_detach (threadid)
+
+> pthread_join() 子程序阻碍调用程序，直到指定的 threadid 线程终止为止。当创建一个线程时，它的某个属性会定义它是否是可连接的（joinable）或可分离的（detached）。只有创建时定义为可连接的线程才可以被连接。如果线程创建时被定义为可分离的，则它永远也不能被连接。
+
+## 32. Web编程
+
+什么是 CGI？
+
+- 公共网关接口（CGI），是一套标准，定义了信息是如何在 Web 服务器和客户端脚本之间进行交换的。
+- CGI 规范目前是由 NCSA 维护的，NCSA 定义 CGI 如下：
+- 公共网关接口（CGI），是一种用于外部网关程序与信息服务器（如 HTTP 服务器）对接的接口标准。
+- 目前的版本是 CGI/1.1，CGI/1.2 版本正在推进中。
+
+### Web 浏览
+
+为了更好地了解 CGI 的概念，让我们点击一个超链接，浏览一个特定的网页或 URL，看看会发生什么。
+
+1. 您的浏览器联系上 HTTP Web 服务器，并请求 URL，即文件名。
+2. Web 服务器将解析 URL，并查找文件名。如果找到请求的文件，Web 服务器会把文件发送回浏览器，否则发送一条错误消息，表明您请求了一个错误的文件。
+3. Web 浏览器从 Web 服务器获取响应，并根据接收到的响应来显示文件或错误消息。
+4. 然而，以这种方式搭建起来的 HTTP 服务器，不管何时请求目录中的某个文件，HTTP 服务器发送回来的不是该文件，而是以程序形式执行，并把执行产生的输出发送回浏览器显示出来。
+
+> 公共网关接口（CGI），是使得应用程序（称为 CGI 程序或 CGI 脚本）能够与 Web 服务器以及客户端进行交互的标准协议。这些 CGI 程序可以用 Python、PERL、Shell、C 或 C++ 等进行编写。
+
+![CGI 架构](./img/cgi_structure.png)
+
+### Web 服务器配置
+
+在您进行 CGI 编程之前，请确保您的 Web 服务器支持 CGI，并已配置成可以处理 CGI 程序。所有由 HTTP 服务器执行的 CGI 程序，都必须在预配置的目录中。该目录称为 CGI 目录，按照惯例命名为 /var/www/cgi-bin。虽然 CGI 文件是 C++ 可执行文件，但是按照惯例它的扩展名是 .cgi。
+
+默认情况下，Apache Web 服务器会配置在 /var/www/cgi-bin 中运行 CGI 程序。如果您想指定其他目录来运行 CGI 脚本，您可以在 httpd.conf 文件中修改以下部分：
+
+```XML
+<Directory "/var/www/cgi-bin">
+   AllowOverride None
+   Options ExecCGI
+   Order allow,deny
+   Allow from all
+</Directory>
+ 
+<Directory "/var/www/cgi-bin">
+Options All
+</Directory>
+```
+
+在这里，我们假设已经配置好 Web 服务器并能成功运行，你可以运行任意的 CGI 程序，比如 Perl 或 Shell 等。
+
+```C++
+#include <iostream>
+using namespace std;
+int main ()
+{
+   cout << "Content-type:text/html\r\n\r\n";
+   cout << "<html>\n";
+   cout << "<head>\n";
+   cout << "<title>Hello World - 第一个 CGI 程序</title>\n";
+   cout << "</head>\n";
+   cout << "<body>\n";
+   cout << "<h2>Hello World! 这是我的第一个 CGI 程序</h2>\n";
+   cout << "</body>\n";
+   cout << "</html>\n";
+   return 0;
+}
+```
+
+编译上面的代码，把可执行文件命名为 cplusplus.cgi，并把这个文件保存在 /var/www/cgi-bin 目录中。在运行 CGI 程序之前，请使用 chmod 755 cplusplus.cgi UNIX 命令来修改文件模式，确保文件可执行。访问可执行文件，您会看到下面的输出：
+
+### Hello World! 这是我的第一个 CGI 程序
+
+上面的 C++ 程序是一个简单的程序，把它的输出写在 STDOUT 文件上，即显示在屏幕上。在这里，值得注意一点，第一行输出 Content-type:text/html\r\n\r\n。这一行发送回浏览器，并指定要显示在浏览器窗口上的内容类型。您必须理解 CGI 的基本概念，这样才能进一步使用 Python 编写更多复杂的 CGI 程序。C++ CGI 程序可以与任何其他外部的系统（如 RDBMS）进行交互。
+
+### HTTP 头信息
+
+行 Content-type:text/html\r\n\r\n 是 HTTP 头信息的组成部分，它被发送到浏览器，以便更好地理解页面内容。HTTP 头信息的形式如下：
+
+    HTTP 字段名称: 字段内容
+    例如
+    Content-type: text/html\r\n\r\n
+
+|头信息|描述|
+|---|---|
+|Content-type:|MIME 字符串，定义返回的文件格式。例如 Content-type:text/html。|
+|Expires: Date|信息变成无效的日期。浏览器使用它来判断一个页面何时需要刷新。一个有效的日期字符串的格式应为 01 Jan 1998 12:00:00 GMT。|
+|Location: URL|这个 URL 是指应该返回的 URL，而不是请求的 URL。你可以使用它来重定向一个请求到任意的文件。|
+|Last-modified: Date|资源的最后修改日期。|
+|Content-length: N|要返回的数据的长度，以字节为单位。浏览器使用这个值来表示一个文件的预计下载时间。|
+|Set-Cookie: String|通过 string 设置 cookie。|
+
+
+### CGI 环境变量
+
+所有的 CGI 程序都可以访问下列的环境变量。这些变量在编写 CGI 程序时扮演了非常重要的角色。
+
+|变量名|描述|
+|---|---|
+|CONTENT_TYPE|内容的数据类型。当客户端向服务器发送附加内容时使用。例如，文件上传等功能。|
+|CONTENT_LENGTH|查询的信息长度。只对 POST 请求可用。|
+|HTTP_COOKIE|以键 & 值对的形式返回设置的 cookies。|
+|HTTP_USER_AGENT|用户代理请求标头字段，递交用户发起请求的有关信息，包含了浏览器的名称、版本和其他平台性的附加信息。|
+|PATH_INFO|CGI 脚本的路径。|
+|QUERY_STRING|通过 GET 方法发送请求时的 URL 编码信息，包含 URL 中问号后面的参数。|
+|REMOTE_ADDR|发出请求的远程主机的 IP 地址。这在日志记录和认证时是非常有用的。|
+|REMOTE_HOST|发出请求的主机的完全限定名称。如果此信息不可用，则可以用 REMOTE_ADDR 来获取 IP 地址。|
+|REQUEST_METHOD|用于发出请求的方法。最常见的方法是 GET 和 POST。|
+|SCRIPT_FILENAME|CGI 脚本的完整路径。|
+|SCRIPT_NAME|CGI 脚本的名称。|
+|SERVER_NAME|服务器的主机名或 IP 地址。|
+|SERVER_SOFTWARE|服务器上运行的软件的名称和版本。|
+
+```C++
+#include <iostream>
+#include <stdlib.h>
+#include <string>
+using namespace std;
+const string ENV[ 24 ] = {
+        "COMSPEC", "DOCUMENT_ROOT", "GATEWAY_INTERFACE",
+        "HTTP_ACCEPT", "HTTP_ACCEPT_ENCODING",
+        "HTTP_ACCEPT_LANGUAGE", "HTTP_CONNECTION",
+        "HTTP_HOST", "HTTP_USER_AGENT", "PATH",
+        "QUERY_STRING", "REMOTE_ADDR", "REMOTE_PORT",
+        "REQUEST_METHOD", "REQUEST_URI", "SCRIPT_FILENAME",
+        "SCRIPT_NAME", "SERVER_ADDR", "SERVER_ADMIN",
+        "SERVER_NAME","SERVER_PORT","SERVER_PROTOCOL",
+        "SERVER_SIGNATURE","SERVER_SOFTWARE" };
+int main ()
+{
+   cout << "Content-type:text/html\r\n\r\n";
+   cout << "<html>\n";
+   cout << "<head>\n";
+   cout << "<title>CGI 环境变量</title>\n";
+   cout << "</head>\n";
+   cout << "<body>\n";
+   cout << "<table border = \"0\" cellspacing = \"2\">";
+   for ( int i = 0; i < 24; i++ )
+   {
+       cout << "<tr><td>" << ENV[ i ] << "</td><td>";
+       // 尝试检索环境变量的值
+       char *value = getenv( ENV[ i ].c_str() );  
+       if ( value != 0 ){
+         cout << value;
+       }else{
+         cout << "环境变量不存在。";
+       }
+       cout << "</td></tr>\n";
+   }
+   cout << "</table><\n";
+   cout << "</body>\n";
+   cout << "</html>\n";
+   return 0;
+}
+```
+
+### C++ CGI 库
+
+在真实的实例中，您需要通过 CGI 程序执行许多操作。这里有一个专为 C++ 程序而编写的 CGI 库，我们可以从 [链接](ftp://ftp.gnu.org/gnu/cgicc/) 上下载这个 CGI 库，并按照下面的步骤安装库：
+
+    $tar xzf cgicc-X.X.X.tar.gz
+    $cd cgicc-X.X.X/
+    $./configure --prefix=/usr
+    $make
+    $make install
+
+注意：libcgicc.so 和 libcgicc.a 库会被安装到/usr/lib目录下，需执行拷贝命令：
+
+    sudo cp /usr/lib/libcgicc.* /usr/lib64/
+
+才能使 CGI 程序自动找到 libcgicc.so 动态链接库。
+
+您可以点击 [C++ CGI Lib Documentation](http://www.gnu.org/software/cgicc/doc/index.html)，查看相关的库文档。
+
+### GET 和 POST 方法
+
+您可能有遇到过这样的情况，当您需要从浏览器传递一些信息到 Web 服务器，最后再传到 CGI 程序。通常浏览器会使用两种方法把这个信息传到 Web 服务器，分别是 GET 和 POST 方法。
+
+### 使用 GET 方法传递信息
+
+GET 方法发送已编码的用户信息追加到页面请求中。页面和已编码信息通过 ? 字符分隔开，如下所示：
+
+    http://www.test.com/cgi-bin/cpp.cgi?key1=value1&key2=value2
+
+GET 方法是默认的从浏览器向 Web 服务器传信息的方法，它会在浏览器的地址栏中生成一串很长的字符串。当您向服务器传密码或其他一些敏感信息时，不要使用 GET 方法。GET 方法有大小限制，在一个请求字符串中最多可以传 1024 个字符。
+
+当使用 GET 方法时，是使用 QUERY_STRING http 头来传递信息，在 CGI 程序中可使用 QUERY_STRING 环境变量来访问。
+
+您可以通过在 URL 后跟上简单连接的键值对，也可以通过使用 HTML \<FORM> 标签的 GET 方法来传信息。
+
+![Web 示例](./img/web_example.png)
