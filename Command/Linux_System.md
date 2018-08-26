@@ -1,8 +1,19 @@
+- [Linux](#linux)
+    - [常用的命令](#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4)
+    - [其他常用命令](#%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4)
+        - [more命令和less命令](#more%E5%91%BD%E4%BB%A4%E5%92%8Cless%E5%91%BD%E4%BB%A4)
+        - [help命令和man命令](#help%E5%91%BD%E4%BB%A4%E5%92%8Cman%E5%91%BD%E4%BB%A4)
+        - [APT](#apt)
+        - [网络配置](#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE)
+        - [网路命令](#%E7%BD%91%E8%B7%AF%E5%91%BD%E4%BB%A4)
+        - [Curl](#curl)
+        - [Tool Command](#tool-command)
+
 # Linux
 
-> Linux 系统下的常见命令
+> Linux 系统下的命令
 
-## 系统命令
+## 常用的命令
 
 - fdisk -l  查看当前分区挂载信息
 - mkfs  mke2fs 格式化一个未格式化的分区
@@ -60,9 +71,9 @@
 
 ##　磁盘内容
 
-### mount
+- mount
 
-    mount -t 文件类型 -o 挂接方式 device path 
+    mount -t 文件类型 -o 挂接方式 device path
 
 > -t iso9660/ntfs/msdos/smbfs/vfat/nfs -o loop(将文件当作硬盘分区挂接到系统)/iocharset(指定访问的文件系统的字符集)/ro 采用只读的方式挂接/device 要挂接的设备 /rw 采用读写挂接 /dir 设备在系统的挂接点
 
@@ -373,3 +384,4 @@ Mail [-s subject] [-c address] [-b address] mail -f [mailbox]mail [-u user]
 清除卸载后的配置文件
 
     dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
+
