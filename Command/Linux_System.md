@@ -1,3 +1,5 @@
+# Linux
+
 - [Linux](#linux)
     - [常用的命令](#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4)
     - [其他常用命令](#%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4)
@@ -11,8 +13,6 @@
         - [chmod](#chmod)
             - [参数](#%E5%8F%82%E6%95%B0)
         - [chown](#chown)
-
-# Linux
 
 > Linux 系统下的命令
 
@@ -57,7 +57,7 @@
 - gzip 文件压缩解压命令 -d 解压
 - unzip 解压.zip文件 -d 解压到指定目录 -n 不覆盖原来存在的文件 -v查看文件目录不解压 -o以默认方式覆盖已经存在的文件
 - zcat 和 bzcat 查看压缩文件内容 不解压
-- zcat 文件名  查看.gz 文件 
+- zcat 文件名  查看.gz 文件
 - bzcat 文件名 查看.bz2 文件
 - tar 命令 对文件和目录进行打包
 - tar [-选项] [备份的文件名] [要打包的目录或文件]
@@ -78,7 +78,8 @@
 
     mount -t 文件类型 -o 挂接方式 device path
 
-> -t iso9660/ntfs/msdos/smbfs/vfat/nfs -o loop(将文件当作硬盘分区挂接到系统)/iocharset(指定访问的文件系统的字符集)/ro 采用只读的方式挂接/device 要挂接的设备 /rw 采用读写挂接 /dir 设备在系统的挂接点
+> -t iso9660/ntfs/msdos/smbfs/vfat/nfs -o loop(将文件当作硬盘分区挂接到系统)/iocharset(指定访问的文件
+> 系统的字符集)/ro 采用只读的方式挂接/device 要挂接的设备 /rw 采用读写挂接 /dir 设备在系统的挂接点
 
 光盘文件的挂接  
 
@@ -167,7 +168,7 @@
 |-o| 以用户定义的格式显示|
 |-l| 查看当前用户进程的优先级|
 
-nice 命令 
+nice 命令
 
 > 改变进程优先级
 
@@ -212,7 +213,8 @@ last 命令 列出目前与过去登陆系统用户的信息
 
 增加用户
 
-- useradd [-u uid] [-g group] [-d home_dir] [-s shell] [-c comment] [-m [-k skeldir]] [-N] [-f incavtive] [-e expire] login
+    useradd [-u uid] [-g group] [-d home_dir] [-s shell] [-c comment] [-m
+    [-k skeldir]] [-N] [-f incavtive] [-e expire] login`
 
 > 例子：增加一个jack用户，指定宿主目录为/home/jack shell为/bin/bash
 
@@ -240,7 +242,7 @@ groupadd 组增加 groupdel 组删除
 ### APT
 
 - apt-get 命令
-- aptitude 命令 
+- aptitude 命令
 
 `sudo apt-get dist-upgrade 更新所有软件`
 
@@ -394,8 +396,8 @@ Mail [-s subject] [-c address] [-b address] mail -f [mailbox]mail [-u user]
 
 使用方式 :`chmod [-cfvR] [--help] [--version] mode file...`
 
-说明 : 
-> Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他。利用 chmod 可以藉以控制档案如何被他人所调用。 
+说明 :
+> Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他。利用 chmod 可以藉以控制档案如何被他人所调用。
 
 #### 参数
 
