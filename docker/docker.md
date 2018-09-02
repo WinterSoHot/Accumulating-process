@@ -262,7 +262,7 @@ FROM debian:jessie
 RUN buildDeps='gcc libc6-dev make' \
     && apt-get update \
     && apt-get install -y $buildDeps \
-    && wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \
+    && wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz"\
     && mkdir -p /usr/src/redis \
     && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
     && make -C /usr/src/redis \
@@ -355,3 +355,27 @@ Docker 的引擎提供了一组 REST API，被称为 Docker Remote API，而如 
 如果发现标准输入的文件格式是 gzip、bzip2 以及 xz 的话，将会使其为上下文压缩包，直接将其展开，将里面视为上下文，并开始构建。
 
 ### Dockerfile 指令详解
+
+#### COPY 复制文件
+
+格式：
+
+- `COPY <源路径>... <目标路径>`
+- `COPY ["<源路径1>",... "<目标路径>"]`
+
+和**RUN**一样，也有两种格式，一种类似于命令行，一种类似于函数调用。
+
+> COPY 指令将从构建上下文目录中 <源路径> 的文件/目录复制到新的一层的镜像内的 <目标路径> 位置。
+
+比如：
+
+    COPY package.json /usr/src/app/
+
+<源路径> 可以是多个，甚至可以是通配符，其通配符规则要满足 Go 的 filepath.Match 规则，如：
+
+    COPY hom* /mydir/
+    COPY hom?.txt /mydir/
+
+<目标路径> 可以是容器内的绝对路径，也可以是相对于工作目录的相对路径（工作目录可以用 WORKDIR 指令来指定）。目标路径不需要事先创建，如果目录不存在会在复制文件前先行创建缺失目录。
+
+使用 COPY 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。这个特性对于镜像定制很有用。特别是构建相关文件都在使用 Git 进行管理的时候。

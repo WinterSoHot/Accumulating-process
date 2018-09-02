@@ -13,6 +13,7 @@
         - [chmod](#chmod)
             - [参数](#%E5%8F%82%E6%95%B0)
         - [chown](#chown)
+    - [特殊命令](#%E7%89%B9%E6%AE%8A%E5%91%BD%E4%BB%A4)
 
 > Linux 系统下的命令
 
@@ -516,3 +517,13 @@ r=4，w=2，x=1
 如果是Bourne-Again shell script 可以`sh xxxx.sh` 或者`chmod +x xxxx.sh`再`./xxx.sh`
 
 一般 .sh 的直接添加x(可执行属性)`chmod +x xxx.sh` 然后`./xxx.sh`就可以了
+
+## 特殊命令
+
+查看当前静态文件系统信息
+
+    cat /etc/fstab
+
+查看当前系统磁盘的UUID
+
+    ls /dev/disk/by-uuid
