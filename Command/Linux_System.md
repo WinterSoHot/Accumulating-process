@@ -1,19 +1,28 @@
 # Linux
 
-- [Linux](#linux)
-    - [常用的命令](#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4)
-    - [其他常用命令](#%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4)
-        - [more命令和less命令](#more%E5%91%BD%E4%BB%A4%E5%92%8Cless%E5%91%BD%E4%BB%A4)
-        - [help命令和man命令](#help%E5%91%BD%E4%BB%A4%E5%92%8Cman%E5%91%BD%E4%BB%A4)
-        - [APT](#apt)
-        - [网络配置](#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE)
-        - [网路命令](#%E7%BD%91%E8%B7%AF%E5%91%BD%E4%BB%A4)
-        - [Curl](#curl)
-        - [Tool Command](#tool-command)
-        - [chmod](#chmod)
-            - [参数](#%E5%8F%82%E6%95%B0)
-        - [chown](#chown)
-    - [特殊命令](#%E7%89%B9%E6%AE%8A%E5%91%BD%E4%BB%A4)
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=true} -->
+
+<!-- code_chunk_output -->
+
+1. [Linux](#linux)
+    1. [常用的命令](#常用的命令)
+    2. [磁盘内容](#磁盘内容)
+    3. [其他常用命令](#其他常用命令)
+        1. [more命令和less命令](#more命令和less命令)
+        2. [help命令和man命令](#help命令和man命令)
+        3. [APT](#apt)
+        4. [网络配置](#网络配置)
+        5. [网路命令](#网路命令)
+        6. [Curl](#curl)
+        7. [Tool Command](#tool-command)
+        8. [chmod](#chmod)
+            1. [参数](#参数)
+        9. [chown](#chown)
+    4. [特殊命令](#特殊命令)
+
+<!-- /code_chunk_output -->
+
+
 
 > Linux 系统下的命令
 
@@ -527,3 +536,8 @@ r=4，w=2，x=1
 查看当前系统磁盘的UUID
 
     ls /dev/disk/by-uuid
+
+重新获取IP
+
+    dhclient -r 释放IP
+    dhclient 获取IP
