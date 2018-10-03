@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace dx
+{
 class SqStack
 {
   private:
@@ -128,3 +130,4 @@ int LinkStack::Pop()
     delete p;
     return x;
 }
+} // namespace dx
