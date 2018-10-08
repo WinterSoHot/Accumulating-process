@@ -86,13 +86,13 @@
 
     数据的存储结构在计算机中有两种不同的表示方法：顺序映像和非顺序映像，并由此得到两种存储结构：顺序存储结构和链式存储结构。
 
-    - 抽象数据类型：Abstract Data Type 简称ADT则是指一个数学模型以及定义在该模型的一组操作。
+    - 抽象数据类型：$Abstract\;Data\;Type$ 简称$ADT$则是指一个数学模型以及定义在该模型的一组操作。
 
     - 抽象：抽出问题的本质特征而忽略非本质的细节，是对具体事务的一个概括。
 
-    - 数据抽象（Data Abstraction）：指用ADT描述程序处理的实体时，强调其本质的特征、所能完成的功能以及它和外部用户的接口。
+    - 数据抽象$Data\;Abstraction$：指用ADT描述程序处理的实体时，强调其本质的特征、所能完成的功能以及它和外部用户的接口。
 
-    - 数据封装（Data Encapsulation）：将实体的外部特性和其内部实现细节分开，并且对外部用户隐藏其内部实现细节。
+    - 数据封装$Data\;Encapsulation$：将实体的外部特性和其内部实现细节分开，并且对外部用户隐藏其内部实现细节。
 
 2. 算法和算法分析
 
@@ -110,10 +110,13 @@
 
     - 时间复杂度：指程序运行从开始到结束所需要的时间。
 
-    算法的时间度量记作：$$T(n)=O(f(n))$$
+    算法的时间度量记作：
+    $$T(n)=O(f(n))$$
     它表示随着问题规模$n$的增大，算法执行时间的增长率和$f(n)$的增长率相同，称作算法的 **渐进时间复杂度**
 
-    - 空间复杂度：程序运行从开始到结束所需要的存储空间。记作$$S(n)=O(f(n))$$
+    - 空间复杂度：程序运行从开始到结束所需要的存储空间。记作
+    $$S(n)=O(f(n))$$
+
     其中$n$为问题的规模，$f(n)$为所需存储空间关于问题规模$n$的函数表达式。
 
     一个上机执行的程序运行所需的存储空间包括两部分：
@@ -122,7 +125,7 @@
 
 ## 线性表
 
-def: 线性表（Linear List）是由$n(n \geq 0)$个具有相同类型的数据元素$a_1,a_2,\dots,a_n$组成的有限序列。其中元素的个数$n$定义为表的长度。
+**线性表**$Linear List$是由$n(n \geq 0)$个具有相同类型的数据元素$a_1,a_2,\dots,a_n$组成的有限序列。其中元素的个数$n$定义为表的长度。
 
 非空线性表的逻辑特征：
 
@@ -141,14 +144,110 @@ def: 线性表（Linear List）是由$n(n \geq 0)$个具有相同类型的数据
 
 顺序表：线性表的顺序存储指的是把线性表的数据元素按逻辑顺序依次存放一组地址连续的存储单元里。
 
-[code: 1.cpp](./code/1.cpp)
+```C++
+const int LISTINCREMENT = 10;
+typedef int ElemType;
+
+class SqList_d
+{
+  private:
+    ElemType *elem;
+    int length;
+    int maxSize;
+
+  public:
+    SqList_d(int n);
+    ~SqList_d();
+    void SqListInsert(int i, int e);
+    int SqListDelete(int i);
+    void printAllData();
+};
+
+SqList_d::SqList_d(int n)
+{
+    elem = (int *)malloc(n * sizeof(int));
+    length = 0;
+    maxSize = n;
+}
+
+SqList_d::~SqList_d()
+{
+    delete[] elem;
+    length = 0;
+    maxSize = 0;
+}
+
+void SqList_d::SqListInsert(int i, int e)
+{
+    if (length >= maxSize)
+    {
+        elem = (int *)realloc(elem, (maxSize + LISTINCREMENT) * sizeof(int));
+    }
+    if (i < 1 || i > length + 1)
+    {
+        cout << "插入位置异常";
+        return;
+    }
+
+    for (int j = length; j >= i; j--)
+        elem[j] = elem[j - 1];
+    elem[i - 1] = e;
+    length++;
+}
+
+int SqList_d::SqListDelete(int i)
+{
+    int e;
+
+    if (length <= 0)
+    {
+        cout << "溢出";
+        return -1;
+    }
+
+    if (i < 1 || i > length + 1)
+    {
+        /* code */
+        cout << "删除位置异常";
+        return -1;
+    }
+
+    e = elem[i - 1];
+
+    for (int j = i; j < length; j++)
+    {
+        elem[j - 1] = elem[j];
+    }
+    length--;
+    return e;
+}
+
+void SqList_d::printAllData()
+{
+
+    for (int i = 0; i < length; i++)
+    {
+        /* code */
+        cout << "Item: " << i << " value: " << this->elem[i] << endl;
+    }
+}
+
+main(int argc, char const *argv[])
+{
+    SqList_d la = SqList_d(10);
+    la.SqListInsert(1, 1);
+    la.printAllData();
+    return 0;
+}
+```
 
 假设顺序吧每个数据元素占有$m$个存储单元，且数据元素的存储位置定义为其所占的存储空间中第一个单元的存储地址，则表中相邻的数据元素$a_i$和$a_{i+1}$的存储位置$LOC(a_i)$和$LOC(a_{i+1})$也是相邻的，且满足如下关系：
 $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
-如果知道第一个元素$a_i$的存储位置则：$$LOC(a_{i}) = LOC(a_1) + (i-1)*m$$
+如果知道第一个元素$a_i$的存储位置则：
+$$LOC(a_{i}) = LOC(a_1) + (i-1)*m$$
 
-由于计算任意数据元素存储地址的时间都是相等的，因此顺序表是一种 **随机存取（Random Access）** 结构
+由于计算任意数据元素存储地址的时间都是相等的，因此顺序表是一种 **随机存取**$(Random\;Access)$结构
 
 顺序表的优点：
 
@@ -185,16 +284,51 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
     单链表是 **非随机存取** 的存储结构。
 
     单链表基本操作的实现：
-        - 创建链表
-            - 头插入法
-            - 尾插入法
-        - 查找操作
-            - 按位序查找
-            - 按值查找
-        - 插入操作
-        - 删除操作
+    - 创建链表
+        - 头插入法
+        - 尾插入法
+    - 查找操作
+        - 按位序查找
+        - 按值查找
+    - 插入操作
+    - 删除操作
 
-    [code: 2.cpp](./code/2.cpp)
+    ```C++
+    typedef int ElemType;
+    struct Node{
+        ElemType data;
+        Node* next;
+    };
+    class LinkList
+    {
+        private:
+            Node *Head;
+        public:
+            LinkList();
+            ~LinkList();
+            void CreateList1(int n);
+            void CreateList2(int n);
+            void ListInsert(int i,int e);
+            int ListDelete(int i);
+            int GetElem(int i);
+            int LocateElem(int e);
+            int ListLength();
+    };
+    void LinkList::CreateList1(int n)
+    {
+        //头插法创建线性表：不停的从头部插入
+        Node *p,*s;
+        p = Head;
+        cout << "请依次输入" << n << "个数据元素值：" << endl;
+        for(int i = 1; i <= n; i++)
+        {
+            s = new Node;
+            cin >> s->data;
+            s->next = p->next;
+            p->next = s;
+        }
+    }
+    ```
 
     ![单链表头插法](./imgs/单链表头插法.png)
 
@@ -208,13 +342,15 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
 4. 双向链表
 
-    双向链表的结点结构：$$\boxed{piror|data|next}$$
+    双向链表的结点结构：
+    $$\boxed{piror|data|next}$$
 
 ### 线性表的应用
 
 1. 一元多项式的表示及运算
 
-    一个一元多项式可按照升幂表示为：$$A(x)=a_0+a_1x+a_2x^2+\dots+a_nx^n$$
+    一个一元多项式可按照升幂表示为：
+    $$A(x)=a_0+a_1x+a_2x^2+\dots+a_nx^n$$
 
     它由$n+1$个系数确定。在计算机中，可用一个线性表$(a_0,a_1,a_2,\dots,a_n)$来表示，每一项的指数$i$隐含在其系数$a_i$在序号里。
 
@@ -232,7 +368,148 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
         - exp:指数域，存放非零项的指数。
         - next:指针域，存放指向下一结点的指针。
 
-        [code: 3.cpp](./code/3.cpp)
+        ```C++
+        #define MAX 20
+
+        typedef struct
+        {
+            float coef;
+            int exp;
+        } PolyArray[MAX];
+
+        struct PolyNode
+        {
+            float coef;
+            int exp;
+            PolyNode *next;
+        };
+
+        class Poly
+        {
+          private:
+            PolyNode *Head;
+
+          public:
+            Poly(){};
+            ~Poly(){};
+            void CreatePoly(PolyArray a, int n); //创建多项式
+            void PolyDisplay();                  //多项式显示
+            void PolySort();                     // 有序表排列
+            void PolyAdd(Poly LB);               //多项式相加
+        };
+
+        void Poly::CreatePoly(PolyArray a, int n)
+        {
+
+            PolyNode *s, *r;
+            int i;
+            r = Head;
+
+            for (i = 0; i < n; i++)
+            {
+                s = new PolyNode;
+                s->coef = a[i].coef;
+                s->exp = a[i].coef;
+                s->next = NULL;
+                r->next = s;
+                r = s;
+            }
+        }
+
+        void Poly::PolySort()
+        {
+            PolyNode *p, *q, *r;
+            p = Head->next;
+
+            if (p != NULL)
+            {
+                r = p->next;
+                p->next = NULL;
+                p = r;
+
+                while (p != NULL)
+                {
+                    r = p->next;
+                    q = Head;
+                    while (q->next != NULL && q->next->exp < p->exp)
+                    {
+                        q = q->next;
+                        p->next = q->next;
+                        q->next = p;
+                        p = r;
+                    }
+                }
+            }
+        }
+
+        void Poly::PolyAdd(Poly LB)
+        {
+            float sum;
+            PolyNode *pa, *pb, *qa, *qb;
+            pa = Head;
+            qa = pa->next;
+            pb = LB.Head;
+            qb = qb->next;
+
+            while (qa != NULL && qb != NULL)
+            {
+                if (qa->exp < qb->exp)
+                {
+                    pa = qa;
+                    qa = qa->next;
+                }
+                else if (qa->exp > qb->exp)
+                {
+                    pb->next = qb->next;
+                    qb->next = qa;
+                    pa->next = qb;
+                    pa = qb;
+                    qb = qb->next;
+                }
+                else
+                {
+                    sum = qa->coef + qb->coef;
+                    if (sum == 0)
+                    {
+                        pa->next = qa->next;
+                        delete qa;
+                        qa = pa->next;
+                        pb->next = qb->next;
+                        delete qb;
+                        qb = pb->next;
+                    }
+
+                    else
+                    {
+                        qa->coef = sum;
+                        pa = qa;
+                        qa = qa->next;
+                        pb->next = qb->next;
+                        delete qb;
+                        qb = pb->next;
+                    }
+                }
+            }
+
+            if (qb != NULL)
+            {
+                pa->next = qb;
+            }
+        }
+        main(int argc, char const *argv[])
+        {
+            PolyArray a = {{7.0, 0}, {3.0, 1}, {9.0, 8}, {5.0, 16}};
+            cout << a;
+            PolyArray b = {{8.0, 1}, {22, 7}, {-9.0, 8}};
+            Poly LA = Poly(), LB = Poly();
+            LA.CreatePoly(a, 4);
+            LB.CreatePoly(b, 3);
+            LA.PolySort();
+            LB.PolySort();
+            LA.PolyAdd(LB);
+            return 0;
+        }
+        ```
 
     一元多项式相加原则：指数相同的项系数相加。
 
@@ -243,11 +520,12 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 ### 栈
 
 **栈**：$Stack$，是限定仅在表尾进行插入或删除操作的线性表。
-栈顶：允许插入和删除的一端。
-栈底：另一端。
-空栈：当栈中没有任何元素。
-进栈(入栈)：将一个元素从栈顶插入到栈的操作。
-出栈(弹出)):从栈顶删除一个元素的操作。
+
+- 栈顶：允许插入和删除的一端。
+- 栈底：另一端。
+- 空栈：当栈中没有任何元素。
+- 进栈(入栈)：将一个元素从栈顶插入到栈的操作。
+- 出栈(弹出)):从栈顶删除一个元素的操作。
 
 特点：**先进先出**$FIFO$和**后进先出**$LIFO$
 
@@ -277,7 +555,72 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
 顺序栈：利用一组地址连续的存储单元一次存放自栈底到栈顶的数据元素，同时附设$top$指针指示栈顶元素在顺序栈的位置。通常$top=0$表示空栈。
 
-顺序栈的类定义和基本操作：[code:4.cpp](./code/4.cpp)
+顺序栈的类定义和基本操作：
+
+```C++
+class SqStack
+{
+  private:
+    int *base; //栈底指针
+    int top;   //栈顶
+    int stackSize;
+
+  public:
+    SqStack(int m);
+    ~SqStack()
+    {
+        delete[] base;
+        top = -1;
+        stackSize = 0;
+    };
+    void Push(int e);
+    int Pop();
+    int GetTop();
+    int StackEmpty();
+    void StackTranverse(); //显示栈中元素
+};
+
+void SqStack::Push(int e)
+{
+    if (top == stackSize - 1)
+    {
+        cout << "栈满，无法入栈";
+        return;
+    }
+    top++;
+    base[top] = e;
+}
+
+int SqStack::Pop()
+{
+    int e;
+    if (top = -1)
+    {
+        cout << "栈空，无法出栈";
+        return -1;
+    }
+    e = base[top--];
+    return e;
+}
+
+int SqStack::GetTop()
+{
+    return top;
+}
+
+void SqStack::StackTranverse()
+{
+    if (top == -1)
+    {
+        cout << "空栈";
+    }
+
+    for (int i = 0; i < top; i++)
+    {
+        cout << "index: " << i << " value: " << base[i] << endl;
+    }
+}
+```
 
 顺序栈的应用：
 
@@ -290,7 +633,73 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
 链栈的结点结构和单链表的结点结构相同。链表只能在栈顶执行插入和删除操作，因此以单链表的头部作为栈顶最方便，而且也没必要为单链表附加头结点链表的头指针即为栈顶指针。
 
-链栈的类定义和基本操作：[code:4.cpp](./code/4.cpp)
+链栈的类定义和基本操作：
+
+```C++
+struct Node
+{
+    int data;
+    Node *next;
+};
+
+class LinkStack
+{
+  private:
+    Node *top;
+
+  public:
+    LinkStack() { top == NULL; };
+    ~LinkStack();
+    void Push(int e);
+    int Pop();
+    int GetTop()
+    {
+        if (top != NULL)
+            return top->data;
+    };
+    bool Empty() { return top != NULL ? 1 : 0; };
+};
+
+LinkStack::~LinkStack()
+{
+    Node *p;
+    while (top)
+    {
+        p = top->next;
+        delete top;
+        top = p;
+    }
+}
+
+void LinkStack::Push(int e)
+{
+    Node *s = new Node;
+
+    if (!s)
+    {
+        cout << "内存分配失败";
+        return;
+    }
+    s->data = e;
+    s->next = top;
+    top = s;
+}
+
+int LinkStack::Pop()
+{
+    int x;
+    if (top == NULL)
+    {
+        cout << "栈溢出";
+        return -1;
+    }
+    x = top->data;
+    Node *p = top;
+    top = top->next;
+    delete p;
+    return x;
+}
+```
 
 ### 队列
 
@@ -311,15 +720,15 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 确定 $a_1$端为队头，$a_n$端为队尾。
 
 - 基本操作：
-    - InitQueue(&Q)
-    - DestroyQueue(&Q)
-    - CleanQueue(&Q)
-    - QueueEmpty(Q)
-    - QueueLength(Q)
-    - GetHead(Q,&e)
-    - EnQueue(&Q,e)
-    - DeQueue(&Q,&e)
-    - QueueTraverse(Q,visit())
+    - $InitQueue(\&Q)$
+    - $DestroyQueue(\&Q)$
+    - $CleanQueue(\&Q)$
+    - $QueueEmpty(Q)$
+    - $QueueLength(Q)$
+    - $GetHead(Q,\&e)$
+    - $EnQueue(\&Q,e)$
+    - $DeQueue(\&Q,\&e)$
+    - $QueueTraverse(Q,visit())$
 
 #### 队列的顺序存储
 
@@ -335,7 +744,7 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
 解决“假溢”现象的方法：将存储队列的数组看成是头尾相接的圆环，并成为循环存储空间，即允许队列直接从数组中下标最大的位置延续到下标最小的位置。
 
-循环队列$(Circular Queue)$：队列的头尾相接的顺序存储结构
+循环队列$(Circular\;Queue)$：队列的头尾相接的顺序存储结构
 
 这种队列，队空和队满时头尾指针均相等，故无法通过$front==rear$来判断队列“空”还是“满”。
 
@@ -351,7 +760,132 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
 ![循环队列](./imgs/循环队列.png)
 
-循环队列的类定义和基本操作：[code:5.cpp](./code/5.cpp)
+循环队列的类定义和基本操作：
+
+```C++
+class CQueue
+{
+  private:
+    int *base; //存储空间基址
+    int front;
+    int rear;
+    int queueSize;
+
+  public:
+    CQueue(int m);
+    ~CQueue();
+    void EnQueue(int e);
+    int DeQueue();
+    int GetHead();
+    int GetLast();
+    void QueueDisplay();
+};
+
+CQueue::CQueue(int m)
+{
+    queueSize = m;
+    base = (int *)malloc(queueSize * sizeof(int));
+    front = 0;
+    rear = 0;
+}
+
+CQueue::~CQueue()
+{
+    delete[] base;
+    front = 0;
+    rear = 0;
+    queueSize = 0;
+}
+
+void CQueue::EnQueue(int e)
+{
+    if ((rear + 1) % (queueSize) == front)
+    {
+        cout << "上溢，无法入队" << endl;
+        return;
+    }
+    base[rear] = e;
+    rear = (rear + 1) % queueSize;
+}
+
+int CQueue::DeQueue()
+{
+    int e;
+
+    if (front == rear)
+    {
+        cout << "下溢，不能出队" << endl;
+        return -1;
+    }
+    e = base[front];
+    front = (front + 1) % queueSize;
+    return e;
+}
+
+int CQueue::GetHead()
+{
+    int e;
+    if (front == rear)
+    {
+        cout << "队空，无元素" << endl;
+        return -1;
+    }
+    e = base[front];
+    return e;
+}
+
+int CQueue::GetLast()
+{
+    int e;
+    if (front == rear)
+    {
+        cout << "队空，无元素";
+        return -1;
+    }
+    e = base[rear];
+    return e;
+}
+
+void CQueue::QueueDisplay()
+{
+    if (front == rear)
+    {
+        cout << "队空，无元素" << endl;
+        return;
+    }
+    for (int i = front % queueSize; i < rear; i++)
+    {
+        int index = i;
+        if (i > queueSize) {
+            index = i % queueSize;
+        }
+        cout << "index: " << index << " value: " << base[index] << endl;
+    }
+
+    // for (int i = 0; i < (rear) % queueSize; i++)
+    // {
+    //     cout << "index: " << i << " value: " << base[i] << endl;
+    // }
+}
+
+int main(int argc, char const *argv[])
+{
+    CQueue cq = CQueue(6);
+    cq.EnQueue(1);
+    cq.EnQueue(2);
+    cq.EnQueue(3);
+    cq.EnQueue(4);
+    cq.EnQueue(5);
+
+    cout << "入队后：" << endl;
+    cq.QueueDisplay();
+
+    cout << "第一个元素出队后：" << endl;
+    cq.DeQueue();
+    cq.QueueDisplay();
+    return 0;
+}
+```
 
 #### 队列的链式存储
 
@@ -361,36 +895,185 @@ $$LOC(a_{i+1}) = LOC(a_i) + m$$
 
 ![链队列示意图](./imgs/链队列示意图.jpg)
 
-链队列的类定义和基本操作：[code:6.cpp](./code/6.cpp)
+链队列的类定义和基本操作：
+
+```C++
+struct Node
+{
+    int data;
+    Node *next;
+};
+
+class LinkQueue
+{
+  private:
+    Node *front;
+    Node *rear;
+
+  public:
+    LinkQueue();
+    ~LinkQueue();
+    void EnQueue(int e);
+    int DeQueue();
+    int GetHead();
+    int GetLast();
+    void QueueDisplay();
+};
+
+LinkQueue::LinkQueue()
+{
+    front = new Node;
+    front->next = NULL;
+    rear = front;
+}
+
+LinkQueue::~LinkQueue()
+{
+    Node *p;
+
+    while (front != NULL)
+    {
+        p = front;
+        front = front->next;
+        delete p;
+    }
+}
+
+void LinkQueue::EnQueue(int e)
+{
+    cout << e << "进入队列！！" << endl;
+    Node *s = new Node;
+    s->data = e;
+    s->next = rear->next;
+    rear->next = s;
+    rear = s;
+
+    if (front->next == NULL)
+    {
+        front->next = s;
+    }
+}
+
+int LinkQueue::DeQueue()
+{
+    int e;
+    Node *p;
+
+    if (rear == front)
+    {
+        cout << "下溢";
+        return -1;
+    }
+    p = front->next;
+    e = p->data;
+    front->next = p->next;
+    if (p->next == NULL)
+    {
+        rear = front;
+    }
+    delete p;
+    return e;
+}
+
+int LinkQueue::GetHead()
+{
+    int e;
+    Node *p;
+    if (front == rear)
+    {
+        cout << "下溢";
+        return -1;
+    }
+    p = front->next;
+
+    if (p == NULL)
+    {
+        cout << "当前队列为空" << endl;
+    }
+    e = p->data;
+    return e;
+}
+
+int LinkQueue::GetLast()
+{
+    int e;
+    if (front == rear)
+    {
+        cout << "下溢";
+        return -1;
+    }
+    e = rear->data;
+    return e;
+}
+
+void LinkQueue::QueueDisplay()
+{
+    if (front == rear)
+    {
+        cout << "队列为空" << endl;
+        return;
+    }
+    Node *p = NULL;
+    do
+    {
+
+        if (p == NULL)
+        {
+            p = front->next;
+        }
+        else
+        {
+            p = p->next;
+        }
+        cout << p->data << " ";
+    } while ((p != rear));
+}
+
+int main(int argc, char const *argv[])
+{
+    LinkQueue lq = LinkQueue();
+    lq.EnQueue(1);
+    lq.EnQueue(2);
+    lq.EnQueue(3);
+    lq.EnQueue(4);
+    lq.EnQueue(5);
+    lq.EnQueue(7);
+    lq.EnQueue(8);
+
+    int e = lq.DeQueue();
+    cout << e << endl;
+    e = lq.DeQueue();
+    cout << e << endl;
+    e = lq.GetHead();
+    cout << e << endl;
+    e = lq.GetLast();
+    cout << e << endl;
+    lq.QueueDisplay();
+    return 0;
+}
+```
 
 ## 串
 
 串：$(String)$是由零个或多个字符组成的有限序列。非空串一般记作：$$s="a_1a_2a_3 \cdots a_n"(n \ge 1)$$
 
-其中$s$为串名，双引号引起来的字符序列是串值。
+其中$s$为串名，双引号引起来的字符序列是串值。$a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
 
-$a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
-
-串包含的字符个数称为串的长度。
-
-空串$(Null\;String)$：长度为0的串。
-
-空格串：仅有一个或多个空格组成的串。
-
-子串和主串：串中任意个连续字符组成的子序列称为该串的子串，包含子串的串称为主串。
-
-子串的首字符在主串中的序号称为子串在主串中的位置。
-
-空串是任一串的子串，串总是自身的子串。
+- 串包含的字符个数称为串的长度。
+- 空串$(Null\;String)$：长度为0的串。
+- 空格串：仅有一个或多个空格组成的串。
+- 子串和主串：串中任意个连续字符组成的子序列称为该串的子串，包含子串的串称为主串。
+- 子串的首字符在主串中的序号称为子串在主串中的位置。
+- 空串是任一串的子串，串总是自身的子串。
 
 程序中使用的串分为两种：串常量和串变量
 
 串常量在程序中只能被引用但不能改变其值，即只读不能写。
 
-例如语句`cout<<"overflow"`中的“overflow”该字符串只能读，不能改。如C++中,可定义：
+例如语句`cout<<"overflow"`中的`overflow`该字符串只能读，不能改。如C++中,可定义：
 
 ```C++
-    const char path[] = "dir/bin/app1"
+const char path[] = "dir/bin/app1"
 ```
 
 这里的path是一个串常量，对它只能读不能写。
@@ -404,40 +1087,40 @@ $a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
 - 数据对象：$D=\{a_i|a_i\in WordSet,i=1,2,\cdots,n\}$
 - 数据关系：$R=\{(a_i,a_{i+1})|a_i,a_{i+1}\in D,i=1,2,\cdots,n-1\}$
 - 基本操作：
-    - strassign(&s,st)
+    - $strassign(\&s,st)$
         - 初始条件：st为字符串常量
         - 操作结果：产生一个值等于st的串s
-    - strempty(s)
+    - $strempty(s)$
         - 初始条件：s为一个串
         - 操作结果：若s为空串，则返回1，否则返回0
-    - strcopy(&t,s)
+    - $strcopy(\&t,s)$
         - 初始条件：s为一个串
         - 操作结果：把串s复制给t
-    - strncpy(&sub,s,pos,len)
+    - $strncpy(\&sub,s,pos,len)$
         - 初始条件：s为一个串，pos为起始位置，$1\le pos \le strlength(s)-1,len \gt 0$
         - 操作结果：用sub返回串s的第pos个字符开始长度为len的子串
-    - strcmp(s,t)
+    - $strcmp(s,t)$
         - 初始条件：s和t为两个串
         - 操作结果：若s>t，则返回值1；若s=t，则返回值0，否则返回值-1
-    - strlength(s)
+    - $strlength(s)$
         - 初始条件：s是一个串
         - 操作结果：返回s的元素的个数
-    - strconcat(&t,s1,s2)
+    - $strconcat(\&t,s1,s2)$
         - 初始条件：s1，s2是两个串
         - 操作结果：用t返回s1和s2连接成的新串
-    - substring(&sub,s,pos,len)
+    - $substring(\&sub,s,pos,len)$
         - 初始条件：s是一个串，pos是串的起始位置，len是子串的长度
         - 操作结果：用sub返回串s的第pos个字符开始长度为len的子串
-    - strindex(s,t,pos)
+    - $strindex(s,t,pos)$
         - 初始条件：s，t为两个串；$1\le pos \le strlength(s)$
         - 操作结果：在s中取从第pos个字符起、长度和串t相等的子串和t比较，若相等，则返回pos，否则增值1至s中不存在和串t相等的子串为止，此时返回0
-    - strinsert(&s,pos，t)
+    - $strinsert(\&s,pos，t)$
         - 初始条件：s，t是两个串，$1\le pos \le strlength(s)+1$
         - 操作结果：在s的第pos字符插入串t
-    - strdelete(&s,pos,len)
+    - $strdelete(\&s,pos,len)$
         - 初始条件：s是一个串，$1\le pos \le strlength(s)-len+1$
         - 操作结果：从串s中删除第pos字符起长度为len的子串
-    - Replace(&s,t,w)
+    - $Replace(\&s,t,w)$
         - 初始条件：s，t，w是三个串，t为非空串
         - 操作结果：用w替换串s中出现的所有与t相等的不重复的子串。
 
@@ -445,7 +1128,7 @@ $a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
 
 串是特殊的线性表，存储结构和线性表的存储结构类似。其特殊性在于组成串的结点是单个字符。
 
-串的三种存储表示方式：定长顺序存储、堆分配存储和链式存储
+串的三种存储表示方式：**定长顺序存储、堆分配存储和链式存储**
 
 1. 定长顺序存储表示
 
@@ -454,12 +1137,14 @@ $a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
     定长存储结构，指直接使用定长的字符数组来实现。
 
     ```C++
-        #define MAXSTRLEN 256
-        typedef char sstring[MAXSTRLEN+1];//0号单元存放串的长度
-        sstring s;//s是个可容纳255个字符的顺序串
+    #define MAXSTRLEN 256
+    typedef char sstring[MAXSTRLEN+1];//0号单元存放串的长度
+    sstring s;//s是个可容纳255个字符的顺序串
     ```
 
-    一般可使用一个不会出现在串中的特殊字符在串值的尾部来表示串的结束。例如C/C++语言使用字符'\0'表示串值的终结，这就是为什么上面保存255个字符，留一个字节存放'\0'字符。
+    一般可使用一个不会出现在串中的特殊字符在串值的尾部来表示串的结束。
+
+    例如C/C++语言使用字符'\0'表示串值的终结，这就是为什么上面保存255个字符，留一个字节存放'\0'字符。
 
 2. 堆分配存储表示
 
@@ -478,11 +1163,11 @@ $a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
     堆分配存储表示的定义如下:
 
     ```C++
-        typedef struct
-        {
-            char *ch;
-            int length;
-        }Hstring;
+    typedef struct
+    {
+        char *ch;
+        int length;
+    }Hstring;
     ```
 
 3. 链式存储表示
@@ -495,17 +1180,17 @@ $a_i(1 \le n \le n)$可以是字母、数字或其他字符串。
 
     串的链式存储结构如下
     ```C++
-        #define chunksize 100
-        typedef struct chunk
-        {
-            char ch[chunksize];
-            chunk *next;
-        } chunk;
-        typedef struct
-        {
-            chunk *head, *tail;
-            int curlen;
-        } Lstring;
+    #define chunksize 100
+    typedef struct chunk
+    {
+        char ch[chunksize];
+        chunk *next;
+    } chunk;
+    typedef struct
+    {
+        chunk *head, *tail;
+        int curlen;
+    } Lstring;
     ```
 
 ### 串的匹配模式
@@ -535,27 +1220,27 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
     具体算法如下：
 
     ```C++
-        int index(sstring s,sstring t,int pos)
+    int index(sstring s,sstring t,int pos)
+    {
+        int i=pos,j=1;
+        while(i<=s[0]&&j<=t[0])
         {
-            int i=pos,j=1;
-            while(i<=s[0]&&j<=t[0])
+            if(s[i]==t[j])
             {
-                if(s[i]==t[j])
-                {
-                    i++;
-                    j++;
-                }
-                else
-                {
-                    i=i-j+2;
-                    j=1;
-                }
+                i++;
+                j++;
             }
-            if(j>t[0])
-                return i-t[0];
             else
-                return 0;
+            {
+                i=i-j+2;
+                j=1;
+            }
         }
+        if(j>t[0])
+            return i-t[0];
+        else
+            return 0;
+    }
     ```
 
     模式串T="abcac"和主串s=“ababcabcaccabbc”的匹配过程
@@ -576,46 +1261,46 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 
     算法如下：
     ```C++
-        void get_next(sstring t,int next[])
-        {   //求出模式串t的next函数值并存入数组next中
-            int i=1,j=0;
-            next[1]=0;
-            while(i<t[0])
-            {
-                if(j==0||t[i]==t[j])
-                {
-                    i++;
-                    j++;
-                    next[i]=j;
-                }
-                else
-                    j=next[j];
-            }
-        }
-        int KMP_index(sstring s,sstring t,int pos)
+    void get_next(sstring t,int next[])
+    {   //求出模式串t的next函数值并存入数组next中
+        int i=1,j=0;
+        next[1]=0;
+        while(i<t[0])
         {
-            //t非空,1<=pos<=Strlength(s)
-            int i=pos,j=1;
-            while(i<=s[0]&&j<=t[0])
+            if(j==0||t[i]==t[j])
             {
-                if(j==0||s[i]==t[j])
-                {
-                    i++;
-                    j++;
-                }
-                else
-                    j=next[j];
+                i++;
+                j++;
+                next[i]=j;
             }
-            if(j>t[0])
-                return i-t[0];
             else
-                return 0;
+                j=next[j];
         }
+    }
+    int KMP_index(sstring s,sstring t,int pos)
+    {
+        //t非空,1<=pos<=Strlength(s)
+        int i=pos,j=1;
+        while(i<=s[0]&&j<=t[0])
+        {
+            if(j==0||s[i]==t[j])
+            {
+                i++;
+                j++;
+            }
+            else
+                j=next[j];
+        }
+        if(j>t[0])
+            return i-t[0];
+        else
+            return 0;
+    }
     ```
 
 ## 数组和广义表
 
-> 数组和广义表可以看做是线性表的扩展，即数组和广义表中的数据元素本身也是一种数据结构。数组中每个数据元素具有相同的结构，广义表中的数据元素可以有不同的数据结构。
+数组和广义表可以看做是线性表的扩展，即数组和广义表中的数据元素本身也是一种数据结构。数组中每个数据元素具有相同的结构，广义表中的数据元素可以有不同的数据结构。
 
 ### 数组
 
@@ -636,22 +1321,24 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
     $$D=\{a_{j_1j_2\cdots j_n}|n(n>0),b_i,j_i,a_{j_1j_2\cdots j_n}\in ElemSet\}$$
     $n$是数据的维数，$b_i$是数据的第$i$维的长度，$j_i$是数组元素第$i$维的下标。
 - 数据关系：$R=\{R_1,R_2,\cdots,R_n\}$
-    $$R_i=\{<a_{j1\cdots ji \cdots jn},a_{j1\cdots ji+1\cdots jn}>\}
+
+$$R_i=\{<a_{j1\cdots ji \cdots jn},a_{j1\cdots ji+1\cdots jn}>\}
     \\ 0\le j_k\le b_k-1,1\le k\le n\;n\neq i,
     \\ 0\le j_i \le b_i-2,
-    - InitArray(&A,n,bound1,...,boundn)
+    - InitArray(\&A,n,bound1,...,boundn)
     \\a_{j1\cdots ji \cdots jn},a_{j1\cdots ji+1\cdots jn}\in D,i=2,\cdots,n$$
+
 - 基本操作
-    - InitArray(&A,n,bound1,...,boundn)
+    - $InitArray(\&A,n,bound1,...,boundn)$
         - 初始条件：无
         - 操作结果：若维数$n$和各维长度$b_1,...,b_n$合法，则构造相应的数组$A$，并返回$OK$
-    - DestroyArray(&A)
+    - $DestroyArray(\&A)$
         - 初始条件：无
         - 操作结果：销毁数组$A$
-    - GetValue(A,&e,index1,...,indexn)
+    - $GetValue(A,\&e,index1,...,indexn)$
         - 初始条件：$A$是$n$维数组，$e$为数据元素变量，$index1,\cdots,indexn$是$n$个下标值。
         - 操作结果：若下标$index1,\cdots,indexn$都不超界，则读取与下标对应的数据元素的值，并赋值给$e$
-    - Assign(&A,e,index1,...,indexn)
+    - $Assign(\&A,e,index1,...,indexn)$
         - 初始条件：$A$是$n$维数组，$e$为数据元素变量，$index1,\cdots,indexn$是$n$个下标值。
         - 操作结果：若下标$index1,\cdots,indexn$都不超界，则将$e$赋值给下标对应的数据元素
 
@@ -663,11 +1350,14 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 
 用一组连续的存储单元存放数据元素存在一个次序约定的问题，是先存一行数据元素还是先存一列数据元素？
 
-根据存储方式的不同，顺序存储方法分为一下两类：
+根据**存储方式**的不同，顺序存储方法分为一下两类：
 
 - 行优先顺序存储
+
     以行序为主序的存储方式。将数据元素按行排列，第$i+1$个行向量紧接在第$i$个行向量后面。
+
 - 列优先顺序存储
+
     以列序为主序的存储方式。将数据元素按列排列，第$j+1$个列向量紧接在第$j$个列向量后面。
 
 行优先顺序存储：$\boxed{a_{11}|a_{12}|\cdots|a_{1n}|a_{21}|a_{22}|\cdots|a_{2n}|\cdots|a_{m1}|a_{m2}|\cdots|a_{mn}}$
@@ -675,12 +1365,18 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 
 二维数组元素地址，按行优先顺序存储的计算公式
 
-任一数据元素$a_{ij}$的存储地址$LOC(a_{ij})$应为数组的基地址加上排在$a_{ij}$前面的数据元素所占用的单元数，因此$a_{ij}$的存储地址计算公式为：$$LOC(a_{ij})=LOC(a_{l_1l_2})+((i-l_1)*(h_2-l_2+1)+(j-l_2))*c\\=LOC(a_{l_1l_2})+i*(h_2-l_2+1)*c-l_1*(h_2-l_2+1)*c+j*c-l_2*c$$
+任一数据元素$a_{ij}$的存储地址$LOC(a_{ij})$应为数组的基地址加上排在$a_{ij}$前面的数据元素所占用的单元数，因此$a_{ij}$的存储地址计算公式为：
 
-令：$M_1=(h_2-l_2+1)*c,M_2=c,$则有$$LOC(a_{ij})=v_0+i*M_1+j*M_2$$
+$$LOC(a_{ij})=LOC(a_{l_1l_2})+((i-l_1)*(h_2-l_2+1)+(j-l_2))*c\\=LOC(a_{l_1l_2})+i*(h_2-l_2+1)*c-l_1*(h_2-l_2+1)*c+j*c-l_2*c$$
+
+令：$M_1=(h_2-l_2+1)*c,M_2=c,$则有
+
+$$LOC(a_{ij})=v_0+i*M_1+j*M_2$$
+
 其中，$v_0=LOC(a_{l_1l_2})+-l_1*M_1-l_2*M_2,i\in[l_1,h_1],j\in[l_2,h_2],$且$i$和$j$均为整数；$LOC(a_l{ij})$是数据元素$a_{ij}$的存储地址，$LOC(a_{l_1l_2})$是二维数组中第一个元素的存储地址，即基地址。
 
-二维数组推广到一般，按照行优先顺序存储，则下标为$i_1,i_2,\cdots,i_n$的存储地址为：$$LOC(a_{i_1,i_2,\cdots,i_n})
+二维数组推广到一般，按照行优先顺序存储，则下标为$i_1,i_2,\cdots,i_n$的存储地址为：
+$$LOC(a_{i_1,i_2,\cdots,i_n})
 =LOC(a_{l_1,l_2,\cdots,l_n})+(j_1d_2d_3\cdots d_n+j_2d_3\cdots d_n+\cdots+j_{n-1}d_n+j_n)*c\\=V_0+i_1*M_1+i_2*M_2+\cdots+i_n*M_n$$
 
 #### 矩阵的压缩存储
@@ -697,10 +1393,15 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 稀疏矩阵$(Sparse\;Maxtrix)$：矩阵中有许多零数据元素(一般根据稀疏因子的值判定领数据元素是否较多)
 
 1. 特殊矩阵的压缩存储
-    特殊矩阵是指非零数据元素或零数据元素的分布具有一定规律的矩阵。
-    常见的特殊矩阵有，对称矩阵、对角矩阵等，它们都是方阵，行数和列数相同。
+    特殊矩阵是指非零数据元素或零**数据元素的分布**具有一定**规律**的矩阵。
+
+    常见的特殊矩阵有:对称矩阵、对角矩阵等，它们都是方阵，行数和列数相同。
+
     1. 对称对称的压缩
-        在一个$n$阶方阵$A$中，若数据元素满足下述性质:$$a_{ij}=a_{ji}(i\ge1,j\le n)$$
+        在一个$n$阶方阵$A$中，若数据元素满足下述性质:
+
+        $$a_{ij}=a_{ji}(i\ge1,j\le n)$$
+
         则称为$A$为$n$阶对称矩阵。
 
         对称矩阵只需存储矩阵中的上三角$a_{ij}(i\le j)$或下三角$a_{ij}(i\ge j)$的数据元素。
@@ -708,16 +1409,21 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
         对称矩阵优先采用行优先顺序存储下三角中的数据元素。
 
         下三角的数据元素可用一个容量是$n*(n+1)/2$的一维数组存储。对于下三角中任意数据元素$a_{ij}(i\ge j)$,$a_{ij}$在一维数组中的下标$k$与$i、j$的关系为：$k=i*(i+1)/2+j$。
+
         $$\boxed{a_{00}|a_{10}|a_{11}|a_{20}|a_{21}|a_{22}|\cdots|a_{ij}|\cdots|a_{n-1,0}|a_{n-1,1}|\cdots|a_{n-1,n-1}}$$
 
         若采用上述的压缩存储方式，则矩阵中的任一数据元素$a_{ij}$与它在一维数组中的存储位置$k$之间存在如下的对应关系:
+
         $$k=\begin{cases}i(i-1)/2+j-1,\ge j
         \\j(j-1)/2+i-1,\lt j\end{cases}$$
+
         其中$k=0,1,2，\cdots,((n+1)n/2)-1,
         \\1+2+3+(i-1)=(i-1)i/2,
         \\(i-1)i/2+j=k+1\quad i\ge j\quad and\quad i,j\ge 1$
+
     2. 对角矩阵的压缩存储
-        对角矩阵：所有的非零数据元素都集中在以主对角线为中心的带状区域中的举证，即除了主对角线上和主对角线相邻两侧的若干条对角线上的数据之外，其余所有数据元素均为零数据元素。
+
+        对角矩阵：所有的非零数据元素都集中在以主对角线为中心的带状区域中的举证，即除了**主对角线上和主对角线相邻两侧**的若干条对角线上的数据之外，其余所有数据元素均为零数据元素。
 
 2. 稀疏矩阵的压缩存储
 
@@ -736,8 +1442,166 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 
     2. 稀疏矩阵的类定义和基本操作
 
-        [code: 8.cpp](./code/8.cpp)
-        矩阵的运算一般有矩阵转置、矩阵相加、矩阵相减、矩阵相乘等。
+        ```C++
+        const int MaxSize = 1000;
+
+        typedef int ElemType;
+
+        struct Triple
+        {
+            int i;
+            int j;
+            ElemType e;
+        };
+
+        class SMatrix
+        {
+          private:
+            int mu; //行数
+            int nu; //列数
+            int tu; //非零数据的个数
+            Triple *data;
+
+          public:
+            SMatrix();
+            SMatrix(int m, int n, int k, Triple data[]);
+            ~SMatrix();
+            SMatrix MCreate(int d[][3], int m, int n, int k);
+            void MDisplay(SMatrix a);
+            void MatrixTrans_1(SMatrix A, SMatrix &B); //矩阵转置算法1
+            void MatrixTrans(SMatrix A, SMatrix &B);   //快速转置算法
+        };
+
+        SMatrix::SMatrix()
+        {
+            mu = 0;
+            nu = 0;
+            tu = 0;
+
+            for (int p = 0; p < tu; p++)
+            {
+                data[p].i = 0;
+                data[p].j = 0;
+                data[p].e = 0;
+            }
+        }
+
+        SMatrix::SMatrix(int m, int n, int k, Triple data[])
+        {
+            this->mu = m;
+            this->nu = n;
+            this->tu = k;
+            this->data = data;
+        }
+
+        SMatrix SMatrix::MCreate(int d[][3], int m, int n, int k)
+        {
+            SMatrix M = {m, n, k, NULL};
+            if (k != 0)
+                M.data = new Triple[k];
+
+            for (int i = 0; i < k; i++)
+            {
+                M.data[i].i = d[i][0];
+                M.data[i].j = d[i][1];
+                M.data[i].e = d[i][2];
+            }
+            return M;
+        }
+        //矩阵遍历
+        void SMatrix::MDisplay(SMatrix a)
+        {
+            Triple p;
+            int i, j, k, c = 0;
+            p = a.data[k];
+
+            for (i = 0; i < a.mu; i++)
+            {
+                for (j = 1; j < a.nu; j++)
+                {
+                    if (k < a.tu && p.i == i && p.j == j)
+                    {
+                        cout << "\t" << p.e;
+                        k++;
+                        if (k < a.tu)
+                            p = a.data[k];
+                    }
+                    else
+                    {
+                        cout << "\t" << c;
+                    }
+                }
+                cout << endl;
+            }
+        }
+
+        //基于三元组顺序表的转置算法
+        void SMatrix::MatrixTrans_1(SMatrix A, SMatrix &B)
+        {
+            B.mu = A.nu;
+            B.nu = A.tu;
+            B.tu = A.tu;
+            int q, p;
+            int col;
+            if (B.tu)
+            {
+                q = 0;
+                for (col = 1; col < A.nu; col++)
+                {
+                    for (p = 0; p <= A.tu - 1; p++)
+                    {
+                        if (A.data[p].j == col)
+                        {
+                            B.data[q].i = A.data[p].j;
+                            B.data[q].j = A.data[p].i;
+                            B.data[q].e = A.data[p].e;
+                            q++;
+                        }
+                    }
+                }
+            }
+        }
+
+        //快速转置算法
+        void SMatrix::MatrixTrans(SMatrix A, SMatrix &B)
+        {
+            int col, k, p, q;
+            int *num, *cpot;
+            num = new int[B.nu];
+            cpot = new int[B.nu];
+
+            if (B.tu)
+            {
+                for (col = 0; col < A.tu; col++)
+                {
+                    num[col] = 0;
+                }
+
+                for (k = 0; k < A.tu; k++)
+                {
+                    num[A.data[k].j]++;
+                }
+                cpot[0] = 0;
+
+                for (col = 1; col <= A.nu; col++)
+                {
+                    cpot[col] = cpot[col - 1] + num[col - 1];
+                }
+
+                for (p = 0; p < A.tu; p++)
+                {
+                    col = A.data[p].j;
+                    q = cpot[col];
+                    B.data[q].i = A.data[p].j;
+                    B.data[q].j = A.data[p].i;
+                    B.data[q].e = A.data[p].e;
+                    cpot[col]++;
+                }
+            }
+        }
+        ```
+
+        矩阵的运算一般有**矩阵转置、矩阵相加、矩阵相减、矩阵相乘**等。
         - 矩阵转置
 
             $def：$一个$m\ast n$的矩阵$A$，它的转置矩阵$B$是一个$n\ast m$的矩阵，且
@@ -811,7 +1675,10 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 
 ### 广义表
 
-**广义表**$(Generalized\;Lists)$是$n(n\ge 0)$个数据元素的有限序列，一般记作:$$LS=(a_1,a_2,\cdots,a_n)$$
+**广义表**$(Generalized\;Lists)$是$n(n\ge 0)$个数据元素的有限序列，一般记作:
+
+$$LS=(a_1,a_2,\cdots,a_n)$$
+
 其中,$LS$是广义表的名称，$a_i(i\le i\le n)$是$LS$的直接数据元素，也称成员，它可以是单个数据元素，也可以是一个广义表，它们分别称为$LS$的单数据元素(原子)或子表。
 
 当广义表$LS$非空时：
@@ -821,7 +1688,7 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 - 长度：直接数据元素的个数
 - 深度：括号中最大嵌套层数
 
-广义表()和广义表(())是不同的，前者为空表，长度为0，后者长度为1。
+广义表$()$和广义表$(())$是不同的，前者为空表，长度为0，后者长度为1。
 
 广义表的性质：
 
@@ -835,23 +1702,23 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 - 数据对象：$D=\{e_i|i=1,2,\cdots,n;n\ge 0;e_i\in AtomSet\;or\;e_i\in GList\}$$AtomSet$为某个数据对象
 - 数据关系：$R=\{<e_{i-1},e_i>|e_{i-1},e_i\in D,2\le i\le n\}$
 - 基本操作：
-    - InitGList(&L)
-    - CreateGList(&L,S)
-    - CopyGList(&T,L)
-    - GListLength(L)
-    - GListDepth(L)
-    - GListEmpty(L)
-    - GetHead(L)
-    - GetTail(L)
-    - InsertFirst_GL(&L,e)
-    - DeleteFirst_GL(&L,e)
-    - Traverse_GL(L,visit())
+    - $InitGList(\&L)$
+    - $CreateGList(\&L,S)$
+    - $CopyGList(\&T,L)$
+    - $GListLength(L)$
+    - $GListDepth(L)$
+    - $GListEmpty(L)$
+    - $GetHead(L)$
+    - $GetTail(L)$
+    - $InsertFirst_GL(\&L,e)$
+    - $DeleteFirst_GL(\&L,e)$
+    - $Traverse_GL(L,visit())$
 
 #### 广义表的存储结构
 
-由于数据元素类型的不统一，难以采用顺序存储结构，而采用链式存储结构存储广义表。
+由于数据元素**类型的不统一**，难以采用顺序存储结构，而采用链式存储结构存储广义表。
 
-若广义表不空，则可分解为表头和表尾；反之，一对确定的表头和表尾可唯一确定一个广义表。
+若广义表不空，则可分解为**表头和表尾**；反之，一对确定的表头和表尾可唯一确定一个广义表。
 
 根据上述性质可采用**头尾表示法**$(Head\;Tail\;Express)$来存储广义表。
 
@@ -869,20 +1736,65 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
 - tp:指向表尾结点的指针
 - data:存储数据元素自身的信息
 
-[code: 9.cpp](./code/9.cpp)
+```C++
+struct GLNode
+{
+    int tag;
+    char data;
+    struct atom
+    {
+        GLNode *hp, *tp;
+    } ptr;
+};
+
+class GList
+{
+  private:
+    GLNode *ls; //指向表头的指针
+    char result[50];
+    int count;                      //计数
+    GLNode *CreateGList(string st); //由广义表的书面格式s创建广义表
+    GLNode *CopyGList(GLNode *ts, GLNode *ls);
+    int Depth(GLNode *ls);
+    void Print(GLNode *ls);
+
+  public:
+    GList();
+    GList(string s);
+    ~GList();
+    int DepthGList();
+    void GListCopy();
+    void Server(string &str, string &hstr);
+    void GListDisplay();
+};
+
+GList::GList()
+{
+    ls = NULL;
+    count = 0;
+}
+
+GList::~GList()
+{
+    delete[] ls;
+}
+```
 
 ## 树和二叉树
 
-树是一种非线性结构。树是一种层次结构。
+树是一种非线性结构。树是一种**层次结构**。
 
 ### 树
 
 树$(Tree)$:是$n(n\ge0)$个结点的有限集。
+
 树的递归定义如下：
+
 当$n=0$时，$T$称为空树；当$n>0$时，$T$是非空树。在一棵非空树中：
 
 1. 有且仅有一个特定的结点，它只有后继结点，没有前驱结点，这个结点称为根$(Root)$
 2. 当$n\gt1$时，除了根以外的其余结点分为$m(m\gt0)$个互不相交的有限集合$T_1,T_2，\cdots,T_m$其中每一个集合本身又是一棵树，并且称为根的**子树**$(SubTree)$。T的定义记作：
+
     $$T=\begin{cases}\varPhi,n=0\\
     \{root,T_1,T_2,\cdots,T_m\},n\gt0\end{cases}$$
     其中，$root$表示$T$的根，$T_1,T_2,\cdots,T_m$表示$T$的$m$棵子树。
@@ -922,13 +1834,13 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
         双亲表示法：$(Parent\;Express)$，一维数组来存储树的每个结点的信息，数组中的一个数据元素表示树中的一个结点，数据元素为结构体类型，其中包括结点本身的信息以及其双亲结点在数组中的位置信息。
 
         ```C++
-            const int MaxSize = 100;
-            struct PNode
-            {
-                ElemType data;
-                int parent
-            };
-            struct PNode Tree[MaxSize];;
+        const int MaxSize = 100;
+        struct PNode
+        {
+            ElemType data;
+            int parent
+        };
+        struct PNode Tree[MaxSize];;
         ```
 
     2. 树的链式存储结构
@@ -941,14 +1853,16 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
         - 孩子兄弟表示法：又称二叉链表表示法或二叉树表示法。以二叉链表作为树的存储结构，链表中结点的两个链域分别指向该结点的第一个孩子结点和下一个兄弟结点，分别命名为$firstchild$和$nextsibling$域。
 
             ```C++
-                struct TNode
-                {
-                    ElemType data;
-                    TNode *firstchild,*nextsibling;
-                };
+            struct TNode
+            {
+                ElemType data;
+                TNode *firstchild,*nextsibling;
+            };
             ```
+
     3. 树的遍历
         遍历：$(Traverse)$是树的基本操作。
+
         树的遍历：指从根结点出发，按照某种次序访问树中所有结点，使得每个结点被访问一次且仅被访问一次。
 
         - 先根遍历(先序遍历)
@@ -976,14 +1890,15 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
 
 #### 二叉树
 
-1. def
+1. 定义
 
     二叉树：$(Binary\;Tree)$:一种树形结构，每个结点至多有两棵子树，分别称为左子树和右子树。
 
     二叉树的递归定义如下：
     $$T=\begin{cases}\phi,n=0\\\{root,T_L,T_r\},n\gt0\end{cases}$$
 
-2. 性质$lchild$
+2. 性质
+
     - 在二叉树的第$i(i\ge1)$层上至多有$2^{i-1}$个结点。
     - 深度为$k(k\ge1)$的二叉树至多有$2^{k-1}$个结点
     - 对任何一棵非空二叉树，如果其叶子结点数为$n_0$,度为2的结点数为$n_2$则$n_0=n_2+1$.
@@ -999,17 +1914,57 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
         3. 若$2i+1\le n$，则结点$i$的右孩子为结点$2i+1$，否则结点$i$无右孩子
 
 3. 二叉树的存储结构
-    1. 二叉树的数学存储结构
+
+    - 二叉树的顺序存储结构
+
         1. 完全二叉树的顺序存储表示
         2. 一般二叉树的顺序表示：对不存在的结点仍然编号。
-    2. 二叉树的链式存储结构
+
+    - 二叉树的链式存储结构
+
         顺序存储方式用于完全二叉树的存储非常有效，但用于一般二叉树，存储空间浪费。
 
         根据二叉树的定义，每个结点可以有两个分支：
         二叉树的结点至少三个域，分别存放数据信息$data$、左孩子结点指针$lchild$和右孩子结点指针$rchild$，这种结构称为二叉链表$(Binary)\;Linked\;List$。
         为了便于查找，可以增加一个指向双亲结点的指针域。这样的结构称为三叉链表$(Trifurcate\;Linked\;List)$。
 
-        [code: 10.cpp](./code/10.cpp)
+        ```C++
+        typedef int ElemType;
+        struct BiTNode
+        {
+            ElemType data;
+            BiTNode *lchild, *rchild;
+        };
+        class BinaryTree
+        {
+          private:
+            BiTNode *bt;
+            int RCreate(BiTNode *p, int k, int end);
+            int PreTraverse(BiTNode *p);
+            int InTraverse(BiTNode *p);
+            int PostTraverse(BiTNode *p);
+
+          public:
+            BinaryTree();
+            ~BinaryTree();
+            void CreateBiTree(int end);
+            void PreOrderTraverse();
+            void InOrderTraverse();
+            void PostOrderTraverse();
+            BiTNode *GetRoot();
+            void BiTreeDisplay(BiTNode *bt, int level = 1);
+        };
+
+        BinaryTree::BinaryTree()
+        {
+            bt = NULL;
+        }
+
+        BinaryTree::~BinaryTree()
+        {
+            delete[] bt;
+        }
+        ```
 
 4. 二叉树的遍历
 
@@ -1020,9 +1975,68 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
         - 层次遍历
     2. 二叉树遍历的递归算法和非递归算法
         1. 递归算法
-             [code: 10.cpp:*Traverse(BiTNode *p)](./code/10.cpp)
+             ```C++
+            int BinaryTree::PreTraverse(BiTNode *p)
+            {
+
+                if (p != NULL)
+                {
+                    cout << p->data << ' ';
+                    PreTraverse(p->lchild);
+                    PreTraverse(p->rchild);
+                }
+                return 0;
+            }
+            int BinaryTree::InTraverse(BiTNode *p)
+            {
+
+                if (p != NULL)
+                {
+                    InTraverse(p->lchild);
+                    cout << p->data << ' ';
+                    InTraverse(p->rchild);
+                }
+                return 0;
+            }
+            int BinaryTree::PostTraverse(BiTNode *p)
+            {
+
+                if (p != NULL)
+                {
+                    PostTraverse(p->lchild);
+                    PostTraverse(p->rchild);
+                    cout << p->data << ' ';
+                }
+                return 0;
+            }
+             ```
+
         2. 非递归算法
-            [code: 10.cpp:*OrderTraverse(BiTNode *p)](./code/10.cpp)
+
+            ```C++
+            void BinaryTree::PreOrderTraverse()
+            {
+                cout << "先序非递归遍历二叉树：";
+                BiTNode *p = bt;
+                SqStack s(20);
+                while (p || !s.StackEmpty())
+                {
+                    if (p)
+                    {
+                        cout << p->data << ' ';
+                        s.Push(p->data);
+                        p = p->lchild;
+                    }
+                    else
+                    {
+                        s.Pop();
+                        p = p->rchild;
+                    }
+                }
+                cout << endl;
+            };
+            ```
+
     3. 二叉树遍历的应用
         - 利用后序递归遍历计算结点个数
         - 利用后序递归遍历计算树的高度
@@ -1051,7 +2065,65 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
     结点结构示意图：
     $$\boxed{lchild|ltag|data|rtag|rchild}$$
 
-    线索二叉树的定义和基本操作：[code: 10.cpp](./code/10.cpp)
+    线索二叉树的定义和基本操作：
+    ```C++
+    typedef struct BiThrNode
+    {
+        ElemType data;
+        BiThrNode *lchild, *rchild;
+        int LTag, RTag;
+    } BiThrNode, *BiThrTree;
+
+    class ThreadBiTree
+    {
+      private:
+        BiThrNode *bt;
+        BiThrNode *pre;
+        void RCreate(BiThrNode *p, int flag, int end);
+
+      public:
+        BiThrNode *Thrt;
+        ThreadBiTree();
+        ~ThreadBiTree();
+        void CreateBiTree(int end);
+        BiThrNode *GetRoot();
+        int InOrderThreading(BiThrTree &Thrt, BiThrTree T);
+        void InThreading(BiThrTree p);
+        int InOrderTraverse_Thr(BiThrTree T);
+        void BiTreeDisplay(BiThrNode *bt, int level = 1);
+    };
+    ThreadBiTree::ThreadBiTree()
+    {
+        bt = NULL;
+        Thrt = new BiThrNode();
+    }
+
+    ThreadBiTree::~ThreadBiTree()
+    {
+    }
+    void ThreadBiTree::InThreading(BiThrTree p)
+    {
+
+        if (p)
+        {
+            InThreading(p->lchild);
+
+            if (!p->lchild)
+            {
+                p->LTag = 1;
+                p->lchild = pre;
+            }
+
+            if (!pre->rchild)
+            {
+                pre->RTag = 1;
+                pre->rchild = p;
+            }
+            pre = p;
+            InThreading(p->rchild);
+        }
+    }
+    ```
 
 ### 树，森林与二叉树的转换
 
@@ -1072,6 +2144,7 @@ $$\boxed{tag=1|hp|tp}\quad\quad\boxed{tag=0|data}$$
 ### 堆
 
 堆：设有$n$个元素的序列$\{k_1,k_2,\cdots,k_n\}$,当且仅当满足下述关系之一时：
+
 $$\begin{cases}k_i\le k_{2i}\\
 k_i\le k_{2i+1}\end{cases}
 \;or\;
@@ -1111,8 +2184,6 @@ k_i\ge k_{2i+1}\end{cases}$$
     3. 在$F$中删除作为左右子树的两棵二叉树，同时将新得到的二叉树加入$F$中。
     4. 重复2和3，直到$F$只含有一棵树为止，这棵树就是哈夫曼树。
 
-    [code:11.cpp](./code/11.cpp)
-
 3. 哈夫曼编码
 
     在数据通信中，需要将传送的文字转换成由二进制字符0、1组成的字符串也称编码。
@@ -1137,7 +2208,9 @@ k_i\ge k_{2i+1}\end{cases}$$
 
 ### 图的基本概念
 
-- 图$(Graph)$：是由有穷非空的顶点集合和顶点之间的边的集合组成的，可表示为：$$G=(V,E)$$
+- 图$(Graph)$：是由有穷非空的顶点集合和顶点之间的边的集合组成的，可表示为：
+
+    $$G=(V,E)$$
 
     其中，$G$表示图，图中的数组元素通常叫做**顶点**$(Vertex),V$称为顶点的非空有穷集合，$E$是图$G$中顶点之间边的集合。
 
@@ -1200,11 +2273,13 @@ k_i\ge k_{2i+1}\end{cases}$$
     设图$G=(V,E)$包含$n$个顶点，则$G$的邻接矩阵是一个二维数组$G.Edge[n][n]$
 
     - 若$G$是一个无权图，则$G$的邻接矩阵定义为：
+
     $$G.Edge[i][j]=\begin{cases}1,
     if\;(v_i,v_j)\in E\;or\;<v_i,v_j>\in E\\
     0,other\end{cases}$$
 
     - 若$G$是一个网，则$G$的邻接矩阵定义为：
+
     $$G.Edge[i][j]=\begin{cases}w_{i,j},
     if\;(v_i,v_j)\in E\;or\;<v_i,v_j>\in E\\
     \infty,other\end{cases}$$
@@ -1217,7 +2292,44 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 邻接矩阵容易确定图中两顶点的是否有边，但检测边需要很大的时间代价。
 
     邻接矩阵的存储结构的类定义和基本操作：
-    [code:12.cpp](./code/12.cpp)
+
+    ```C++
+    #define MAX_VERTEX_NUM 20
+    const int infinity = INT32_MAX;
+    struct ArcCell
+    {
+        int adj; //对无权图1,0表示是否相邻，对带权图表示权值类型
+        char *info;
+    };
+
+    struct MGraph
+    {
+        string vexs[MAX_VERTEX_NUM];                  //顶点表
+        ArcCell arcs[MAX_VERTEX_NUM][MAX_VERTEX_NUM]; //邻接矩阵表，即  边表
+        int vexnum;                                   //顶点数
+        int arcnum;                                   //边数
+        int kind;                                     //邻接矩阵存储的  图的种类
+    };
+    class Graph
+    {
+      private:
+        MGraph mgraph;
+        bool visited[MAX_VERTEX_NUM];
+
+      public:
+        Graph(/* args */);
+        ~Graph();
+        void CreateGraph();
+        int LocateVex(string u); //返回顶点u在图中的位置
+        bool CreateDG();         //构造有向图
+        bool CreateUDG();        //构造无向图
+        bool CreateDN();         //构造有向网
+        bool CreateUDN();        //构造无向网
+        void Display();          //输出邻接矩阵
+        void DFSTraverse(int v); //深度优先遍历
+        void BFDTraverse(int v); //广度优先遍历
+    };
+    ```
 
 2. 图的链式存储结构
 
@@ -1243,12 +2355,64 @@ k_i\ge k_{2i+1}\end{cases}$$
         the\;node\;of\;arc\end{matrix}
         $$
 
-        [code:邻接表](./code/13.cpp)
+        ```C++
+        //邻接表
+        struct ArcNode
+        {
+            int adjvex;
+            ArcNode *next;
+        };
+
+        struct VertexNode
+        {
+            int vertex;
+            ArcNode *firstedge;
+        };
+
+        #define MAX_VERTEX_NUM 20
+
+        struct ArcNode
+        {
+            int adjvex;
+            struct ArcNode *nextarc;
+            int *info;
+        };
+
+        struct VNode
+        {
+            string data;
+            ArcNode *firstarc;
+        };
+
+        struct AdjLGraph
+        {
+            VNode vertices[MAX_VERTEX_NUM];
+            int vexnum;
+            int arcnum;
+            int kind;
+        };
+        class ALGraph
+        {
+          private:
+            AdjLGraph algraph;
+            bool visited[MAX_VERTEX_NUM];
+
+          public:
+            ALGraph(/* args */);
+            ~ALGraph();
+            void CreateGraph();
+            int LocateVex(string u);
+            void ALGraphDisplay();
+            void FindInDegree(int indegree[]);
+            bool TopologicalSort();
+        };
+        ```
 
     2. 十字链表
         十字链表$(Orthogonal\;List)$是有向图的一种链式存储方式。
         十字链表将邻接表和逆邻接表结合起来得到的
-         $$
+
+        $$
         \begin{matrix} \underbrace{ \boxed{tailvex|headvex|hlink|tlink|info}}\\
         the\;node\;of\;arc\end{matrix}
         \begin{matrix} \underbrace{ \boxed{data|firstin|firstout}}\\
@@ -1267,7 +2431,45 @@ k_i\ge k_{2i+1}\end{cases}$$
         - firstin：指向该顶点的第一个弧结点
         - firstout：指向该顶点为弧尾的第一个弧结点
 
-        [code:十字链表](./code/13.cpp)
+        ```C++
+        //十字链表
+
+        #define MAX_INFO 10
+
+        struct ArcBox
+        {
+            int tailvex, headvex;
+            ArcBox *hlink, *tlink;
+            char *info;
+        };
+
+        struct VexNode
+        {
+            string data;
+            ArcBox *firstin, *firstout;
+        };
+
+        struct OLGraph
+        {
+            VexNode xlist[MAX_VERTEX_NUM];
+            int vexnum, arcnum;
+        };
+
+        class OrListGraph //有向图的十字链表表示
+        {
+          private:
+            OLGraph olgraph;
+            bool visited[MAX_VERTEX_NUM];
+
+          public:
+            OrListGraph(/* args */) {}
+            ~OrListGraph() {}
+            void CreateGraph();
+            int LocateVex(string u);
+            void Display();
+        };
+        ```
+
         ![有向图的十字链表](./imgs/有向图的十字链表.png)
 
     3. 邻接多重表
@@ -1279,6 +2481,7 @@ k_i\ge k_{2i+1}\end{cases}$$
         \begin{matrix} \underbrace{ \boxed{data|firstedge}}\\
         the\;node\;of\;vertex\end{matrix}
         $$
+
         - mark：标志域，可以标记改边是否被搜索过
         - ivex、jvex：与该边依附的两个顶点在顶点表的下标
         - ilink、jlink：指针域，指向下一条依附于顶点ivex和jvex的边
@@ -1299,16 +2502,16 @@ k_i\ge k_{2i+1}\end{cases}$$
     深度优先搜索的递归实现
 
     ```C++
-        void Graph::DFSTraverse(int v)
+    void Graph::DFSTraverse(int v)
+    {
+        cout << mgraph.vertex[v];
+        visited[v]=1;
+        for(j=0;j<mgraph.vexnum;i++)
         {
-            cout << mgraph.vertex[v];
-            visited[v]=1;
-            for(j=0;j<mgraph.vexnum;i++)
-            {
-                if(mgraph.arcs[v][j]==1 && visited[j]==0)
-                    DFSTraverse(j);
-            }
+            if(mgraph.arcs[v][j]==1 && visited[j]==0)
+                DFSTraverse(j);
         }
+    }
     ```
 
 2. 广度优先搜索$Breadth\_First\;Search\quad BFS$
@@ -1317,22 +2520,22 @@ k_i\ge k_{2i+1}\end{cases}$$
 
     无向连通图广度优先搜索的实现
     ```C++
-        void Graph::BFSTraverse(int v)
+    void Graph::BFSTraverse(int v)
+    {
+        front = rear = -1;
+        cout << mgraph.vertex[v];
+        visited[v]=1;
+        Q[++rear]=v;
+        while(front!=rear)
         {
-            front = rear = -1;
-            cout << mgraph.vertex[v];
-            visited[v]=1;
-            Q[++rear]=v;
-            while(front!=rear)
-            {
-                v=Q[++front];
-                 if(mgraph.arcs[v][j]==1 && visited[j]==0)
-                    DFSTraverse(j);
-                cout << mgraph.vertex[j];
-                visited[j]=1;
-                Q[++rear]=j;
-            }
+            v=Q[++front];
+             if(mgraph.arcs[v][j]==1 && visited[j]==0)
+                DFSTraverse(j);
+            cout << mgraph.vertex[j];
+            visited[j]=1;
+            Q[++rear]=j;
         }
+    }
     ```
 
 3. 连通分量和重连通分量
@@ -1348,62 +2551,72 @@ k_i\ge k_{2i+1}\end{cases}$$
 - 代价$(Cost)$：$G$的生成树上任一条边的权值称为该边的代价
 - 最小生成树：一棵生成树的代价就是树上各边代价之和，代价最小的生成树就是最小代价生成树，简称最小生成树。
 
-根据生成树的定义，若连通带权图由n个顶点组成，其生成树必含n个顶点，n-1条边，因此构造最小代价生成树的准则有3条：
+根据生成树的定义，若连通带权图由$n$个顶点组成，其生成树必含$n$个顶点，$n-1$条边，因此构造最小代价生成树的准则有3条：
 
 1. 只能使用该网络中的边来构造最小生成树
-2. 能且只能使用n-1条边来连接网络中的n个顶点
-3. 选用的n-1条边不能产生回路
+2. 能且只能使用$n-1$条边来连接网络中的n个顶点
+3. 选用的$n-1$条边不能产生回路
 
 构造最小生成树的方法多数利用了最小生成树的一种性质，简称MST
 
-- MST:假设N(V,{E})是一个连通网，U是顶点集V的一个非空子集。若(u,v)是一条具有最小权值的边，其中u\in U，v\in{V-U}，则必存在一棵包含边(u,v)的最小生成树。
+- $MST$:假设$N(V,{E})$是一个连通网，$U$是顶点集$V$的一个非空子集。若$(u,v)$是一条具有最小权值的边，其中$u\in U，v\in{V-U}$，则必存在一棵包含边$(u,v)$的最小生成树。
 
 构造最小生成树的典型算法：
 
-- Kruskal算法
-- Prim算法
+- $Kruskal$算法
+- $Prim$算法
 
-都利用了MST性质，采用逐步求解的策略，亦称**贪心策略**
+都利用了$MST$性质，采用逐步求解的策略，亦称**贪心策略**
 
-1. Kruskal算法
+1. $Kruskal$算法
 
     基本思想：设一个有$n$个顶点的连通网络$N=\{V,E\}$。
     - 首先构造一个由$n$个顶点组成，不含任何边的图$T=\{V,\varnothing\}$，其中每个顶点自成一个连通分量
     - 不断从$E$中去除代价最小的一条边（若有多条，任选其一）,若该边的两个顶点来自T的不同的连通分量，则将此边加入到T中，否则舍去此边选择下一条代价最小的边。
     - 依次类推，直到T中所有的顶点在同一个连通分量为止。
 
-2. Prim算法
+    ![Kruskal算法](./imgs/Kruskal算法.png)
+
+2. $Prim$算法
 
     基本思想：
     - 给定任意带权连通网络$V=\{V,E\},T=\{U,TE\}$是$G$的最小生成树。
     - 算法始终将顶点集合$V$分成没有元素重叠的两部分，$V=U\cup(V-U)，T$的初始状态为$U=\{u_0\}(u_0\in V),TE=\varnothing$,然后重复执行一下操作：
     - 在所有$u\in U,v\in V-U$的边中找出一条代价最小的边$(u_0,v_o)$并入集合$TE$,同时$v_0$并入$U$，直至$U=V$为止。
 
+    ![Prim算法](./imgs/Prim算法.jpeg)
+
 ### 有向无环图及其应用
 
 - 有向无环图$(Directed\;Acycline\;Graph)$：一个无环的有向图，简称$DAG$图
     - 有向无环图是描述含有公共子式的表达式的有效工具。例如：
+
         $$((a+b)*(b*(c-d)+b*(c-d)))*((c-d)*e)$$
+
         ![二叉树描述表达式](./imgs/二叉树描述表达式.jpg)![有向无环图描述表达式](./imgs/有向无环图描述表达式.jpg)
 
     - 有向无环图也是描述一项工程或系统的有效工具
+
         关心的问题：
         1. 工程是否能够顺利进行
         2. 估算整个工程完成所必须的最短时间
         对应于有向图，则进行拓扑排序和求关键路径的操作。
-- AOV网与拓扑排序
+
+- $AOV$网与拓扑排序
+
     - 活动$(Activity)$：所有工程或某种流程可以分成若干个小的工程或阶段，这些小的工程或阶段就是活动
-    - AOV网$(Activity\;On\;Vertex\;Netword)$：用顶点表示活动，有向边表示活动的优先关系
+    - $AOV$网$(Activity\;On\;Vertex\;Netword)$：用顶点表示活动，有向边表示活动的优先关系
     - 若顶点$i$到顶点$j$之间存在一条有向路径，则称顶点$i$是顶点$j$的前驱或顶点$j$是顶点$i$的后继
     - 拓扑排序$(Topological\;Sort)$：就是由某个集合的一个偏序得到该集合上的一个全序的操作
         - 若集合$X$的关系$R$满足自反、反对称和传递性，则称$R$是集合$X$上的偏序$(Partial\;Order)$
         - 若$R$是集合$X$上的偏序，如果对每个$x,y\in X$必有$xRy$或$yRx$，则称$R$是$X$上的全序关系
 
-- AOE网与关键路径
-    - AOE网$(Activity\;On\;Edge\;Network)$：边表示活动的网。AOE网是一个带权的有向无环图。顶点表示事件，弧表示活动，权表示活动持续的时间，AOE网可以用来表示工程的进度计划
+- $AOE$网与关键路径
+
+    - $AOE$网$(Activity\;On\;Edge\;Network)$：边表示活动的网。$AOE$网是一个带权的有向无环图。顶点表示事件，弧表示活动，权表示活动持续的时间，$AOE$网可以用来表示工程的进度计划
     - 在正常情况下(无环)下：网中只有一个入度为0的点,称之为源点$(Source)$；一个出度为0的点，称之为汇点$(Link)$
 
-    AOE用于工程估算：
+    $AOE$用于工程估算：
     1. 完成整个工程所需的时间(假设网中无环)？
     2. 那些活动是影响工程进度的关键？
 
@@ -1423,21 +2636,33 @@ k_i\ge k_{2i+1}\end{cases}$$
 - 单源最短路径
     利用$Dijkstra$算法解决单源最短路径问题：给定带权有向图$G$和源点$v$,求$v$到$G$中其余个点的最短路径，其时间复杂度为$O(n^3)$
 
+    ![Dijkstra算法](./imgs/Dijkstra算法.png)
+
 - 每对顶点间的最短路径
-    求各个顶点之间最短路径的Floyd算法，其时间复杂度也是$O(n^3)$：
+    求各个顶点之间最短路径的$Floyd$算法，其时间复杂度也是$O(n^3)$：
+
+    通过$Floyd$计算图$G=(V,E)$中各个顶点的最短路径时，需要引入两个矩阵，- 矩阵$S$中的元素$a[i][j]$表示顶点$i$(第$i$个顶点)到顶点$j$(第$j$个顶点)的距离。
+    - 矩阵$P$中的元素$b[i][j]$，表示顶点$i$到顶点$j$经过了$b[i][j]$记录的值所表示的顶点。
+
+    假设图G中顶点个数为$N$，则需要对矩阵$D$和矩阵$P$进行$N$次更新。初始时，矩阵$D$中顶点$a[i][j]$的距离为顶点$i$到顶点$j$的权值;
+    如果$i$和$j$不相邻，则$a[i][j]=\infty$，矩阵$P$的值为顶点$b[i][j]$的$j$的值。接下来开始，对矩阵$D$进行$N$次更新。
+    第1次更新时，如果”$a[i][j]$的距离”$>$“$a[i][0]+a[0][j]$”($a[i][0]+a[0][j]$表示”$i$与$j$之间经过第1个顶点的距离”)，则更新$a[i][j]$为”$a[i][0]+a[0][j]$”,更新$b[i][j]=b[i][0]$。
+    同理，第$k$次更新时，如果”$a[i][j]$的距离”$>$“$a[i][k-1]+a[k-1][j]$”，则更新$a[i][j]$为”$a[i][k-1]+a[k-1][j]$”,$b[i][j]=b[i][k-1]$。更新$N$次之后，操作完成！
+
+    [最短路径问题---Floyd算法详解](https://blog.csdn.net/qq_35644234/article/details/60875818)
 
 ## 查找
 
 ### 查找的基本概念
 
-- 静态查找表$(Static\;Search\;Table)$：仅对查找表进行查找操作，不进行插入和删除操作的查找表
-- 动态查找表$(Dynamic\;Search\;Table)$：可以查找表进行查找、插入和删除操作的表。
+- **静态查找表**$(Static\;Search\;Table)$：仅对查找表进行查找操作，不进行插入和删除操作的查找表
+- **动态查找表**$(Dynamic\;Search\;Table)$：可以查找表进行查找、插入和删除操作的表。
 
-- 面向查找操作的数据结构称为查找结构$(Search\;Structure)$
+- 面向查找操作的数据结构称为**查找结构**$(Search\;Structure)$
 
-    - 线性表：适用于静态查找，主要采用顺序查找技术、折半查找技术
-    - 树表：适用于动态查找，主要采用二叉排序树的查找技术；
-    - 散列表：静态和动态查找均适用，主要采用散列技术。
+    - **线性表**：适用于静态查找，主要采用顺序查找技术、折半查找技术
+    - **树表**：适用于动态查找，主要采用二叉排序树的查找技术；
+    - **散列表**：静态和动态查找均适用，主要采用**散列技术**。
 
     以“关键字与给定值的比较次数”作为衡量算法效率的方法，该比较次数的期望值，称为查找成功的**平均查找长度**$(Average\;Search\;Length,ASL)$
 
@@ -1468,30 +2693,30 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 折半查找算法的非递归实现
 
         ```C++
-            int Search_Bin(int key)
+        int Search_Bin(int key)
+        {
+            int low=0;high=st.length-1;
+            int mid;
+            while(low<=hight)
             {
-                int low=0;high=st.length-1;
-                int mid;
-                while(low<=hight)
+                mid = (low+high)/2;
+                if(st.elem[mid]==key)
                 {
-                    mid = (low+high)/2;
-                    if(st.elem[mid]==key)
-                    {
-                        cout << "查找成功，处于第"<<mid+1<<"位置上"<<endl;
-                        return mid+1;
-                    }
-                    if(st.elem[mid]>key)
-                    {
-                        high = mid - 1;
-                    }
-                    if(st.elem[mid]<key)
-                    {
-                        low = mid + 1;
-                    }
+                    cout << "查找成功，处于第"<<mid+1<<"位置"<<endl;
+                    return mid+1;
                 }
-                cout << "未找到！"<<endl;
-                return 0;
+                if(st.elem[mid]>key)
+                {
+                    high = mid - 1;
+                }
+                if(st.elem[mid]<key)
+                {
+                    low = mid + 1;
+                }
             }
+            cout << "未找到！"<<endl;
+            return 0;
+        }
         ```
     - 算法分析
         对于折半查找，查找成功时进行的关键字比较次数至多为$\left\lfloor{\log_2(n+1)}\right\rfloor+1$。
@@ -1499,12 +2724,16 @@ k_i\ge k_{2i+1}\end{cases}$$
         $$ASL=\sum_{i=1}^{n}P_iC_i=\frac{1}{n}\sum_{j=1}^{h}{(j*2^{j-1})}=\frac{n+1}{n}\log_2{(n+1)}-1$$
         当$n$比较大时，$ASL\approx\log_2(n+1)-1$
         查找失败时的平均查找长度的量级为：$O(log_2n)$
+
 3. 分块查找
 
     - 分块查找又称索引顺序查找
+
     - 前提：查找表，满足分块有序，分块有序即整个查找表无序，但把查找表看做几个子表时，每个子表的关键字是有序的。
+
     - 基本思想
         在查找时，首先用待查值key在索引表中进行区间查找(即查找key所在的子表，由于索引表按最大关键字项有序，因此可采用折半查找或者顺序查找)，然后在对应的子表进行顺序查找
+
     - 算法分析
 
         设对索引表查找的平均查找长度为$L_1$,对待查子表中查找元素的平均查找长度为$L_2$，则分块查找的平均查找长度可以通过两种算法的平均查找长度之和表示：
@@ -1517,8 +2746,11 @@ k_i\ge k_{2i+1}\end{cases}$$
             当$m=\sqrt{n}$时，平均查找厂区取最小值为$\sqrt{n}+1$。
         - 采用折半查找确定块
             $$ASL\approx \log_2{(\frac{n}{m}+1)}+\frac{m}{2}$$
+
 4. 二叉排序树
+
     - 二叉排序树$(Binary\;Sort\;Tree)$又称二叉查找树
+
     - 性质
         1. 若左子树不空，则左子树上的所有结点的值均小于根结点的值
         2. 若右子树不空，则右子树上的所有结点的值均大于根结点的值
@@ -1527,103 +2759,112 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 查找方法
         首先将给定值key与根结点的关键字进行比较，若相等，则查找成功；若根结点的关键字大于key，则在根结点的左子树上进行查找，否则在根结点的右子树上进行查找
     - 查找代码
+
         ```C++
-            struct Node
+        struct Node
+        {
+            int key;
+        };
+        struct BTSNode
+        {
+            Node data;
+            BTSNode *lchild,*rchild;
+        };
+        void SearchBST(BTSNode *T,int key)
+        {
+            if((!T)||(key==T->data.key))
             {
-                int key;
-            };
-            struct BTSNode
-            {
-                Node data;
-                BTSNode *lchild,*rchild;
-            };
-            void SearchBST(BTSNode *T,int key)
-            {
-                if((!T)||(key==T->data.key))
-                {
-                    if(!T)
-                        cout << "找不到"<<key<<“的结点”<<endl;
-                    else
-                        cout << "找到"<<key<<“的结点”<<endl;
-                    else if(key<T->data.key)
-                        SearchBST(T->lchild,key);
-                    else
-                        SearchBST(T->rchild,key);
-                }
-            }
-            int SearchBST(BTSNode *T,int key,BTSNode *f,BTSNode* &p)
-            {
-                if(!T)//查找不成功
-                {
-                    p=f;
-                    return 0;
-                }
-                else if(key==T->data.key)//查找成功
-                {
-                    p=T;
-                    return = 1;
-                }
-                else if(key<T->data.key)
-                    return SearchBST(T->lchild,key,T,p);
+                if(!T)
+                    cout << "找不到"<<key<<“的结点”<<endl;
                 else
-                    return SearchBST(T->rchild,key,T,p);
+                    cout << "找到"<<key<<“的结点”<<endl;
+                else if(key<T->data.key)
+                    SearchBST(T->lchild,key);
+                else
+                    SearchBST(T->rchild,key);
             }
+        }
+        int SearchBST(BTSNode *T,int key,BTSNode *f,BTSNode* &p)
+        {
+            if(!T)//查找不成功
+            {
+                p=f;
+                return 0;
+            }
+            else if(key==T->data.key)//查找成功
+            {
+                p=T;
+                return = 1;
+            }
+            else if(key<T->data.key)
+                return SearchBST(T->lchild,key,T,p);
+            else
+                return SearchBST(T->rchild,key,T,p);
+        }
         ```
+
     - 二叉排序树的插入
+
         - 插入方法
             首先在树中查找是否已有关键字为key的结点，若查找成功，则说明待插入结点已经存在，不能插入重复结点。只有当查找失败，才能在树中插入关键字为key的新节点。
+
         - 插入代码
             ```C++
-                int InsertBST(int e)
+            int InsertBST(int e)
+            {
+                int key =e;
+                BTSNode *p = new BTSNode;
+                BTSNode *T = BT;
+                if(!SearchBST(T,key,NULL,p))
                 {
-                    int key =e;
-                    BTSNode *p = new BTSNode;
-                    BTSNode *T = BT;
-                    if(!SearchBST(T,key,NULL,p))
+                    BTSNode *s = new BTSNode;
+                    s->data.key = e;
+                    s->lchild=s->rchild=NULL:
+                    if(!p)
                     {
-                        BTSNode *s = new BTSNode;
-                        s->data.key = e;
-                        s->lchild=s->rchild=NULL:
-                        if(!p)
-                        {
-                            BT=s;
-                        }
-                        else if(key<p->data.key)
-                            p->lchild=s;
-                        else
-                            p->rchild=s;
-                        return 1;
+                        BT=s;
                     }
+                    else if(key<p->data.key)
+                        p->lchild=s;
                     else
-                        return 0;
+                        p->rchild=s;
+                    return 1;
                 }
+                else
+                    return 0;
+            }
             ```
+
     - 二叉排序树的删除
+
         - 删除代码
             ```C++
-                int DeleteBST(BSTNode* &T，int key)
+            int DeleteBST(BSTNode* &T，int key)
+            {
+                if(!T)
+                    return 0;
+                else
                 {
-                    if(!T)
-                        return 0;
+                    if(key==T->data.key)
+                        return Delete(T);
+                    else if(key<T->data.key)
+                        return DeleteBST(T->lchild,key);
                     else
-                    {
-                        if(key==T->data.key)
-                            return Delete(T);
-                        else if(key<T->data.key)
-                            return DeleteBST(T->lchild,key);
-                        else
-                            return DeleteBST(T->rchild,key);
-                    }
+                        return DeleteBST(T->rchild,key);
                 }
+            }
             ```
+
 5. B_树
 
-    上述介绍的查找方法都是适用于内部查找的方法，称为内部查找法。适用于数据集不大，可以放入内存中，适用于对较小的文件进行查找，而不适用于对较大的存放在外存储器中文件。
+    上述介绍的查找方法都是适用于内部查找的方法，称为**内部查找法**。适用于数据集不大，可以放入内存中，适用于对较小的文件进行查找，而不适用于对较大的存放在外存储器中文件。
 
     - B_树：特点是插入、删除时易于保持平衡，外部查找效率高，适用于组织磁盘文件的动态索引结构。
+
         B_树是一种平衡的多路查找树，作为索引组织文件，用以提高访问速度。
 
     - 一棵m阶的B_树，可以为空树，或者是一棵满足下列性质的m叉树：
+
         1. 树中的每个结点至多有m棵子树
         2. 若根结点不是叶子结点，则至少有两棵子树
         3. 除根结点之外所有非叶子结点至少有$\left \lceil \frac{m}{2} \right \rceil$棵子树
@@ -1753,71 +2994,71 @@ k_i\ge k_{2i+1}\end{cases}$$
     查找元素：
 
     ```C++
-        #define p 13//MOD 13
-        struct HashTable
-        {
-            int *elem;//数据元素基址
-            int count;//当前数据元素个数
-            int size;//哈希表长度
-        }ht;
-        int SearchHash(int key,int &s)
-        {
-            s = CalHash(key);
-            while((ht.elem[s]!=-1)&&(ht.elem[s]!=key))//发生冲突
-                Collision(s);
-            if(ht.elem[s]==key)
-                return 1;
-            else
-                return 0;
-        }
+    #define p 13//MOD 13
+    struct HashTable
+    {
+        int *elem;//数据元素基址
+        int count;//当前数据元素个数
+        int size;//哈希表长度
+    }ht;
+    int SearchHash(int key,int &s)
+    {
+        s = CalHash(key);
+        while((ht.elem[s]!=-1)&&(ht.elem[s]!=key))//发生冲突
+            Collision(s);
+        if(ht.elem[s]==key)
+            return 1;
+        else
+            return 0;
+    }
     ```
 
     计算哈希地址：
 
     ```C++
-        int CalHash(int key)//由哈希函数求哈希地址
-        {
-            return key % p;
-        }
+    int CalHash(int key)//由哈希函数求哈希地址
+    {
+        return key % p;
+    }
     ```
 
     发生冲突，计算下一地址：
 
     ```C++
-        void Collision(int &s)
-        {
-            s=s++;
-        }
+    void Collision(int &s)
+    {
+        s=s++;
+    }
     ```
 
     插入元素：
 
     ```C++
-        int InsertHash(int e)
+    int InsertHash(int e)
+    {
+        int s;
+        if(ht.count == ht.size)
         {
-            int s;
-            if(ht.count == ht.size)
+            cout << "表满，不能插入！" << endl;
+            return 1;
+        }
+        else
+        {
+            s = CalHash(e);
+            int r = SearchHash(e,s);
+            if(r)//表中已有和e的关键字相同的元素，不能插入操作
             {
-                cout << "表满，不能插入！" << endl;
-                return 1;
+                cout << "元素已经存在，不能插入！" << endl;
+                return 0;
             }
             else
             {
-                s = CalHash(e);
-                int r = SearchHash(e,s);
-                if(r)//表中已有和e的关键字相同的元素，不能插入操作
-                {
-                    cout << "元素已经存在，不能插入！" << endl;
-                    return 0;
-                }
-                else
-                {
-                    ht.elem[s]=e;
-                    ht.count++;
-                    return 1;
-                }
+                ht.elem[s]=e;
+                ht.count++;
+                return 1;
             }
         }
+    }
     ```
 
     查找过程中，关键字的比较次数取决于产生冲突的次数，冲突产生越少，查找效率就越高。
@@ -1825,7 +3066,7 @@ k_i\ge k_{2i+1}\end{cases}$$
     影响冲突产生的因素有：
     1. 哈希函数是否均匀
     2. 冲突的处理方法
-    3. 哈希表的装填因子
+    3. 哈希表的**装填因子**
         将哈希表中元素的个数和哈希长度的比值最为哈希表的装填因子，即
         $$\alpha=\frac{count}{size}$$
         $\alpha$是哈希表装满程度的指标，即装填因子。
@@ -1838,7 +3079,7 @@ k_i\ge k_{2i+1}\end{cases}$$
 - 排序$(Sort)$
 
     设有记录序列$\{R_1,R_2,\cdots,R_n\}$，其相应的关键字序列为$\{K_1,K_2,\cdots,K_n\}$，
-    若存在某种确定的关系$K_x \le K_y \le \cdots \le K_z$，其中$1 \le x,y,z \le n$且$x,y,z$各不相同，则将记录序列$\{R_1,R_2,\cdots,R_n\}排成按关键字有序的序列$\{R_x,R_y,\cdots,R_z\}的操作。
+    若存在某种确定的关系$K_x \le K_y \le \cdots \le K_z$，其中$1 \le x,y,z \le n$且$x,y,z$各不相同，则将记录序列$\{R_1,R_2,\cdots,R_n\}$排成按关键字有序的序列$\{R_x,R_y,\cdots,R_z\}$的操作。
 
 - 正序$(Exact\;Order)$：若待排序序列中的记录已按关键字排序，此序列为正序
 - 逆序$(Inverse\;Order)$和反序$(Anti\;Order)$：若待排序序列中的记录的排序顺序与排序后的排列顺序正好相反
@@ -1860,9 +3101,10 @@ k_i\ge k_{2i+1}\end{cases}$$
 
 ### 插入排序
 
-- 插入排序的工作原理：每次将一个待排序的数据按其关键字的大小插入到一个已经完成排序的有序序列中，直到所有记录排序结束。
+- 插入排序的工作原理：每次将一个待排序的数据按其关键字的大小**插入**到一个已经完成排序的**有序序列**中，直到所有记录排序结束。
 
 - 根据排序的执行过程分为
+
     - 直接插入排序
     - 折半插入排序
     - 表插入排序
@@ -1870,46 +3112,56 @@ k_i\ge k_{2i+1}\end{cases}$$
 
 1. 直接插入排序
     - 算法思路
+
         通过构建有序序列，对于未排序数据，在已排序序列中从后往前扫描，从而找到相应的位置并插入。
         在从后往前扫描过程中，需要反复把已排序逐步往后挪位，为待插入的新元素提供插入空间
+
     - 步骤
+
         1. 设置$i=2$
         2. 将待插入记录$r[i]$放入编号为0的结点(即下标为0的结点)，即$r[0]=r[i]$;并令$j=i-1$，从第$i$个记录开始向前查找插入位置
         3. 若$r[0].key \ge r[j].key$,执行5；否则执行4
         4. 将第$j$个记录后移，即$r[j+1]=r[j]$；并令$j=j-1$;执行3
         5. 完成插入记录：$r[j+1]=r[0],i=i+1$。若$i \gt n$，则排序结束，否则执行2
+
     - 流程图
+
         ![直接插入排序流程图](./imgs/直接插入排序流程图.png)
+
     - 语言描述：
 
         ```C++
-            void SInsertSort(SqList &L)
+        void SInsertSort(SqList &L)
+        {
+            for(int i=2;i<=L.length;i++)
             {
-                for(int i=2;i<=L.length;i++)
+                if(L.r[i]<=L.r[i-1])
                 {
-                    if(L.r[i]<=L.r[i-1])
-                    {
-                        L.r[0]=L.r[i];
-                        L.r[i]=L.r[i-1];
-                        for(int j=i-2;L.r[0]<=L.r[j];j--)
-                            L.r[j+1]=L.r[j];
-                        L.r[j+1]=L.r[0];
-                    }
+                    L.r[0]=L.r[i];
+                    L.r[i]=L.r[i-1];
+                    for(int j=i-2;L.r[0]<=L.r[j];j--)
+                        L.r[j+1]=L.r[j];
+                    L.r[j+1]=L.r[0];
                 }
             }
+        }
         ```
 
     - 算法分析
+
         - 时间复杂度：两层嵌套循环结构，其外层循环n-1次，而内层循环执行次数取决于待排序列记录初始的排列情况。
             - 最好情况：待排序序列为正序，算法时间复杂度为$O(n)$
             - 最坏情况：待排序序列为逆序，算法时间复杂度为$O(n^2)$
             - 平均情况：算法的平均时间复杂度为$O(n)$
+
         - 空间复杂度：由于只需一个作为暂存待插入记录的存储单元，空间复杂度为$O(1)$
+
         - 稳定性：该算法是稳定的排序算法
 
 2. 折半插入排序
 
     > 当待排序记录数量很小时，直接插入排序方法是一种效率较高的排序算法。当记录数量较大，不宜用直接插入排序。
+
     - 算法思想
 
         既然在有序表中确定插入位置，可以不断二分有序表来确定插入位置，即在一次比较中，通过比较待插入记录和有序表中中间记录的关键字，将有序表一分为二，而下一次比较则在其中一个有序子表中进行，将子表再次一分为二。这样继续下去，直到要比较的子表中只有一个记录时，做最后一次比较以确定插入位置。
@@ -1930,32 +3182,35 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            void BInsertSort(SqList &L)
+        void BInsertSort(SqList &L)
+        {
+            int high,low,m;
+            for(int i=2;i<=L.length;i++)
             {
-                int high,low,m;
-                for(int i=2;i<=L.length;i++)
+                L.r[0]=L.r[i];
+                low = 1;
+                high = i-1;
+                while(low<=high)
                 {
-                    L.r[0]=L.r[i];
-                    low = 1;
-                    high = i-1;
-                    while(low<=high)
-                    {
-                        m = (low+high)/2;
-                        if(L.r[0]<=L.r[m])
-                            high=m-1;
-                        else
-                            low=m+1;
-                    }
-                    for(int j=i-1;j>high+1;j--)
-                        L.r[j+1]=r[j];
-                    L.r[high+1]=L.r[0];
+                    m = (low+high)/2;
+                    if(L.r[0]<=L.r[m])
+                        high=m-1;
+                    else
+                        low=m+1;
                 }
+                for(int j=i-1;j>high+1;j--)
+                    L.r[j+1]=r[j];
+                L.r[high+1]=L.r[0];
             }
+        }
         ```
 
     - 算法分析
+
         - 时间复杂度：关键字比较次数最多为$\left\lceil \log_2{n+1} \right\rceil$因此时间复杂度为$O(n^2)$
+
         - 空间复杂度：$O(1)$
+
         - 稳定性：折半插入排序是稳定的排序方法
 
 3. 表插入排序
@@ -1965,25 +3220,27 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 算法思想
 
         表插入排序是通过链接指针、按关键字的大小实现从小到大的链接过程，为此需增设一个指针项。
+
         具体的操作方法与直接插入排序类似，不同的是表插入排序是直接修改链接指针来完成记录的排序。
 
         所需结点定义：
 
         ```C++
-            #define SIZE 150
-            struct SLNode
-            {
-                int rc;//记录项
-                int next;//指针项
-            };
-            struct SLinkList
-            {
-                SLNode node[size];//0号单元为表头结点
-                int curlen;//链表实际长度
-            }；
+        #define SIZE 150
+        struct SLNode
+        {
+            int rc;//记录项
+            int next;//指针项
+        };
+        struct SLinkList
+        {
+            SLNode node[size];//0号单元为表头结点
+            int curlen;//链表实际长度
+        }；
         ```
 
         具体思想：
+
         首先设置空循环链表，即头结点指针置0，并在头结点数据中存放比所有记录的关键字都大的整数，然后把结点逐个向链表中插入即可。
 
     - 步骤
@@ -2000,47 +3257,47 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            void SLInsertSort(SlinkList &L)
+        void SLInsertSort(SlinkList &L)
+        {
+            int min,max;
+            L.node[0].next = 1;
+            L.node[1].next = 0;//初始化形成指头头结点的循环链表
+            max = min = 1;
+            for(int i=2;i<=L.curlen;i++)
             {
-                int min,max;
-                L.node[0].next = 1;
-                L.node[1].next = 0;//初始化形成指头头结点的循环链表
-                max = min = 1;
-                for(int i=2;i<=L.curlen;i++)
+                if(L.node[i].rc<=L.node[min].rc)
                 {
-                    if(L.node[i].rc<=L.node[min].rc)
-                    {
-                        L.node[0].next = i;
-                        L.node[i].next = i-1;
-                        min = i;
-                    }
-                    if(L.node[i].rc>=L.node[max].rc)
-                    {
-                        L.node[i].next = 0;
-                        L.node[max].next = i;
-                        max = i;
-                    }
-                    if(L.node[i].rc<L.node[max].rc && L.node[i].rc > L.node[min].rc)
-                    {
-                        int index1=min,index2;//index2标记index1的前一个下标
-                        while(L.node[i].rc>=L.node[index1].rc)
-                        {
-                            index2=index1;
-                            index1=L.node[index1].next;
-                        }
-                        L.node[i].next=index1;
-                        L.node[index2].next=i;
-                    }
+                    L.node[0].next = i;
+                    L.node[i].next = i-1;
+                    min = i;
                 }
-                cout << "表插入排序结果如下：" << endl;
-                int index = L.node[0].next;
-                while(index!=0)
+                if(L.node[i].rc>=L.node[max].rc)
                 {
-                    cout << L.node[index].rc << "\t";
-                    index = L.node[index].next;
+                    L.node[i].next = 0;
+                    L.node[max].next = i;
+                    max = i;
                 }
-                cout << endl;
+                if(L.node[i].rc<L.node[max].rc && L.node[i].rc > L.node[min].rc)
+                {
+                    int index1=min,index2;//index2标记index1的前一个下标
+                    while(L.node[i].rc>=L.node[index1].rc)
+                    {
+                        index2=index1;
+                        index1=L.node[index1].next;
+                    }
+                    L.node[i].next=index1;
+                    L.node[index2].next=i;
+                }
             }
+            cout << "表插入排序结果如下：" << endl;
+            int index = L.node[0].next;
+            while(index!=0)
+            {
+                cout << L.node[index].rc << "\t";
+                index = L.node[index].next;
+            }
+            cout << endl;
+        }
         ```
     - 算法分析
 
@@ -2058,6 +3315,7 @@ k_i\ge k_{2i+1}\end{cases}$$
         - 直到整个序列基本有序时，在对全体记录进行一次直接插入排序。
 
         - 与直接插入排序的区别
+
             希尔排序不是每次一个元素挨着一个元素比较，而是初期选用大跨步(增量较大)间隔比较，使记录跳跃式的接近它的排序位置；然后增量逐步缩小，最后增量为1.
 
     - 步骤
@@ -2075,24 +3333,24 @@ k_i\ge k_{2i+1}\end{cases}$$
 
         - 子程序(一趟希尔排序)
             ```C++
-                void ShellInsert(SqList &L,int dk)
+            void ShellInsert(SqList &L,int dk)
+            {
+                for(int i=dk+1;i<=L.length;i++)
                 {
-                    for(int i=dk+1;i<=L.length;i++)
-                    {
-                        L.r[0]=L.r[i];
-                        for(int j=i-dk;j>0 && L.r[0]<=L.r[j];j-=dk)
-                            L.r[j+dk]=L.r[j];
-                        L.r[j+dk]=L.r[0];
-                    }
+                    L.r[0]=L.r[i];
+                    for(int j=i-dk;j>0 && L.r[0]<=L.r[j];j-=dk)
+                        L.r[j+dk]=L.r[j];
+                    L.r[j+dk]=L.r[0];
                 }
+            }
             ```
         - 主程序(按照增量序列$dl[0]--dl[t-1]$对顺序表$L$调用子程序)
             ```C++
-                void ShellSort(SqList &L,int dlta[],int t)
-                {
-                    for(int k=0;k<t;k++)
-                        ShellInsert(L,dlta[k]);
-                }
+            void ShellSort(SqList &L,int dlta[],int t)
+            {
+                for(int k=0;k<t;k++)
+                    ShellInsert(L,dlta[k]);
+            }
             ```
     - 算法分析
 
@@ -2106,7 +3364,8 @@ k_i\ge k_{2i+1}\end{cases}$$
 
 1. 冒泡排序
 
-    冒泡排序$(Bubble\;Sort)$也称为起泡排序，是交换排序中常用的排序方法
+    > 冒泡排序$(Bubble\;Sort)$也称为起泡排序，是交换排序中常用的排序方法
+
     - 算法思想
 
         通过对排序元素中相邻元素间的关键字的比较和交换，是关键字最大的元素如气泡一样逐渐“上浮”。
@@ -2129,21 +3388,21 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            void BubbleSort(SqList &L)
+        void BubbleSort(SqList &L)
+        {
+            for (int i = 1; i < L.length; i++)
             {
-                for (int i = 1; i < L.length; i++)
+                for (int j = 0; j < L.length - i; j++)
                 {
-                    for (int j = 0; j < L.length - i; j++)
+                    if (L.r[j] > L.r[j + 1])
                     {
-                        if (L.r[j] > L.r[j + 1])
-                        {
-                            int t = L.r[j];
-                            L.r[j] = L.r[j + 1];
-                            L.r[j + 1] = t;
-                        }
+                        int t = L.r[j];
+                        L.r[j] = L.r[j + 1];
+                        L.r[j + 1] = t;
                     }
                 }
             }
+        }
         ```
 
     - 算法分析
@@ -2195,40 +3454,40 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            int QSort::Partition(SqList &L, int low, int high)//对序列的一次划分
+        int QSort::Partition(SqList &L, int low, int high)/对序列的一次划分
+        {
+            int pivotkey;
+            L.r[0] = L.r[low];   //用子表的第一个记录作枢轴记录
+            pivotkey = L.r[low]; //关键字
+
+            while (low < high) //从表的两边交替向中间扫描
             {
-                int pivotkey;
-                L.r[0] = L.r[low];   //用子表的第一个记录作枢轴记录
-                pivotkey = L.r[low]; //关键字
 
-                while (low < high) //从表的两边交替向中间扫描
+                while (low < high && L.r[high] >= pivotkey)
                 {
-
-                    while (low < high && L.r[high] >= pivotkey)
-                    {
-                        --high;
-                    }
-                    L.r[low] = L.r[high]; //将比枢轴小的记录移至低端
-
-                    while (low < high && L.r[low] <= pivotkey)
-                    {
-                        ++low;
-                    }
-                    L.r[high] = L.r[low]; //将比枢轴大的记录移至高端
+                    --high;
                 }
-                L.r[low] = L.r[0]; //枢轴记录到位
-                return low;        //返回枢轴位置
+                L.r[low] = L.r[high]; //将比枢轴小的记录移至低端
+
+                while (low < high && L.r[low] <= pivotkey)
+                {
+                    ++low;
+                }
+                L.r[high] = L.r[low]; //将比枢轴大的记录移至高端
             }
-            void QSort::QuickSort1(SqList &L, int low, int high) //按分区对子程序进行调用
+            L.r[low] = L.r[0]; //枢轴记录到位
+            return low;        //返回枢轴位置
+        }
+        void QSort::QuickSort1(SqList &L, int low, int high) //按分区对子程序进行调用
+        {
+            int mid;
+            if (low < high)
             {
-                int mid;
-                if (low < high)
-                {
-                    mid = Partition(L, low, high);
-                    QuickSort1(L, low, mid - 1);
-                    QuickSort1(L, mid + 1, high);
-                }
+                mid = Partition(L, low, high);
+                QuickSort1(L, low, mid - 1);
+                QuickSort1(L, mid + 1, high);
             }
+        }
         ```
 
     - 算法分析
@@ -2238,7 +3497,7 @@ k_i\ge k_{2i+1}\end{cases}$$
             - 最坏情况：每次划分都只得到一个子列时，快速排序的过程类似冒泡排序，$O(n^2)$
             - 为了避免最坏情况，对快速排序进行一定的改进，改进方法是选取支点时选最左、最右和中间三个元素取值处于中间的元素作为支点。
         - 空间复杂度：$O(\log_2n)$
-        - 稳定性：以$\{55,49,65,97,76,52,50,\underline{49}\}$为例，经过快速排序得到有序序列为$\{\underline{49},49,50,52,55,65,76,97\}$，因此快速排序是不稳定的排序方法
+        - 稳定性：以$\{55,49,65,97,76,52,50,\underline{49}\}$为例，经过快速排序得到有序序列为$\{\underline{49},49,50,52,55,65,76,97\}$，因此快速排序是**不稳定**的排序方法
 
 ### 选择排序
 
@@ -2270,27 +3529,27 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            void QSort::SSelectionSort(SqList &L)
+        void QSort::SSelectionSort(SqList &L)
+        {
+            int t, j;
+            for (int x = 0; x <= L.length - 1; x++)
             {
-                int t, j;
-                for (int x = 0; x <= L.length - 1; x++)
+                j = x;
+                for (int y = x; y <= L.length - 1; y++)
                 {
-                    j = x;
-                    for (int y = x; y <= L.length - 1; y++)
+                    if (L.r[y] < L.r[j])
                     {
-                        if (L.r[y] < L.r[j])
-                        {
-                            j = y;
-                        }
-                    }
-                    if (x != j)
-                    {
-                        t = L.r[x];
-                        L.r[x] = L.r[j];
-                        L.r[j] = t;
+                        j = y;
                     }
                 }
+                if (x != j)
+                {
+                    t = L.r[x];
+                    L.r[x] = L.r[j];
+                    L.r[j] = t;
+                }
             }
+        }
         ```
 
     - 算法分析
@@ -2325,6 +3584,7 @@ k_i\ge k_{2i+1}\end{cases}$$
         - 时间复杂度：树的深度为$\left\lceil\log_2n\right\rceil+1$，进行了$\log_2n$次比较，$O(n\log_2n)$
         - 空间复杂度：$O(n)$
         - 稳定性：树形选择排序是稳定的排序方法
+
 3. 堆排序
 
     > 堆排序$(Heap\;Sort)$利用堆的特性进行排序的方法。
@@ -2367,36 +3627,36 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            //堆的建立
-            void HeapAdjust(SqList &L, int s, int m) //对顺序表做查找，从值最小的孩子结点向下筛选，找到最小值
+        //堆的建立
+        void HeapAdjust(SqList &L, int s, int m) //对顺序表做查找，从值最小的孩子结点向下筛选，找到最小值
+        {
+            int rc = L.r[s];
+            for (int j = 2 * s; j <= m; j *= 2)
             {
-                int rc = L.r[s];
-                for (int j = 2 * s; j <= m; j *= 2)
-                {
-                    if (j < m && L.r[j] >= L.r[j + 1])
-                        j++;
-                    if (rc < L.r[j])
-                        break;
-                    L.r[s] = L.r[j];
-                    s = j;
-                }
-                L.r[s] = rc;
+                if (j < m && L.r[j] >= L.r[j + 1])
+                    j++;
+                if (rc < L.r[j])
+                    break;
+                L.r[s] = L.r[j];
+                s = j;
             }
-            //完整的堆排序
-            void HeapSort(SqList &L) //对顺序表L进行堆排序
+            L.r[s] = rc;
+        }
+        //完整的堆排序
+        void HeapSort(SqList &L) //对顺序表L进行堆排序
+        {
+            int value;
+            int i;
+            for (i = L.length / 2; i > 0; i--) //把L.r[1...L.length]调整为小顶堆
+                HeapAdjust(L, i, L.length);
+            for (i = L.length; i > 1; i--)
             {
-                int value;
-                int i;
-                for (i = L.length / 2; i > 0; i--) //把L.r[1...L.length]调整为小顶堆
-                    HeapAdjust(L, i, L.length);
-                for (i = L.length; i > 1; i--)
-                {
-                    value = L.r[1];
-                    L.r[1] = L.r[i];
-                    L.r[i] = value;
-                    HeapAdjust(L, 1, i - 1);
-                }
+                value = L.r[1];
+                L.r[1] = L.r[i];
+                L.r[i] = value;
+                HeapAdjust(L, 1, i - 1);
             }
+        }
         ```
 
     - 算法分析
@@ -2435,54 +3695,54 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            //一趟归并排序
-            void Merge(int *SR, int *TR, int i, int m, int n)
+        //一趟归并排序
+        void Merge(int *SR, int *TR, int i, int m, int n)
+        {
+            int j, k;
+            for (j = m + 1, k = i; i <= m && j <= n; k++) //将SR中的记录由大到小并入TR
             {
-                int j, k;
-                for (j = m + 1, k = i; i <= m && j <= n; k++) //将SR中的记录由大到小并入TR
+                if (SR[i] <= SR[j])
                 {
-                    if (SR[i] <= SR[j])
-                    {
-                        TR[k] = SR[i++];
-                    }
-                    else
-                    {
-                        TR[k] = SR[j++];
-                    }
-                }
-
-                if (i <= m) //将剩余的SR[i...m]赋值到TR
-                {
-                    for (int a = i; a <= m; a++)
-                    {
-                        TR[k++] = SR[a];
-                    }
-                }
-                else if (j <= n) //将剩余的SR[j...n]赋值到TR
-                {
-                    for (int b = j; b <= n; b++)
-                    {
-                        TR[k++] = SR[b];
-                    }
-                }
-            }
-            //归并排序递归算法
-            void MergeSort(int *SR, int *TR1, int s, int t)
-            {
-                int TR2[100];
-                int m;
-                if (s == t)
-                {
-                    TR1[s] = SR[s];
+                    TR[k] = SR[i++];
                 }
                 else
                 {
-                    m = (s + t) / 2;
-                    MergeSort(SR, TR2, s, m);
-                    MergeSort(SR, TR2, m+1, t);
-                    Merge(TR2,TR1,s,m,t);
+                    TR[k] = SR[j++];
                 }
             }
+
+            if (i <= m) //将剩余的SR[i...m]赋值到TR
+            {
+                for (int a = i; a <= m; a++)
+                {
+                    TR[k++] = SR[a];
+                }
+            }
+            else if (j <= n) //将剩余的SR[j...n]赋值到TR
+            {
+                for (int b = j; b <= n; b++)
+                {
+                    TR[k++] = SR[b];
+                }
+            }
+        }
+        //归并排序递归算法
+        void MergeSort(int *SR, int *TR1, int s, int t)
+        {
+            int TR2[100];
+            int m;
+            if (s == t)
+            {
+                TR1[s] = SR[s];
+            }
+            else
+            {
+                m = (s + t) / 2;
+                MergeSort(SR, TR2, s, m);
+                MergeSort(SR, TR2, m+1, t);
+                Merge(TR2,TR1,s,m,t);
+            }
+        }
         ```
 
     - 算法分析
@@ -2543,67 +3803,67 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 语言描述
 
         ```C++
-            #include <iostream>
-            using namespace std;
-            #define RADIX 10
-            typedef int ArrType[RADIX];
-            ArrType f, e;
-            struct SLCell
+        #include <iostream>
+        using namespace std;
+        #define RADIX 10
+        typedef int ArrType[RADIX];
+        ArrType f, e;
+        struct SLCell
+        {
+            int *keys; //关键字
+            int next;
+        };
+        struct SLList
+        {
+            SLCell *SList;
+            int keynum; //记录当前关键字个数
+            int recnum; //记录当前静态链表的长度
+        };
+        //分配
+        void Distrbute(SLCell *r, int i, ArrType &f, ArrType &e)
+        {
+            int j;
+            for (j = 0; j < RADIX; j++)
+                f[j] = 0;
+            for (int a = r[0].next; a; a = r[a].next)
             {
-                int *keys; //关键字
-                int next;
-            };
-            struct SLList
+                j = r[a].keys[i];
+                if (!f[j])
+                    f[j] = a;
+                else
+                    r[e[j]].next = a;
+                e[j] = a;
+            }
+        }
+        //收集
+        void Collect(SLCell *r, int i, ArrType &f, ArrType &e)
+        {
+            int j;
+            for (j = 0; !f[j]; j++)
+                ;             //找到第一个非空子集
+            r[0].next = f[j]; //r[0].next 指向第一个非空子表中第一个结点
+            int t = e[j];
+            while (j < RADIX)
             {
-                SLCell *SList;
-                int keynum; //记录当前关键字个数
-                int recnum; //记录当前静态链表的长度
-            };
-            //分配
-            void Distrbute(SLCell *r, int i, ArrType &f, ArrType &e)
-            {
-                int j;
-                for (j = 0; j < RADIX; j++)
-                    f[j] = 0;
-                for (int a = r[0].next; a; a = r[a].next)
+                for (j++; j < RADIX - 1 && !f[j]; j++)
+                    ; //找下一个非空子集
+                if (f[j])
                 {
-                    j = r[a].keys[i];
-                    if (!f[j])
-                        f[j] = a;
-                    else
-                        r[e[j]].next = a;
-                    e[j] = a;
+                    r[t].next = f[j];
+                    t = e[j]; //链接两个非空子表
                 }
             }
-            //收集
-            void Collect(SLCell *r, int i, ArrType &f, ArrType &e)
+            r[t].next = 0; //t指向最后一个非空子表的左后一个结点
+        }
+        //主程序
+        void RadixSort(SLList &SL)
+        {
+            for (int i = SL.keynum; i >= 1; i--) //按最高位优先依次对各关键字进行分配收集
             {
-                int j;
-                for (j = 0; !f[j]; j++)
-                    ;             //找到第一个非空子集
-                r[0].next = f[j]; //r[0].next 指向第一个非空子表中第一个结点
-                int t = e[j];
-                while (j < RADIX)
-                {
-                    for (j++; j < RADIX - 1 && !f[j]; j++)
-                        ; //找下一个非空子集
-                    if (f[j])
-                    {
-                        r[t].next = f[j];
-                        t = e[j]; //链接两个非空子表
-                    }
-                }
-                r[t].next = 0; //t指向最后一个非空子表的左后一个结点
+                Distrbute(SL.SList, i, f, e); //第i趟分散
+                Collect(SL.SList, i, f, e);   //第i趟收集
             }
-            //主程序
-            void RadixSort(SLList &SL)
-            {
-                for (int i = SL.keynum; i >= 1; i--) //按最高位优先依次对各关键字进行分配收集
-                {
-                    Distrbute(SL.SList, i, f, e); //第i趟分散
-                    Collect(SL.SList, i, f, e);   //第i趟收集
-                }
-            }
+        }
         ```
 
     - 算法分析

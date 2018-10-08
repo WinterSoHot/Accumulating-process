@@ -40,9 +40,6 @@ class Graph
     void BFDTraverse(int v); //广度优先遍历
 };
 
-{
-}
-
 Graph::~Graph()
 {
 }

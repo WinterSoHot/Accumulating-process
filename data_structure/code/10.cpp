@@ -88,7 +88,7 @@ void BinaryTree::PreOrderTraverse()
         if (p)
         {
             cout << p->data << ' ';
-            s.Push(p);
+            s.Push(p->data);
             p = p->lchild;
         }
 
@@ -99,8 +99,7 @@ void BinaryTree::PreOrderTraverse()
         }
     }
     cout << endl;
-    s
-}
+};
 
 typedef struct BiThrNode
 {
