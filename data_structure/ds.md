@@ -1323,10 +1323,10 @@ $S$一般称为主串或目标串，$T$称为模式串。如果找到，称为**
 - 数据关系：$R=\{R_1,R_2,\cdots,R_n\}$
 
 $$R_i=\{<a_{j1\cdots ji \cdots jn},a_{j1\cdots ji+1\cdots jn}>\}
-    \\ 0\le j_k\le b_k-1,1\le k\le n\;n\neq i,
-    \\ 0\le j_i \le b_i-2,
-    - InitArray(\&A,n,bound1,...,boundn)
-    \\a_{j1\cdots ji \cdots jn},a_{j1\cdots ji+1\cdots jn}\in D,i=2,\cdots,n$$
+​    \\ 0\le j_k\le b_k-1,1\le k\le n\;n\neq i,
+​    \\ 0\le j_i \le b_i-2,
+​    - InitArray(\&A,n,bound1,...,boundn)
+​    \\a_{j1\cdots ji \cdots jn},a_{j1\cdots ji+1\cdots jn}\in D,i=2,\cdots,n$$
 
 - 基本操作
     - $InitArray(\&A,n,bound1,...,boundn)$
@@ -1660,7 +1660,7 @@ $$LOC(a_{i_1,i_2,\cdots,i_n})
             1. 一个累加器$ctemp[]$存储当前行中$c[i][j]$的部分积，待当前行中所有数据元素全部算完后，再将非零数据元素的结果存放到$C.data$中。
             2. 为了便于在$B$的三元组表中找到各行的第一个非零数据元素，与快速矩阵转置算法类似，引入$num[row]$和$cpot[row]$两个一维数组。其中$num[row]$指示$row$行的非零元个数，$cpot[row]$指示第$row$行第一个非零数据元素的位置。$cpot[row]$的计算公式如下：
             $$\begin{cases}cpot[0]]=1\\
-                        cpot[row]=cpot[row-1]+num[row-1];\end{cases}$$
+               ​         cpot[row]=cpot[row-1]+num[row-1];\end{cases}$$
 
             采用三元组顺序表表示的稀疏矩阵的乘法步骤如下：
             1. 如果矩阵$A$的列数和矩阵$B$的行数不同，则不满足计算条件，算法退出。
@@ -1975,10 +1975,13 @@ GList::~GList()
         - 层次遍历
     2. 二叉树遍历的递归算法和非递归算法
         1. 递归算法
+
              ```C++
+             
+             ```
             int BinaryTree::PreTraverse(BiTNode *p)
             {
-
+            
                 if (p != NULL)
                 {
                     cout << p->data << ' ';
@@ -1989,7 +1992,7 @@ GList::~GList()
             }
             int BinaryTree::InTraverse(BiTNode *p)
             {
-
+            
                 if (p != NULL)
                 {
                     InTraverse(p->lchild);
@@ -2000,7 +2003,7 @@ GList::~GList()
             }
             int BinaryTree::PostTraverse(BiTNode *p)
             {
-
+            
                 if (p != NULL)
                 {
                     PostTraverse(p->lchild);
@@ -3383,7 +3386,6 @@ k_i\ge k_{2i+1}\end{cases}$$
     - 流程图
 
         ![交换排序-冒泡排序](./imgs/交换排序-冒泡排序.png)
-        ![冒泡排序](./imgs/冒泡排序.gif)
 
     - 语言描述
 
