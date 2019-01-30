@@ -1,0 +1,26 @@
+/* 类选择器 */
+
+/* tip:类名的第一个字符不能使用数字！无法在FireFox起作用*/
+
+.center{
+    text-align: center;
+}
+
+/* 用作派生选择器 */
+
+.fancy td{
+    color: #f60;
+    background: #666
+}
+
+/* 元素基于类被选择 */
+
+td.fancy{
+    color: #f60;
+    background: #666
+}
+
+table{
+    width: 150px;
+    height: 60px;
+}

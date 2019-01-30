@@ -1,0 +1,51 @@
+/* 
+CSS 基本语法
+构成：选择器 and 一条和多条声明
+*/
+/* selector{
+    property:value;
+} */
+
+
+h1{
+    color: red;
+    font-size: 14px;
+}
+
+/* 值的不同写法 */
+p{
+    /* 十六进制的颜色值 */
+    color: #FF0000
+}
+
+p{
+    /* 缩写 */
+    color: #f00;
+}
+
+p{
+    /* 使用rgb值 */
+    color: rgba(255, 0, 0)；
+}
+
+p{
+    /* 使用rgb值 */
+    color: rgba(100%, 0%, 0%, 100%)；
+}
+
+p{
+    /* 若干单词，需要加引号 */
+    font-family: "Sans serif";
+}
+
+/* 多重声明 */
+
+/* tips：定义不止一个声明，需要用分号将其恩凯 */
+
+p{
+    text-align: center;
+    color: black;
+    font-family: arial;
+}
+
+/* CSS 对大小写是不敏感的，除了设计到HTML，class和id名称对大小写是敏感的 */

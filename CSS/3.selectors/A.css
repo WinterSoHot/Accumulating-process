@@ -1,0 +1,24 @@
+/* 派生选择器 */
+
+/* 
+    通过依据元素在其位置的上下文关系来定义样式，你可以使标记更加简洁。
+    派生选择器允许你根据文档的上下文关系来确定某个标签的样式。
+ */
+
+/* 将列表中的strong元素变成斜体 */
+li strong{
+    font-style: italic;
+    font-weight: normal;
+    /* 只有 li 元素中的 strong 元素的样式为斜体字，无需为 strong 元素定义特别的 class 或 id */
+}
+
+strong{
+    color: red;
+}
+h2{
+    color: red;
+}
+h2 strong{
+    color: blue;
+}
+

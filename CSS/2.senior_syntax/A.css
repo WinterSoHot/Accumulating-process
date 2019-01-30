@@ -1,0 +1,33 @@
+/* CSS 高级语法 */
+
+/* 选择器分组 */
+h1,h2,h3,h4,h5,h6{
+    color: green;
+}
+
+/* 继承及其问题 */
+
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* 
+站点的 body 元素将使用 Verdana 字体（假如访问者的系统中存在该字体的话）。
+body 的子元素诸如 p, td, ul, ol, ul, li, dl, dt,和 dd将继承他的属性
+*/
+
+/* 处理旧式浏览器无法理解继承：用组选择器解决*/
+body  {
+    font-family: Verdana, sans-serif;
+    }
+
+p, td, ul, ol, li, dl, dt, dd  {
+    font-family: Verdana, sans-serif;
+    }
+
+/* 摆脱继承 */
+p {
+    /* 对元素创建特殊规则 */
+    font-family: 'Times New Roman', Times, serif;
+}
+
