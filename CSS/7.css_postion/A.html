@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定位</title>
+    <style>
+        .pos_left {
+            position: relative;
+            left: -20px;
+        }
+
+        .pos_right {
+            position: relative;
+            left: 20px;
+        }
+
+        .pos_abs {
+            position: absolute;
+            left: 100px;
+            top: 150px;
+        }
+
+        .one {
+            position: fixed;
+            right: 0px;
+            top: 10px;
+        }
+
+        .two {
+            position: fixed;
+            bottom: 0px;
+            left: 10px;
+        }
+
+        #ov1 {
+            width: 150px;
+            height: 150px;
+            background-color: #00ffff;
+            overflow: scroll;
+        }
+
+        #ov2 {
+            width: 150px;
+            height: 150px;
+            background-color: #00ffff;
+            overflow: hidden;
+            /*auto 自动处理*/
+        }
+
+        img {
+            position: absolute;
+            clip: rect(0, 50px, 200px, 0px)
+        }
+
+        img.top {
+            vertical-align: text-top;
+        }
+
+        img.bottom {
+            vertical-align: text-bottom;
+        }
+
+        img.x {
+            position: absolute;
+            left: 0px;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>这是位于正常位置的标题</h2>
+    <h2 class="pos_left">这个标题相对于其正常位置向左移动</h2>
+    <h2 class="pos_right">这个标题相对于其正常位置向右移动</h2>
+    <p>相对定位会按照元素的原始位置对该元素进行移动。</p>
+    <p>样式 "left:-20px" 从元素的原始左侧位置减去 20 像素。</p>
+    <p>样式 "left:20px" 向元素的原始左侧位置增加 20 像素。</p>
+    <h2 class="pos_abs">这是带有绝对定位的标题</h2>
+    <p>通过绝对定位，元素可以放置到页面上的任何位置。下面的标题距离页面左侧 100px，距离页面顶部 150px。</p>
+    <p class="one">一些文本。</p>
+    <p class="two">更多的文本。</p>
+    <p>如果元素中的内容超出了给定的宽度和高度属性，overflow 属性可以确定是否显示滚动条等行为。</p>
+
+    <div id="ov1">
+        这个属性定义溢出元素内容区的内容会如何处理。如果值为 scroll，不论是否需要，用户代理都会提供一种滚动机制。因此，有可能即使元素框中可以放下所有内容也会出现滚动条。默认值是 visible。
+    </div>
+    <div id="ov2">
+        这个属性定义溢出元素内容区的内容会如何处理。如果值为 scroll，不论是否需要，用户代理都会提供一种滚动机制。因此，有可能即使元素框中可以放下所有内容也会出现滚动条。默认值是 visible。
+    </div>
+    <p>clip 属性剪切了一幅图像：</p>
+    <p><img border="0" src="http://www.w3school.com.cn/i/eg_bookasp.gif" width="120" height="151"></p>
+    <p>
+        这是一幅<img class="top" border="0" src="http://www.w3school.com.cn/i/eg_cute.gif" />位于段落中的图像。
+    </p>
+
+    <p>
+        这是一幅<img class="bottom" border="0" src="http://www.w3school.com.cn/i/eg_cute.gif" />位于段落中的图像。
+    </p>
+
+    <h1>这是一个标题</h1>
+    <img class="x" src="http://www.w3school.com.cn/i/eg_mouse.jpg" />
+    <p>默认的 z-index 是 0。Z-index -1 拥有更低的优先级。</p>
+    <p>默认的 z-index 是 0。Z-index 1 拥有更高的优先级。</p>
+</body>
+
+</html>

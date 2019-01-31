@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浮动案例</title>
+    <style>
+        img.img1 {
+            float: right;
+            border: 1px dotted black;
+            margin: 0px 0px 15px 20px;
+        }
+
+        div.box1 {
+            border: 1px solid black;
+            float: right;
+            padding: 15px;
+            text-align: center;
+        }
+
+        span.alpha_left {
+            float: left;
+            font-size: 400%;
+            width: 0.7em;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 80%
+        }
+
+        ul {
+            float: left;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+            list-style-type: none;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: purple;
+            width: 9%;
+            color: black;
+            padding: 0.2em 0.6em;
+        }
+
+        a:hover {
+            background-color: #ff3300
+        }
+
+        li {
+            display: inline;
+        }
+        .i1,.i2{
+            float: left;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <p>在下面的段落中，我们添加了一个样式为 <b>float:right</b> 的图像。结果是这个图像会浮动到段落的右侧。</p>
+    <p>
+        <img class='img1' src="http://www.w3school.com.cn/i/eg_cute.gif" />
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+    </p>
+    <div class="box1"><img src="http://www.w3school.com.cn/i/eg_cute.gif" alt=""><br>
+        CSS is fun!</div>
+
+    <p>
+        <span class="alpha_left">T</span>his is some text.
+        This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+        This is some text. This is some text. This is some text.
+    </p>
+
+    <p>
+        在上面的段落中，文本的第一个字母包含在一个 span 元素中。这个 span 元素的宽度是当前字体尺寸的 0.7 倍。span 元素的字体尺寸是 400%，行高是 80%。span 中的字母字体是 "Algerian"
+    </p>
+
+    <h1>水平菜单</h1>
+    <ul>
+        <li>
+            <a href="#">Menu 1</a>
+            <a href="#">Menu 2</a>
+            <a href="#">Menu 3</a>
+            <a href="#">Menu 4</a>
+            <a href="#">Menu 5</a>
+            <a href="#">Menu 6</a>
+            <a href="#">Menu 7</a>
+            <a href="#">Menu 8</a>
+        </li>
+    </ul>
+    <img class='i1' src="http://www.w3school.com.cn/i/eg_smile.gif" />
+    <img class='i2' src="http://www.w3school.com.cn/i/eg_smile.gif" />
+</body>
+
+</html>
