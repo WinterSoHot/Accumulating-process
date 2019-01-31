@@ -1,0 +1,20 @@
+/* css 背景 */
+
+/* 背景色 */
+
+p {
+    background-color: gray;
+    padding: 20px
+}
+
+/* 背景图像 */
+body {
+    background-image: url(images/bg_01.jpg);
+    background-repeat: no-repeat;
+    /* 背景重复 repeat-y：垂直重复 */
+    background-position: center;
+    /* 背景定位：top、bottom、left、right 和 center；
+    还可以使用长度值，如 100px 或 5cm，最后也可以使用百分数值 */
+    background-attachment: fixed;
+    /* 背景关联: background-attachment 属性的默认值是 scroll，也就是说，在默认的情况下，背景会随文档滚动。 */
+}

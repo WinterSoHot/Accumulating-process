@@ -1,0 +1,32 @@
+ul.ul1 li {
+    list-style-type: square;
+    list-style-position: inside;
+}
+
+ul.ul2 li {
+    list-style-type: circle;
+    list-style-position: inside;
+}
+
+ul.ul3 li {
+    list-style-type: none;
+    list-style-position: inside;
+}
+
+ol.ol1 li {
+    list-style-type: decimal;
+}
+
+
+ol.ol2 li {
+    list-style-type: lower-roman;
+}
+
+
+ol.ol3 li {
+    list-style-type: upper-roman;
+}
+
+ol.ol4 li {
+    list-style-type: lower-alpha;
+}

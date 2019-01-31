@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表格案例</title>
+    <style>
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            border-collapse: collapse;
+             /*边框空白 boreder-spacing*/
+             caption-side: bottom;/*标题位置*/
+        }
+
+        #customers thead {
+            font-size: 1.1em;
+            text-align: left;
+            background-color: #98bf21;
+        }
+
+        #customers td {
+            font-size: 1em;
+            border: 1px solid #98bf21;
+            padding: 3px 7px 2px 7px;
+        }
+
+        #customers tr.alt td {
+            color: black;
+            background-color: rgb(192, 162, 162);
+        }
+    </style>
+</head>
+
+<body>
+    <table id="customers">
+        <caption>This is a caption</caption>
+        <thead>
+            <tr>
+                <td>Company</td>
+                <td>Contact</td>
+                <td>Country</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Apple</td>
+                <td>Steven Jobs</td>
+                <td>USA</td>
+            </tr>
+            <tr class="alt">
+                <td>Baidu</td>
+                <td>Li YanHong</td>
+                <td>China</td>
+            </tr>
+            <tr>
+                <td>Google</td>
+                <td>Larry Page</td>
+                <td>USA</td>
+            </tr>
+            <tr class="alt">
+                <td>Lenovo</td>
+                <td>Liu Chuanzhi</td>
+                <td>China</td>
+            </tr>
+            <tr>
+                <td>Microsoft</td>
+                <td>Bill Gates</td>
+                <td>USA</td>
+            </tr>
+            <tr class="alt">
+                <td>Nokia</td>
+                <td>Stephen Elop</td>
+                <td>Finland</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 处理表格的空单元 -->
+    <table border="1" style="empty-cells:hide">
+        <tr>
+            <td>Adams</td>
+            <td>John</td>
+        </tr>
+        <tr>
+            <td>Bush</td>
+            <td></td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

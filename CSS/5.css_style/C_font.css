@@ -1,0 +1,119 @@
+/* CSS 字体 */
+
+/* 在 CSS 中，有两种不同类型的字体系列名称：
+
+通用字体系列 - 拥有相似外观的字体系统组合（比如 "Serif" 或 "Monospace"）
+特定字体系列 - 具体的字体系列（比如 "Times" 或 "Courier"） */
+
+/* CSS 定义了 5 种通用字体系列：
+
+Serif 字体
+Sans-serif 字体
+Monospace 字体
+Cursive 字体
+Fantasy 字体 */
+
+/*如果你希望文档使用一种 sans-serif 字体，但是你并不关心是哪一种字体*/
+body {
+    font-family: sans-serif;
+}
+
+/* 除了使用通用的字体系列，您还可以通过 font-family 属性设置更具体的字体。
+
+下面的例子为所有 h1 元素设置了 Georgia 字体： */
+
+h1 {
+    font-family: Georgia;
+}
+
+/* 当字体名中包含空格或者#或$的符号需要加引号 */
+
+/*字体风格*/
+/* 
+    斜体（italic）是一种简单的字体风格，对每个字母的结构有一些小改动，来反映变化的外观。
+    与此不同，倾斜（oblique）文本则是正常竖直文本的一个倾斜版本。
+ */
+p.normal {
+    font-style: normal;
+}
+
+p.italic {
+    font-style: italic;
+}
+
+p.oblique {
+    font-style: oblique;
+}
+
+/* 字体变形 */
+
+p.variant {
+    /* 小型的大写字母 */
+    font-variant: small-caps;
+}
+
+/* 字体加粗 */
+p.fnormal {
+    font-weight: normal;
+}
+
+p.thick {
+    font-weight: bold;
+}
+
+p.thicker {
+    font-weight: 900;
+}
+
+/* 字体大小 */
+h1 {
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+p {
+    font-size: 14px;
+}
+
+h1 {
+    font-size: 3.75em;
+}
+
+/* 浏览器中默认的文本大小是 16 像素。因此 1em 的默认尺寸是 16 像素。
+
+可以使用下面这个公式将像素转换为 em：pixels/16=em
+
+（注：16 等于父元素的默认字体大小，假设父元素的 font-size 为 20px，那么公式需改为：pixels/20=em） */
+/* 60px/16=3.75em */
+h2 {
+    font-size: 2.5em;
+}
+
+/* 40px/16=2.5em */
+p {
+    font-size: 0.875em;
+}
+
+/* 14px/16=0.875em */
+
+/* 结合使用百分比和 EM
+在所有浏览器中均有效的方案是为 body 元素（父元素）以百分比设置默认的 font-size 值： */
+
+body {
+    font-size: 100%;
+}
+
+h1 {
+    font-size: 3.75em;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
+p {
+    font-size: 0.875em;
+}

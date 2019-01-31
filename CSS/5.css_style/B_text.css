@@ -1,0 +1,151 @@
+/* CSS 文本 */
+
+/* 
+    CSS 文本属性可定义文本的外观。
+    通过文本属性，您可以改变文本的颜色、字符间距，
+    对齐文本，装饰文本，对文本进行缩进，等等。 */
+
+/* 文本缩进 */
+
+p {
+    background-color: red;
+}
+
+/* 
+    注意：一般来说，可以为所有块级元素应用 text-indent，但无法将该属性应用于行内元素，图像之类的替换元素上也无法应用 text-indent 属性。
+        不过，如果一个块级元素（比如段落）的首行中有一个图像，它会随该行的其余文本移动。
+    提示：如果想把一个行内元素的第一行“缩进”，可以用左内边距或外边距创造这种效果。 */
+.p1 {
+    text-indent: 5em;
+}
+
+/* 
+    text-indent 还可以设置为负值。利用这种技术，可以实现很多有趣的效果，
+    比如“悬挂缩进”，即第一行悬挂在元素中余下部分的左边： 
+    不过在为 text-indent 设置负值时要当心，如果对一个段落设置了负值，那么首行的某些文本可能会超出浏览器窗口的左边界。
+    为了避免出现这种显示问题，建议针对负缩进再设置一个外边距或一些内边距：
+*/
+.p2 {
+    text-indent: -2em;
+}
+
+.p3 {
+    text-indent: -5em;
+    padding-left: 5em
+}
+
+div {
+    width: 500px;
+}
+
+.p4 {
+    text-indent: 20%;
+    /*缩进值是父元素的 20%，即 100 个像素*/
+}
+
+/* text-indent 属性可以继承 */
+div#outer {
+    width: 500px;
+}
+
+div#inner {
+    text-indent: 10%;
+}
+
+.p5 {
+    width: 200px;
+}
+
+/* 水平对齐 */
+/* 提示：将块级元素或表元素居中，要通过在这些元素上适当地设置左、右外边距来实现。 */
+
+/* text-align:center 与 <CENTER>
+您可能会认为 text-align:center 与 <CENTER> 元素的作用一样，但实际上二者大不相同。
+
+<CENTER> 不仅影响文本，还会把整个元素居中。
+text-align 不会控制元素的对齐，而只影响内部内容。
+元素本身不会从一段移到另一端，只是其中的文本受影响。 */
+
+.p6 {
+    width: 200px;
+    text-align: center
+}
+
+/* 字间隔 */
+/* word-spacing 属性可以改变字（单词）之间的标准间隔。其默认值 normal 与设置值为 0 是一样的。 */
+p.spread {
+    word-spacing: 30px;
+}
+
+p.tight {
+    word-spacing: -0.5em;
+}
+
+/* 
+字母间隔
+letter-spacing 属性与 word-spacing 的区别在于，字母间隔修改的是字符或字母之间的间隔。
+*/
+h1 {
+    letter-spacing: -0.5em
+}
+
+h4 {
+    letter-spacing: 20px
+}
+
+
+/* 字符转换 */
+
+/* text-transform 属性处理文本的大小写。这个属性有 4 个值：
+none
+uppercase
+lowercase
+capitalize：首字母大写
+ */
+.cap {
+    text-transform: capitalize;
+}
+
+/* 文本装饰 */
+/* 接下来，我们讨论 text-decoration 属性，这是一个很有意思的属性，它提供了很多非常有趣的行为。
+text-decoration 有 5 个值：
+none
+underline：下划线
+overline：上划线
+line-through：贯穿线
+blink：文本闪烁
+*/
+a {
+    text-decoration: overline underline;
+}
+
+/* 处理空白符
+white-space 属性会影响到用户代理对源文档中的空格、换行和 tab 字符的处理。 
+normal:多余空格合成一个空格
+pre:浏览器将会注意额外的空格，甚至回车。相当于pre元素
+nowrap：防止元素中的文本换行，除非使用了一个 br 元素
+ pre-wrap：那么该元素中的文本会保留空白符序列，但是文本行会正常地换行
+ pre-line：像正常文本中一样合并空白符序列，但保留换行符。
+*/
+
+.p7{
+    white-space: normal;
+}
+.p8{
+    white-space: pre;
+}
+.p9{
+    white-space: nowrap;
+}
+.p10{
+    white-space: pre-wrap;
+}
+
+.p11{
+    white-space: pre-line;
+}
+
+/* 文本方向
+direction:ltr 和 rtl。大多数情况下，默认值是 ltr，显示从左到右的文本
+ */
+

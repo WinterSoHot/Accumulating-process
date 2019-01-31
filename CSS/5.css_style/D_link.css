@@ -1,0 +1,28 @@
+/* 未被访问的链接 */
+a:link {
+    color: #FF0000;
+    text-decoration: none;
+}
+
+/* 已被访问的链接 */
+a:visited {
+    color: #00FF00;
+    text-decoration: none;
+}
+
+/* 鼠标指针移动到链接上 */
+a:hover {
+    color: #FF00FF;
+    text-decoration: underline;
+}
+
+/* 正在被点击的链接 */
+a:active {
+    color: #0000FF;
+    text-decoration: underline;
+}
+
+/* 当为链接的不同状态设置样式时，请按照以下次序规则：
+
+a:hover 必须位于 a:link 和 a:visited 之后
+a:active 必须位于 a:hover 之后 */

@@ -1,0 +1,13 @@
+/* CSS 轮廓 */
+
+/* 轮廓（outline）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。
+
+CSS outline 属性规定元素轮廓的样式、颜色和宽度。 */
+
+.p1{
+    border: 1px solid red;
+    /* outline: green dotted thick; */
+    outline-color: green;
+    outline-style: dotted;
+    outline-width: thick;
+}
