@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>盒子模型</title>
+    <link rel="stylesheet" href="A.css">
+</head>
+
+<body>
+    <center>
+        <h1 class="box">this is h1</h1>
+    </center>
+    <!-- up 和 down 发生了外边距合并 -->
+    <!-- 当一个元素出现在另一个元素上面时，第一个元素的下外边距与第二个元素的上外边距会发生合并。 -->
+    <h1 class="up">this is up.</h1>
+    <h1 class="down">this is down.</h1>
+    <!-- 当一个元素包含在另一个元素中时
+        （假设没有内边距或边框把外边距分隔开），它们的上和/或下外边距也会发生合并。 -->
+    <div class="outer">
+        <div class="inner">two floor of DIV</div>
+    </div>
+</body>
+
+</html>

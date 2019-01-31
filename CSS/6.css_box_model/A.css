@@ -1,0 +1,57 @@
+/* CSS 盒子模型 */
+
+/* 覆盖浏览器样式 */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  border: 5px solid red;
+  display: block;
+}
+
+/* 内边距padding */
+.box {
+  position: relative;
+  top: 1em;
+  text-transform: capitalize;
+  width: 300px;
+  height: 100px;
+
+  border: 10px red solid;
+  padding: 10px 0.25em 2ex 20%;
+  /* padding-top: 10px;
+    padding-right: 0.25em;
+    padding-bottom: 2ex;
+    padding-left: 20%; */
+  /* 百分比是相对于父元素 */
+  border-style: dashed dotted solid double;
+  border-color: red yellow green blue;
+  border-width: 10px 5px 1em 2%;
+
+  /* 外边距 */
+  margin: 10px;
+}
+
+/* 外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。
+  合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者。 */
+
+.up{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.down{
+    margin-top: 10px;
+}
+
+.outer{
+    margin-top: 20px;
+    background-color: red;
+}
+.inner{
+    margin-top: 10px;
+    width:fit-content;
+    background-color: blue;
+}
+
