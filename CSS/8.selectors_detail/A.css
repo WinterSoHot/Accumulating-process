@@ -1,0 +1,67 @@
+/* 通配选择器 */
+* {
+  color: black;
+}
+
+/* 元素选择器 */
+html {
+  color: black;
+}
+h1 {
+  color: blue;
+  text-transform: uppercase;
+}
+h2 {
+  color: silver;
+  text-transform: uppercase;
+}
+
+/* 选择器分组 */
+h2,
+p {
+  background-color: gray;
+}
+
+/* 类选择器 */
+*.important {
+  color: red;
+}
+
+/* 
+  结合元素选择器 p.important
+  多类选择器 
+*/
+p.important .warning {
+  color: red;
+  font-weight: bold;
+}
+
+/* ID选择器 */
+#mostimportant {
+  background-color: green;
+}
+
+*[title] {
+  background-color: red;
+}
+
+/* 同时有 href 和 title 属性的 */
+a[href][title] {
+  color: aqua;
+}
+
+/* 指定属性值 */
+a[href="#"] {
+  background-color: yellow;
+}
+
+/* 根据部分属性值 */
+/* ..... */
+
+/* 后代选择器 */
+h1 em {
+  color: brown;
+}
+h1 > strong {
+  background-color: aqua;
+}
