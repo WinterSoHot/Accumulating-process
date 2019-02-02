@@ -1,0 +1,21 @@
+/* CSS 分类 */
+.inline_ele {
+    display: inline;
+    background-color: gray;
+}
+
+.dis_none {
+    display: none;
+}
+
+.sp_block {
+    display: block;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}

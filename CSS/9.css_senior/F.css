@@ -1,0 +1,21 @@
+/* CSS2 媒介类型*/
+
+@media screen {
+    p.test {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 14px;
+    }
+}
+
+@media print {
+    p.test{
+        font-family: sans-serif;
+        font-size: 10px;
+    }
+}
+
+@media screen,print{
+    p.test{
+        font-weight: bold;
+    }
+}

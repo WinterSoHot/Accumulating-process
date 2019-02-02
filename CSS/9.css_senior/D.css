@@ -1,0 +1,30 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+/* 导航栏 */
+ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+li {
+    float: left;
+}
+
+a:link,
+a:visited {
+    display: block;
+    width: 120px;
+    color: white;
+    padding: 2px 5px;
+    text-align: center;
+    background-color: gray;
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    background-color: red;
+}
