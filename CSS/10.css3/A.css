@@ -1,0 +1,320 @@
+div {
+    width: 150px;
+    height: 75px;
+    background-color: yellow;
+    margin: 10px;
+    text-align: center;
+    border: 1px solid black;
+    display: inline-block;
+
+    border-radius: 25px;
+}
+
+div.div2 {
+    transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    /* IE 9 */
+    -moz-transform: rotate(30deg);
+    /* Firefox */
+    -webkit-transform: rotate(30deg);
+    /* Safari and Chrome */
+    -o-transform: rotate(30deg);
+    /* Opera */
+}
+
+div.shadow {
+    box-shadow: 10px 10px 5px #cccccc;
+}
+
+div.b_image {
+    border-image: url(./images/border.png) 30 30 round;
+    -moz-border-image: url(border.png) 30 30 round;
+    /* 老的 Firefox */
+    -webkit-border-image: url(border.png) 30 30 round;
+    /* Safari 和 Chrome */
+    -o-border-image: url(border.png) 30 30 round;
+    /* Opera */
+}
+
+h1.shadow {
+    text-shadow: 5px 5px 5px #ff0000;
+}
+
+div.div_rotateX {
+    transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+}
+
+div.div_translation {
+    transition: width 2s, height 2s, transform 2s;
+    -moz-transition: width 2s, height 2s, transform 2s;
+    -webkit-transition: width 2s, height 2s, transform 2s;
+}
+
+div.div_translation:hover {
+    width: 300px;
+    height: 200px;
+    transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+}
+
+div.div_translation2 {
+    /*等待两秒*/
+    transition: width 1s linear 2s;
+    /* Firefox 4 */
+    -moz-transition: width 1s linear 2s;
+    /* Safari and Chrome */
+    -webkit-transition: width 1s linear 2s;
+    /* Opera */
+    -o-transition: width 1s linear 2s;
+}
+
+div.div_translation2:hover {
+    width: 200px;
+}
+
+/* CSS3 动画 */
+
+@keyframes myAnimation {
+    from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    }
+}
+
+@-moz-keyframes myAnimation {
+    from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    }
+}
+
+@-webkit-keyframes myAnimation {
+    from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    }
+}
+
+@-o-keyframes myAnimation {
+    from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    }
+}
+
+@keyframes myAnimation {
+    from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    }
+}
+
+div.div_animation {
+    animation: myAnimation 5s;
+    -webkit-animation: myAnimation 5s;
+    -moz-animation: myAnimation 5s;
+    -o-animation: myAnimation 5s;
+}
+
+@keyframes myfirst {
+    0% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+
+    25% {
+        background: yellow;
+        left: 200px;
+        top: 0px;
+    }
+
+    50% {
+        background: blue;
+        left: 200px;
+        top: 200px;
+    }
+
+    75% {
+        background: green;
+        left: 0px;
+        top: 200px;
+    }
+
+    100% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+}
+
+@-moz-keyframes myfirst
+
+/* Firefox */
+    {
+    0% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+
+    25% {
+        background: yellow;
+        left: 200px;
+        top: 0px;
+    }
+
+    50% {
+        background: blue;
+        left: 200px;
+        top: 200px;
+    }
+
+    75% {
+        background: green;
+        left: 0px;
+        top: 200px;
+    }
+
+    100% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+}
+
+@-webkit-keyframes myfirst
+
+/* Safari 和 Chrome */
+    {
+    0% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+
+    25% {
+        background: yellow;
+        left: 200px;
+        top: 0px;
+    }
+
+    50% {
+        background: blue;
+        left: 200px;
+        top: 200px;
+    }
+
+    75% {
+        background: green;
+        left: 0px;
+        top: 200px;
+    }
+
+    100% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+}
+
+@-o-keyframes myfirst
+
+/* Opera */
+    {
+    0% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+
+    25% {
+        background: yellow;
+        left: 200px;
+        top: 0px;
+    }
+
+    50% {
+        background: blue;
+        left: 200px;
+        top: 200px;
+    }
+
+    75% {
+        background: green;
+        left: 0px;
+        top: 200px;
+    }
+
+    100% {
+        background: red;
+        left: 0px;
+        top: 0px;
+    }
+}
+
+div.div_animation2 {
+    animation: myfirst 5s;
+    -webkit-animation: myfirst 5s;
+    -o-animation: myfirst 5s;
+    -moz-animation: myfirst 5s;
+}
+
+div.newspaper {
+    width: auto;
+    height: auto;
+    display: block;
+    column-count: 3;
+    column-gap: 20px;
+    column-rule: 4px outset #ff0000;
+}
+
+p.resize {
+    border: 2px solid;
+    padding: 10px 20px;
+    width: 300px;
+    resize: both;
+    overflow: auto;
+}
+
+div.container {
+    width: 30em;
+    border: 1em solid;
+    /*清除上面的设置*/
+    margin: 0px;
+    padding: 0px;
+}
+
+div.box {
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    /* Firefox */
+    -webkit-box-sizing: border-box;
+    /* Safari */
+    width: 50%;
+    border: 1em solid red;
+    float: left;
+    /*清除上面的设置*/
+    margin: 0px;
+    padding: 0px;
+}
