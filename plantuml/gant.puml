@@ -1,0 +1,15 @@
+@startgantt Demo甘特图
+Project starts the 2019/05/20
+saturday are closed
+sunday are closed
+[需求分析] as [1] lasts 5 days
+[系统设计] as [2] lasts 10 days
+[系统实现] as [3] lasts 20 days
+[系统测试] as [4] lasts 5 days
+
+[2] starts at [1]'s end
+[3] starts at [2]'s end
+[4] starts at [3]'s end
+
+[1] is colored in Fuchsia/FireBrick 
+@endgantt
