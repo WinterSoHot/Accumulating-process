@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)file:///tmp/mume2019429-12743-h7d790.wtkk.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>shell</title>
+      
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///home/dx/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.4.0/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="the-tutorial-of-shell-script">The Tutorial of Shell Script</h1>
+
+<p>A shell script is a computer program designed to be run by the Unix/Linux shell<br>
+which could be one of the following:</p>
+<ul>
+<li>The Bourne Shell The C Shell</li>
+<li>The Korn Shell</li>
+<li>The GNU Bourne-Again Shell</li>
+</ul>
+<p>A shell is a command-line interpreter and typical operations performed by shell<br>
+scripts include file manipulation, program execution, and printing text.</p>
+<h2 class="mume-header" id="example-script">Example Script</h2>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># Author : Zara Ali</span>
+<span class="token comment"># Script follows here:</span>
+<span class="token function">pwd</span>
+<span class="token function">ls</span>
+</pre><p>Save the content and make the script executable</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token function">chmod</span> +x test.sh
+</pre><h2 class="mume-header" id="shell-variables">Shell Variables</h2>
+
+<h3 class="mume-header" id="variable-names">Variable Names</h3>
+
+<p>The name of a variable can contain only letters(a to or A to Z),numbers(0 to 9)<br>
+or underscore character(_)</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token comment"># vaild Variables</span>
+_ALT
+TOKEN_A
+VAR_1
+VAR_2
+
+<span class="token comment"># invaild Variables</span>
+2_VAR
+-VARIABLE
+VAR1-VAR2
+VAR_A<span class="token operator">!</span>
+</pre><h3 class="mume-header" id="defining-variables">Defining Variables</h3>
+
+<p><code>variable_name=variable_value</code></p>
+<p>For examples:</p>
+<p><code>NAME="Dongxian Gu"</code></p>
+<h3 class="mume-header" id="accesssing-values">Accesssing Values</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+NAME<span class="token operator">=</span><span class="token string">"Dongxian Gu"</span>
+<span class="token keyword">echo</span> <span class="token variable">$NAME</span>
+</pre><h3 class="mume-header" id="read-only-variables">Read-only Variables</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+NAME<span class="token operator">=</span><span class="token string">"Dongxian Gu"</span>
+<span class="token function">readonly</span> NAME
+NAME<span class="token operator">=</span><span class="token string">"Gu"</span>
+</pre><p>The above script will generate the following result.</p>
+<p><code>/bin/sh: NAME: This variable is read only</code></p>
+<h3 class="mume-header" id="unsetting-variables">Unsetting Variables</h3>
+
+<p>Unsetting or deleting a variable directs the shell to remove the variable from<br>
+the list of variables that it tracks.</p>
+<p><code>unset variable_name</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell">NAME<span class="token operator">=</span><span class="token string">"Dongxian Gu"</span>
+unset NAME
+<span class="token keyword">echo</span> <span class="token variable">$NAME</span>
+</pre><h3 class="mume-header" id="variable-types">Variable Types</h3>
+
+<p>When a shell is running,three main type of variables are present:</p>
+<ul>
+<li>Local Variables</li>
+<li>Environment Variables</li>
+<li>Shell Variables</li>
+</ul>
+<h2 class="mume-header" id="special-variables">Special Variables</h2>
+
+<table>
+<thead>
+<tr>
+<th><a href="http://sr.no/">Sr.No</a>.</th>
+<th>Variable &amp; Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$0 The filename of the current script.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$n These variables correspond to the arguments with which a script was invoked. Here n is a positive decimal number corresponding to the position of an argument (the first argument is $1, the second argument is $2, and so on).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$# The number of arguments supplied to a script.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>$* All the arguments are double quoted. If a script receives two arguments, $* is equivalent to $1 $2.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$@ All the arguments are individually double quoted. If a script receives two arguments, $@ is equivalent to $1 $2.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>$? The exit status of the last command executed.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>$$ The process number of the current shell. For shell scripts, this is the process ID under which they are executing.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>$! The process number of the last background command.</td>
+</tr>
+</tbody>
+</table>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token keyword">echo</span> <span class="token string">"File Name: <span class="token variable">$0</span>"</span>
+<span class="token keyword">echo</span> <span class="token string">"First Parameter : <span class="token variable">$1</span>"</span>
+<span class="token keyword">echo</span> <span class="token string">"Second Parameter : <span class="token variable">$2</span>"</span>
+<span class="token keyword">echo</span> <span class="token string">"Quoted Values: <span class="token variable">$@</span>"</span>
+<span class="token keyword">echo</span> <span class="token string">"Quoted Values: <span class="token variable">$*</span>"</span>
+<span class="token keyword">echo</span> <span class="token string">"Total Number of Parameters : <span class="token variable">$#</span>"</span>
+</pre><h3 class="mume-header" id="special-parameters-and">Special Parameters $* and $@</h3>
+
+<p>$* and $@ both will act the same unless they are enclosed in double quotes, "".</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token keyword">for</span> TOKEN <span class="token keyword">in</span> <span class="token variable">$*</span>
+<span class="token keyword">do</span>
+   <span class="token keyword">echo</span> <span class="token variable">$TOKEN</span>
+<span class="token keyword">done</span>
+</pre><h3 class="mume-header" id="exit-status">Exit Status</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell">$./test.sh Zara Ali
+File Name <span class="token keyword">:</span> ./test.sh
+First Parameter <span class="token keyword">:</span> Zara
+Second Parameter <span class="token keyword">:</span> Ali
+Quoted Values: Zara Ali
+Quoted Values: Zara Ali
+Total Number of Parameters <span class="token keyword">:</span> 2
+<span class="token variable">$echo</span> <span class="token variable">$?</span>
+0
+$
+</pre><h2 class="mume-header" id="using-shell-arrays">Using Shell Arrays</h2>
+
+<h3 class="mume-header" id="defining-array-values">Defining Array Values</h3>
+
+<p><code>array_name[index]=value</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell">NAME<span class="token punctuation">[</span>0<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Zara"</span>
+NAME<span class="token punctuation">[</span>1<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Qadir"</span>
+NAME<span class="token punctuation">[</span>2<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Mahnaz"</span>
+NAME<span class="token punctuation">[</span>3<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Ayan"</span>
+NAME<span class="token punctuation">[</span>4<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Daisy"</span>
+</pre><p>If you are using the ksh shell, here is the syntax of array initialization −</p>
+<p><code>set -A array_name value1 value2 ... valuen</code></p>
+<p>If you are using the bash shell, here is the syntax of array initialization −</p>
+<p><code>array_name=(value1 ... valuen)</code></p>
+<h3 class="mume-header" id="accesssing-array-values">Accesssing Array Values</h3>
+
+<p><code>${array_name[index]}</code></p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+NAME<span class="token punctuation">[</span>0<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Zara"</span>
+NAME<span class="token punctuation">[</span>1<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Qadir"</span>
+NAME<span class="token punctuation">[</span>2<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Mahnaz"</span>
+NAME<span class="token punctuation">[</span>3<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Ayan"</span>
+NAME<span class="token punctuation">[</span>4<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"Daisy"</span>
+<span class="token keyword">echo</span> <span class="token string">"First Index: <span class="token variable">${NAME[0]}</span>"</span>
+<span class="token keyword">echo</span> <span class="token string">"Second Index: <span class="token variable">${NAME[1]}</span>"</span>
+</pre><p>You can access all the items in an array in one of the following ways −</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token variable">${array_name[*]}</span>
+<span class="token variable">${array_name[@]}</span>
+</pre><h2 class="mume-header" id="shell-basic-operators">Shell Basic Operators</h2>
+
+<p>the following operators:</p>
+<ul>
+<li>Arithmetic Operators</li>
+<li>Relational Operators</li>
+<li>Boolean Operators</li>
+<li>String Operators</li>
+<li>File Test Operators</li>
+</ul>
+<p>Bourne shell didn't originally have any mechanism to perform simple arithmetic<br>
+operations but it uses** external programs, either <strong>awk</strong> or <strong>expr</strong>.</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+val<span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">expr</span> 2 + 2<span class="token variable">`</span></span>
+<span class="token keyword">echo</span> <span class="token string">"Total value : <span class="token variable">$val</span>"</span>
+</pre><p>The following points need to be considered while adding −</p>
+<ul>
+<li>
+<p>There must be spaces between operators and expressions. For example, 2+2 is not<br>
+correct; it should be written as 2 + 2.</p>
+</li>
+<li>
+<p>The complete expression should be enclosed between ‘ ‘, called the backtick.</p>
+</li>
+</ul>
+<h3 class="mume-header" id="arithmetic-operators">Arithmetic Operators</h3>
+
+<p>Assume variable a holds 10 and variable b holds 20 then −</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Arithmetic_Operators.png" alt="Arithmetic Operators"></p>
+<p>It is very important to understand that all the conditional expressions should be<br>
+inside square braces with spaces around them, for example [ $a == $b ] is<br>
+correct whereas, [$a==$b] is incorrect.</p>
+<h3 class="mume-header" id="relational-operators">Relational Operators</h3>
+
+<p>Assume variable a holds 10 and variable b holds 20 then −</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Relational_Operators.png" alt="Relational Operators"></p>
+<p>It is very important to understand that all the conditional expressions should be<br>
+placed inside square braces with spaces around them. For example, [ $a &lt;= $b ]<br>
+is correct whereas, [$a &lt;= $b] is incorrect.</p>
+<h3 class="mume-header" id="boolean-operators">Boolean Operators</h3>
+
+<p>Assume variable a holds 10 and variable b holds 20 then −</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Boolean_Operators.png" alt="Boolean Operators"></p>
+<h3 class="mume-header" id="string-operators">String Operators</h3>
+
+<p>Assume variable a holds "abc" and variable b holds "efg" then −</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/String_Operators.png" alt="String_Operators"></p>
+<h3 class="mume-header" id="file-test-operators">File Test Operators</h3>
+
+<p>Assume a variable file holds an existing file name "test" the size of which is<br>
+100 bytes and has read, write and execute permission on −</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/File_Test_Operators.png" alt="File_Test_Operators"></p>
+<h2 class="mume-header" id="shell-decision-making">Shell Decision Making</h2>
+
+<h3 class="mume-header" id="the-ifelse-statements">The if..else Statements</h3>
+
+<p>Unix Shell supports following forms of if...else statements.</p>
+<ul>
+<li>if...fi statement</li>
+<li>if...else...fi statement</li>
+<li>if..elif...else..fi statement</li>
+</ul>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">if</span> <span class="token punctuation">[</span> expression 1 <span class="token punctuation">]</span>
+<span class="token keyword">then</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> expression 1 is <span class="token boolean">true</span>
+<span class="token keyword">elif</span> <span class="token punctuation">[</span> expression 2 <span class="token punctuation">]</span>
+<span class="token keyword">then</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> expression 2 is <span class="token boolean">true</span>
+<span class="token keyword">elif</span> <span class="token punctuation">[</span> expression 3 <span class="token punctuation">]</span>
+<span class="token keyword">then</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> expression 3 is <span class="token boolean">true</span>
+<span class="token keyword">else</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> no expression is <span class="token boolean">true</span>
+<span class="token keyword">fi</span>
+</pre><h3 class="mume-header" id="the-caseesac-statements">The case...esac Statements</h3>
+
+<p>There is only one form of case...esac statement which has been described in detail<br>
+here −</p>
+<ul>
+<li>case...esac statement</li>
+</ul>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">case</span> word <span class="token keyword">in</span>
+   pattern1<span class="token punctuation">)</span>
+      Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> pattern1 matches
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+   pattern2<span class="token punctuation">)</span>
+      Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> pattern2 matches
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+   pattern3<span class="token punctuation">)</span>
+      Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> pattern3 matches
+      <span class="token punctuation">;</span><span class="token punctuation">;</span>
+   *<span class="token punctuation">)</span>
+     Default condition to be executed
+     <span class="token punctuation">;</span><span class="token punctuation">;</span>
+esac
+</pre><h2 class="mume-header" id="shell-loop-types">Shell Loop Types</h2>
+
+<p>four types of loops as follow:</p>
+<ul>
+<li>The while loop</li>
+<li>The for loop</li>
+<li>The util loop</li>
+<li>The select loop</li>
+</ul>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">while</span> <span class="token function">command</span>
+<span class="token keyword">do</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> <span class="token function">command</span> is <span class="token boolean">true</span>
+<span class="token keyword">done</span>
+</pre><pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">for</span> var <span class="token keyword">in</span> word1 word2 <span class="token punctuation">..</span>. wordN
+<span class="token keyword">do</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">for</span> every word.
+<span class="token keyword">done</span>
+</pre><pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">until</span> <span class="token function">command</span>
+<span class="token keyword">do</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">until</span> <span class="token function">command</span> is <span class="token boolean">true</span>
+<span class="token keyword">done</span>
+</pre><pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">select</span> var <span class="token keyword">in</span> word1 word2 <span class="token punctuation">..</span>. wordN
+<span class="token keyword">do</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">for</span> every word.
+<span class="token keyword">done</span>
+</pre><h3 class="mume-header" id="nesting-loops">Nesting Loops</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token keyword">while</span> command1 <span class="token punctuation">;</span> <span class="token comment"># this is loop1, the outer loop</span>
+<span class="token keyword">do</span>
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> command1 is <span class="token boolean">true</span>
+
+   <span class="token keyword">while</span> command2 <span class="token punctuation">;</span> <span class="token comment"># this is loop2, the inner loop</span>
+   <span class="token keyword">do</span>
+      Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> command2 is <span class="token boolean">true</span>
+   <span class="token keyword">done</span>
+
+   Statement<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be executed <span class="token keyword">if</span> command1 is <span class="token boolean">true</span>
+<span class="token keyword">done</span>
+</pre><h2 class="mume-header" id="shell-loop-control">Shell Loop Control</h2>
+
+<ul>
+<li>The <strong>break</strong> statement</li>
+<li>The <strong>continue</strong> statement</li>
+</ul>
+<pre data-role="codeBlock" data-info="shell The infinite Loop" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+a<span class="token operator">=</span>10
+
+<span class="token keyword">until</span> <span class="token punctuation">[</span> <span class="token variable">$a</span> -lt 10 <span class="token punctuation">]</span>
+<span class="token keyword">do</span>
+   <span class="token keyword">echo</span> <span class="token variable">$a</span>
+   a<span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">expr</span> $a + 1<span class="token variable">`</span></span>
+<span class="token keyword">done</span>
+</pre><h3 class="mume-header" id="the-break-statement">The break statement</h3>
+
+<p><code>break</code></p>
+<p>The break command can also be used to exit from a nested loop using this format −</p>
+<p><code>break n</code></p>
+<p>Here n specifies the n^{th} enclosing loop to the exit from.</p>
+<h3 class="mume-header" id="the-continue-statement">The continue statement</h3>
+
+<p><code>continue</code></p>
+<p>Like with the break statement, an integer argument can be given to the continue<br>
+command to skip commands from nested loops.</p>
+<p><code>continue n</code></p>
+<p>Here n specifies the n^th enclosing loop to continue from.</p>
+<h2 class="mume-header" id="shell-substitution%E6%9B%BF%E6%8D%A2">Shell Substitution(替换)</h2>
+
+<p>The shell performs substitution when it encounters an expression that contains<br>
+one or more special characters.</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Substitution.png" alt="Substitution"></p>
+<h3 class="mume-header" id="command-substitution">Command Substitution</h3>
+
+<p><code>command</code></p>
+<p>When performing the command substitution make sure that you use the backquote, not<br>
+the single quote character.</p>
+<h3 class="mume-header" id="variable-substitution">Variable Substitution</h3>
+
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Variable_Substitution.png" alt="Variable_Substitution"></p>
+<h2 class="mume-header" id="shell-quoting-mechanisms">Shell Quoting Mechanisms</h2>
+
+<h3 class="mume-header" id="the-metacharacters">The Metacharacters</h3>
+
+<p>Unix Shell provides various metacharacters which have special meaning while using<br>
+them in any Shell Script and causes termination of a word unless quoted.</p>
+<p>For example, ? matches with a single character while listing files in a directory<br>
+and an * matches more than one character. Here is a list of most of the shell<br>
+special characters (also called metacharacters) −</p>
+<p><code>* ? [ ] ' " \ $ ; &amp; ( ) | ^ &lt; &gt; new-line space tab</code></p>
+<p>A character may be quoted (i.e., made to stand for itself) by preceding it with<br>
+a \.</p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/forms_of_quoting.png" alt="altforms_of_quoting"></p>
+<h3 class="mume-header" id="the-single-quotes">The Single Quotes</h3>
+
+<p>There is an easy way to quote a large group of characters. Put a single quote (')<br>
+at the beginning and at the end of the string −</p>
+<p><code>echo '&lt;-$1500.**&gt;; (update?) [y|n]'</code></p>
+<h3 class="mume-header" id="the-double-quoteds">The Double Quoteds</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell">VAR<span class="token operator">=</span>ZARA
+<span class="token keyword">echo</span> <span class="token string">'<span class="token variable">$VAR</span> owes &lt;-<span class="token variable">$1500</span>.**&gt;; [ as of (<span class="token variable"><span class="token variable">`</span><span class="token function">date</span> +%m/%d<span class="token variable">`</span></span>) ]'</span>
+</pre><h3 class="mume-header" id="the-backquotes">The Backquotes</h3>
+
+<p><code>var=</code>command``</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell">DATE<span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">date</span><span class="token variable">`</span></span>
+
+<span class="token keyword">echo</span> <span class="token string">"Current Date: <span class="token variable">$DATE</span>"</span>
+</pre><h2 class="mume-header" id="shell-inputoutput-redirections">Shell Input/Output Redirections</h2>
+
+<p>A command normally reads its input from the standard input, which happens to be your<br>
+terminal by default. Similarly, a command normally writes its output to standard<br>
+output, which is again your terminal by default.</p>
+<h3 class="mume-header" id="output-redirection">Output Redirection</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token function">who</span> <span class="token operator">&gt;</span> <span class="token function">users</span>
+<span class="token function">cat</span> <span class="token function">users</span>
+
+<span class="token keyword">echo</span> line 1 <span class="token operator">&gt;</span> <span class="token function">users</span>
+<span class="token function">cat</span> <span class="token function">users</span>
+
+<span class="token keyword">echo</span> line 2 <span class="token operator">&gt;&gt;</span> <span class="token function">users</span>
+<span class="token function">cat</span> <span class="token function">users</span>
+</pre><h3 class="mume-header" id="input-redirection">Input Redirection</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token function">wc</span> -l <span class="token function">users</span>
+<span class="token function">wc</span> -l <span class="token operator">&lt;</span> <span class="token function">users</span>
+</pre><h3 class="mume-header" id="here-document">Here Document</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token function">command</span> <span class="token operator">&lt;&lt;</span> <span class="token string">delimiter
+document
+delimiter</span>
+</pre><pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token function">wc</span> -l <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+    This is a simple lookup program 
+    for good (and bad) restaurants
+    in Cape Town.
+EOF</span>
+</pre><pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+filename<span class="token operator">=</span>test.txt
+<span class="token function">vi</span> <span class="token variable">$filename</span> <span class="token operator">&lt;&lt;</span><span class="token string">EndOfCommands
+i
+This file was created automatically from
+a shell script
+^[
+ZZ
+EndOfCommands</span>
+</pre><h3 class="mume-header" id="discard-the-output">Discard the output</h3>
+
+<p>Sometimes you will need to execute a command, but you don't want the output displayed<br>
+on the screen. In such cases, you can discard the output by redirecting it to the<br>
+file /dev/null −</p>
+<p><code>command &gt; /dev/null</code></p>
+<p>To discard both output of a command and its error output, use standard redirection to<br>
+redirect STDERR to STDOUT −</p>
+<p><code>command &gt; /dev/null 2&gt;&amp;1</code></p>
+<p>Here 2 represents STDERR and 1 represents STDOUT. You can display a message on to<br>
+STDERR by redirecting STDOUT into STDERR as follows −</p>
+<p><code>echo message 1&gt;&amp;2</code></p>
+<h3 class="mume-header" id="redirection-commands">Redirection Commands</h3>
+
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Redirection_Commands.png" alt="Redirection Commands"></p>
+<h2 class="mume-header" id="shell-functions">Shell Functions</h2>
+
+<p>Using functions to perform repetitive tasks is an excellent way to create code reuse.<br>
+This is an important part of modern object-oriented programming principles.</p>
+<p>Shell functions are similar to subroutines, procedures, and functions in other<br>
+programming languages.</p>
+<h3 class="mume-header" id="creating-functions">Creating Functions</h3>
+
+<pre data-role="codeBlock" data-info="shell" class="language-shell">function_name <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    list of <span class="token function">command</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="pass-parameters-to-a-function">Pass Parameters to a Function</h3>
+
+<p>You can define a function that will accept parameters while calling the function.<br>
+These parameters would be represented by <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">1,</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span></span></span></span>2 and so on.</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token comment"># Define your function here</span>
+Hello <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">echo</span> <span class="token string">"Hello World <span class="token variable">$1</span> <span class="token variable">$2</span>"</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment"># Invoke your function</span>
+Hello Dongxian Gu
+</pre><h3 class="mume-header" id="returning-values-from-functions">Returning Values from Functions</h3>
+
+<p><code>return code</code></p>
+<p>Capture value returned by last command</p>
+<p><code>ret=$?</code></p>
+<h3 class="mume-header" id="nested-functions">Nested Functions</h3>
+
+<p>One of the more interesting features of functions is that they can call themselves<br>
+and also other functions. A function that calls itself is known as a recursive function.</p>
+<h3 class="mume-header" id="function-call-from-prompt">Function Call from Prompt</h3>
+
+<p>You can put definitions for commonly used functions inside your .profile. These<br>
+definitions will be available whenever you log in and you can use them at the<br>
+command prompt.</p>
+<p>To remove the definition of a function from the shell, use the unset command with<br>
+the .f option. This command is also used to remove the definition of a variable<br>
+to the shell.</p>
+<p><code>unset -f function_name</code></p>
+<h2 class="mume-header" id="shell-manpage-help">Shell Manpage Help</h2>
+
+<p><code>man command</code></p>
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Man_Page_Sections.png" alt="Man_Page_Sections"></p>
+<h3 class="mume-header" id="useful-shell-commands">Useful Shell Commands</h3>
+
+<p><img src="file:///home/dx/%E6%A1%8C%E9%9D%A2/Example/shell/Useful_Commands.png" alt="Useful_Commands"></p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  </body></html>
