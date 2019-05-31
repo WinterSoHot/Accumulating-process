@@ -226,7 +226,7 @@ The following points need to be considered while adding −
 
 Assume variable a holds 10 and variable b holds 20 then −
 
-![Arithmetic Operators](./Arithmetic_Operators.png)
+![Arithmetic Operators](images/Arithmetic_Operators.png)
 
 It is very important to understand that all the conditional expressions should be
  inside square braces with spaces around them, for example [ \$a == \$b ] is
@@ -236,7 +236,7 @@ It is very important to understand that all the conditional expressions should b
 
 Assume variable a holds 10 and variable b holds 20 then −
 
-![Relational Operators](./Relational_Operators.png)
+![Relational Operators](images/Relational_Operators.png)
 
 It is very important to understand that all the conditional expressions should be
  placed inside square braces with spaces around them. For example, [ \$a <= \$b ]
@@ -246,20 +246,20 @@ It is very important to understand that all the conditional expressions should b
 
 Assume variable a holds 10 and variable b holds 20 then −
 
-![Boolean Operators](./Boolean_Operators.png)
+![Boolean Operators](images/Boolean_Operators.png)
 
 ### String Operators
 
 Assume variable a holds "abc" and variable b holds "efg" then −
 
-![String_Operators](String_Operators.png)
+![String_Operators](images/String_Operators.png)
 
 ### File Test Operators
 
 Assume a variable file holds an existing file name "test" the size of which is
  100 bytes and has read, write and execute permission on −
 
-![File_Test_Operators](File_Test_Operators.png)
+![File_Test_Operators](images/File_Test_Operators.png)
 
 ## Shell Decision Making
 
@@ -406,7 +406,7 @@ Here n specifies the n^th enclosing loop to continue from.
 The shell performs substitution when it encounters an expression that contains
  one or more special characters.
 
-![Substitution](Substitution.png)
+![Substitution](images/Substitution.png)
 
 ### Command Substitution
 
@@ -417,7 +417,7 @@ When performing the command substitution make sure that you use the backquote, n
 
 ### Variable Substitution
 
-![Variable_Substitution](Variable_Substitution.png)
+![Variable_Substitution](images/Variable_Substitution.png)
 
 ## Shell Quoting Mechanisms
 
@@ -435,7 +435,7 @@ For example, ? matches with a single character while listing files in a director
 A character may be quoted (i.e., made to stand for itself) by preceding it with
  a \\.
 
-![altforms_of_quoting](forms_of_quoting.png)
+![altforms_of_quoting](images/forms_of_quoting.png)
 
 ### The Single Quotes
 
@@ -536,7 +536,7 @@ Here 2 represents STDERR and 1 represents STDOUT. You can display a message on t
 
 ### Redirection Commands
 
-![Redirection Commands](Redirection_Commands.png)
+![Redirection Commands](images/Redirection_Commands.png)
 
 ## Shell Functions
 
@@ -600,8 +600,8 @@ To remove the definition of a function from the shell, use the unset command wit
 
 `man command`
 
-![Man_Page_Sections](Man_Page_Sections.png)
+![Man_Page_Sections](images/Man_Page_Sections.png)
 
 ### Useful Shell Commands
 
-![Useful_Commands](Useful_Commands.png)
+![Useful_Commands](images/Useful_Commands.png)
