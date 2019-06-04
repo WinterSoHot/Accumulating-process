@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<书架 xmlns="http://gdxlym.cn"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://gdxlym.cn  book.xsd">
+
+    <书>
+        <书名></书名>
+        <作者></作者>
+        <售价></售价>
+    </书>
+</书架>

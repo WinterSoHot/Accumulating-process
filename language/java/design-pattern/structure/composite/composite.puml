@@ -1,0 +1,19 @@
+@startuml
+
+abstract class LetterComposite{
+    -children:List<LetterComposite>
+    +add(LetterComposite item)
+    +count()
+    #printBefore()
+    #printAfter()
+    #print()
+}
+
+LetterComposite <|-- Sentence
+LetterComposite <|-- Word
+LetterComposite <|-- Letter
+
+Word "n" <--* "1" Sentence : contains
+Letter "n" <--* "1" Word : contains
+
+@enduml

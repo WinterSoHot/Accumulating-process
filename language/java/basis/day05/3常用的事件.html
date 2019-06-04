@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>常用的事件</title>
+    <script>
+        /*
+         常用的事件：
+
+         鼠标点击相关：
+         onclick 在用户用鼠标左键单击对象时触发。
+         ondblclick 当用户双击对象时触发。
+         onmousedown 当用户用任何鼠标按钮单击对象时触发。
+         onmouseup 当用户在鼠标位于对象之上时释放鼠标按钮时触发。
+
+         鼠标移动相关：
+         onmouseout  当用户将鼠标指针移出对象边界时触发。
+         onmousemove 当用户将鼠标划过对象时触发。
+
+         焦点相关的：
+         onblur 在对象失去输入焦点时触发。
+         onfocus 当对象获得焦点时触发。
+
+         其他：
+         onchange 当对象或选中区的内容改变时触发。
+         onload 在浏览器完成对象的装载后立即触发。
+         onsubmit 当表单将要被提交时触发。
+         */
+
+        function clickTest() {
+            alert("单击。。。");
+        }
+        function dbClick() {
+            alert("双击");
+        }
+        function showTime() {
+            var spTime = document.getElementById("spanTime");
+            spTime.innerHTML = new Date().toLocaleString();
+        }
+        function hideTime() {
+
+            var spTime = document.getElementById("spanTime");
+            spTime.innerHTML = "";
+        }
+        function change() {
+            alert("改变了。。。")
+        }
+        function showInfo() {
+            var spTime = document.getElementById("spanTime");
+            spTime.innerHTML = "用户名应该为6位的小数和字符组成".fontcolor("red");
+        }
+
+        function hideInfo() {
+            var spTime = document.getElementById("spanTime");
+            spTime.innerHTML = "";
+        }
+
+        function showURL() {
+            alert(window.location.href)
+        }
+    </script>
+</head>
+<body>
+<button type="button" onclick="clickTest()">单击</button>
+<button type="button" onclick="dbClick()">双击</button>
+<button type="button" onclick="showURL()">显示地址栏</button>
+<span onmousemove="showTime()" onmouseout="hideTime()">查看系统时间</span>
+<input type="text" placeholder="用户名" onfocus="showInfo()" onblur="hideInfo()">
+<span id="spanTime"></span>
+<select onchange="change()">
+    <option>北京</option>
+    <option>上海</option>
+</select>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+@startuml
+
+abstract class Expression{
+    {abstract} int interpret()
+    {abstract} void toString()
+}
+
+class NumberExpression{
+    - int number
+    int interpret()
+    void toString()
+}
+
+class MinusExpression{
+    - Expression leftExpression
+    - Expression RightExpression
+    int interpret()
+    void toString()
+}
+
+class MultiplyExpression{
+    - Expression leftExpression
+    - Expression RightExpression
+    int interpret()
+    void toString()
+}
+class PlusExpression{
+    - Expression leftExpression
+    - Expression RightExpression
+    int interpret()
+    void toString()
+}
+Expression <|-- NumberExpression
+Expression <|-- MinusExpression
+Expression <|-- MultiplyExpression
+Expression <|-- PlusExpression
+
+
+@enduml

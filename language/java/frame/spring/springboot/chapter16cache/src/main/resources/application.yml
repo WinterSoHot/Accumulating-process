@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///testdb?useSSL=false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作css</title>
+    <script>
+        function ready() {
+            createCode();
+        }
+
+        function createCode() {
+            var datas = ['A', 'B', '何', '敏', '凡', '江', '1', '9']; // 0-7  长度8
+            var code = "";
+            for (var i = 0; i < 4; i++) {
+                var index = Math.floor(Math.random() * datas.length);
+                code += datas[index];
+            }
+
+            var codeNode = document.getElementById("code");
+            codeNode.innerHTML = code;
+            codeNode.style.color = "red";
+            codeNode.style.fontSize = "24px";
+            codeNode.style.backgroundColor = "gray";
+            codeNode.style.textDecoration = "line-through";
+
+        }
+    </script>
+</head>
+<body onload="ready()">
+<span id="code"></span><a href="#" onclick="createCode()">看不清，换一个</a>
+</body>
+</html>

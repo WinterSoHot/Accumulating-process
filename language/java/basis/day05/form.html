@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单验证</title>
+    <style>
+        table {
+            width: 30%;
+        }
+
+    </style>
+    <script>
+        function CheckUserName() {
+            var inputNode = document.getElementById("username");
+            var spanNode = document.getElementById("userSp");
+
+            var content = inputNode.value;
+            var regs = /^[a-z][a-z0-9]{5}$/i;
+            if (regs.test(content)) {
+                spanNode.innerHTML = "正确".fontcolor("green");
+                return true;
+            } else {
+                spanNode.innerHTML = "错误".fontcolor("red");
+                return false;
+            }
+        }
+
+        function checkAll() {
+            if (CheckUserName()){
+                return true;
+            }else {
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<form onsubmit="return checkAll()">
+    <table align="center" border="1px">
+        <caption>表单案例</caption>
+        <tr>
+            <td width="25%">姓名:</td>
+            <td colspan="2">
+                <input type="text" id="username" onblur="CheckUserName()"/>
+                <span id="userSp"></span>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">密码:</td>
+            <td colspan="2">
+                <input type="password" id="password"/>
+                <span id="pwdSp"></span>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">再次输入密码:</td>
+            <td colspan="2">
+                <input type="password" id="rePassword"/>
+                <span id="rePasswordSp"></span>
+            </td>
+        </tr>
+        <tr align="center">
+            <td colspan="2">
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

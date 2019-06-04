@@ -1,0 +1,36 @@
+@startuml
+
+interface Potion{
+    void drink()
+}
+
+class HealingPotion
+class HolyWaterPotion
+class StrengthPotion
+class PoisonPotion
+class InvisiblePotion
+
+Potion <|.. HealingPotion
+Potion <|.. HolyWaterPotion
+Potion <|.. StrengthPotion
+Potion <|.. PoisonPotion
+Potion <|.. InvisiblePotion
+
+enum PotionType{
+    HEALING
+    HOLYWATER
+    STRENGTH
+    POISON
+    INVISIBLE
+}
+
+class PotionFactory{
+    Map<PotionType,Potion> potions
+    +Potion createPotion(potionType:PotionType)
+}
+
+Potion "n" <- "1" PotionFactory
+PotionType <.. PotionFactory
+
+
+@enduml

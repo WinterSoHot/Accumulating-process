@@ -1,0 +1,4 @@
+@startuml
+app -> sword: wield()
+sword -> enchantment: onActivate()
+@enduml

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>伪类选择器</title>
+    <style type="text/css">
+        /*
+         伪类选择器：伪类选择器就是对元素处于某种状态下进行样式的。
+
+
+         注意：
+             1. a:hover 必须被置于 a:link 和 a:visited 之后
+
+            2. a:active 必须被置于 a:hover 之后
+
+        */
+
+        a:link {
+            color: #F00
+        }
+
+        /* 没有被点击过---红色 */
+
+        a:visited {
+            color: #0F0
+        }
+
+        /*  已经被访问过的样式---绿色 */
+
+        a:hover {
+            color: #00F;
+        }
+
+        /* 鼠标经过的状态---蓝 */
+
+        a:active {
+            color: #FF0;
+        }
+
+    </style>
+</head>
+<body>
+        <a href="#">伪类选择器</a>
+</body>
+</html>

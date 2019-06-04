@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">m
+    <title>函数的练习</title>
+    <script>
+        function show() {
+            var month = document.getElementById("month");
+            var value =  month.value;
+            if (isNaN(value)){
+                alert("请输入一个1-12数字");
+                return;
+            }
+            value = parseInt(value);
+            alert(value+"月");
+        }
+    </script>
+</head>
+<body>
+<label>请输入月份</label>
+<input type="text" id="month">
+<button onclick="show()">查询</button>
+</body>
+</html>

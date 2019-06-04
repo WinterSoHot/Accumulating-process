@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串转数字</title>
+    <script>
+        /*
+         字符串转数字
+         parseInt()  可以把一个字符串转换成整数。
+         parseFloat() 可以把一个字符串转换成小数。
+         */
+        var a = "12";
+        a = 12.64;
+
+        a = "123abc123"; /* parseInt方法如果接收的字符串含有非数字的字符，那么parseInt方法会从字符串的首个字符开始寻找，一直找到非数字字符为止，然后就使用前面的数字字符转换成数字， */
+        a = "a123";  // NaN not a number(不是一个数字)
+
+        a = "012"; /* 12 如果首位是0，那么就想祛除0再进行转换。*/
+
+        a = "0x10"; /* 如果一个字符串是以0x开头，那么会把字符串中的内容当成十六进行的数据处理的。 */
+        var b = parseInt(a);
+        document.write("结果："+b+"<br/>");
+        var c= "3.14";
+        c = "10";   // 如果是一个字符串是整数的，那么使用parseFloat还是转换 成整数 。
+        c = "100a";
+        c = "abc123";
+        c = parseFloat(c);
+        document.write("结果："+c+"<br/>");
+
+
+
+        /*
+         javascript提供一个IsNaN的方法让我们判断该字符串是否是 一个数字。
+
+         is not a muber  不是一个数字。
+
+         不是一个数字返回true，是一个数字返回false.
+         */
+
+
+        document.write(isNaN("123")+"<br/>");
+
+        document.write(isNaN("abc123"));
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

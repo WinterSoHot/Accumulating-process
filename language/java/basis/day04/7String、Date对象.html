@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js对象</title>
+
+    <script>
+
+        /*
+         var str1 = new String("hello");
+         var str2 = new String("hello");
+         document.write("两个字符串的对象一样吗？"+(str1.toString()==str2.toString()));
+
+         创建一个字符串的方式：
+         方式1：
+         new String("字符串的内容");
+
+         方式2：
+         var str = "字符串的内容";
+
+         字符串常用的方法：
+         anchor（）   生产锚点
+         blink（）     为元素添加blink标签
+         charAt()     返回指定索引位置处的字符。
+         charCodeAt() 回一个整数，代表指定位置上字符的 Unicode 编码。
+         fontcolor()  把带有 COLOR 属性的一个 HTML <FONT> 标记放置在 String 对象中的文本两端
+         indexOf()    返回 String 对象内第一次出现子字符串的字符位置
+         italics()    把 HTML <I> 标记放置在 String 对象中的文本两端。
+         link()         把一个有 HREF 属性的 HTML 锚点放置在 String 对象中的文本两端。
+         replace()      返回根据正则表达式进行文字替换后的字符串的复制
+         split()        切割
+         Substr()       截取子串
+         toUpperCase()  转大写
+         toLowerCase    转小写
+         */
+        document.write("第五章".anchor("five")+"<br/>");
+        document.write("第五章".blink()+"<br/>");
+        document.write("abc".charAt(1)+"<br/>");
+        document.write("abc".charCodeAt(1)+"<br/>"); //chatCodeAt返回的是索引值对应的字符的码值。
+        document.write("第六章".fontcolor("red")+"<br/>"); //fontcolor() 给字符串添加font标签，然后设置color的属性值。
+        document.write("abchellohehehello".indexOf("hello")+"<br/>"); //返回指定字符串第一次出现的索引值。
+        document.write("第五章".italics()+"<br/>"); //给文本添加一个i标签，把文本内容设置成斜体。
+        document.write("传智".link("http://www.itcast.cn")+"<br/>"); // 给文本添加一个a标签，
+        document.write("明天我们讲xml".replace("xml","DOM编程")+"<br/>"); // 给文本添加一个a标签，
+
+        var str = "我们-大家-好";
+        var arr = str.split("-");
+        for(var index = 0 ; index<arr.length ; index++){
+            document.write(arr[index]+",");
+        }
+        document.write("<br/>");
+        document.write("abc".toUpperCase()+"<br/>"); //转大写
+        document.write("ABC".toLowerCase()+"<br/>");  //转小写
+
+        /*
+        日期对象 Date
+         */
+        var date = new Date();
+        document.write(date.getFullYear()+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

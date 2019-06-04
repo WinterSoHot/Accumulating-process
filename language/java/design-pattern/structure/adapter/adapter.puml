@@ -1,0 +1,8 @@
+@startuml
+
+App -> Caption: new Caption(new FishBootAdapter())
+App -> Caption: row()
+Caption -> FishBootAdapter: row()
+FishBootAdapter -> FishingBoat: sail()
+
+@enduml

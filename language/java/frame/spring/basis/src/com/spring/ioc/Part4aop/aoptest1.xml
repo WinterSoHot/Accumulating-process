@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean class="com.spring.ioc.Part4aop.MyPerform" id="perform"/>
+    <bean id="xmlaspect" class="com.spring.ioc.Part4aop.XmlAspect"/>
+    <aop:config>
+        <aop:aspect ref="xmlaspect">
+            <aop:pointcut id="ponitcut" expression="execution(* com.spring.ioc.Part4aop.Perform.perform(..))"/>
+            <aop:before method="before" pointcut-ref="ponitcut"/>
+            <aop:after method="after" pointcut-ref="ponitcut"/>
+            <aop:after-returning method="afterReturn" pointcut-ref="ponitcut"/>
+            <aop:after-throwing method="afterThrow" pointcut-ref="ponitcut"/>
+            <aop:around method="around" pointcut-ref="ponitcut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

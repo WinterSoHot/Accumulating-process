@@ -1,0 +1,7 @@
+@startuml
+app -> aBuilder: new Builder(profession,name)
+app -> aBuilder: withHairColor(hairColor)
+app -> aBuilder: withHairType(hairType)
+app -> aBuilder: withWeapon(weapon)
+app -> aBuilder: Hero:build()
+@enduml

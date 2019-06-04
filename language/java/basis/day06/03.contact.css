@@ -1,0 +1,9 @@
+﻿contact{
+	color:red;
+	font-size:20px;
+	width:150px;
+	height:100px;
+	display:block;/*以块状显示该标签*/
+	margin-top:40px;
+	background-color:green;
+}

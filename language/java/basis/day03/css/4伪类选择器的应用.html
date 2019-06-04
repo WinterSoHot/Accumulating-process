@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>伪类选择器的应用</title>
+    <style>
+        table{
+            text-align: center;
+            background-color: #CCCCCC;
+            border: 3px;
+            width: 400px;
+            height: 300px;
+            border-collapse: collapse;
+        }
+        th:hover{
+            background-color: aqua;
+        }
+        td:hover{
+            background-color: #00FF00;
+        }
+    </style>
+</head>
+<body>
+    <table border="1px"  align="center">
+        <caption>成绩单</caption>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>科目</th>
+                <th>成绩</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">
+                    Jack
+                </td>
+                <td>物理</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>化学</td>
+                <td>99</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,39 @@
+@startuml
+
+interface Weapon{
+    wield()
+    swing()
+    unWield()
+}
+
+interface Enchantment{
+    onActivate()
+    apply()
+    onDeactivate()
+}
+
+class Sword{
+    enchantment:Enchatment
+    wield()
+    swing()
+    unWield()
+}
+
+class FlyingEnchantment{
+    onActivate()
+    apply()
+    onDeactivate()
+}
+
+class SoulEatingEnchantment{
+    onActivate()
+    apply()
+    onDeactivate()
+}
+
+Weapon <|.. Sword
+Enchantment <|.. FlyingEnchantment
+Enchantment <|.. SoulEatingEnchantment
+Enchantment <--* Sword
+
+@enduml

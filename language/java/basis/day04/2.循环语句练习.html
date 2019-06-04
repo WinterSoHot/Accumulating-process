@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环语句练习</title>
+
+    <script>
+        //1，显示“*”为正方形，5行5列。
+        for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
+                document.write("*");
+            }
+
+            document.write("<br>")
+        }
+        document.write("<hr>")
+        //        2，显示“*”为直角三角型，5行，第1行有1个“*”，第2行有2个“*”……
+
+        for (var rowvar = 0; row < 5; row++) {
+            for ( j = 0; j <= row; j++) {
+                document.write("*")
+            }
+            document.write("<br>")
+        }
+
+
+        //        3，显示乘法口诀。
+        //        1*1=1
+        //        1*2=2 2*2=4
+        //            ....
+        //        1*9=9 2*9=18 ...
+        for (var i = 1; i < 10; i++) {
+            for (var j = 1; j <= i; j++) {
+                document.write(i+"*"+j+"="+(i*j)+"&nbsp");
+            }
+            document.write("<br>")
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

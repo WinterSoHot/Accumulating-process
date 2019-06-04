@@ -1,0 +1,48 @@
+@startuml
+
+abstract class Command{
+    void execute(target:Target)
+    undo()
+    redo()
+    toString()
+}
+
+abstract class Target{
+    size:Size
+    visibility:Visibility
+    toString()
+    printStatus()
+}
+
+enum Size{
+    SMALL
+    NORMAL
+}
+
+enum Visibility{
+    VISIBLE
+    INVISIBLE
+}
+
+class Goblin
+class InvisibilitySpell
+class ShrinkSpell
+
+Target <|.. Goblin
+Command <|.. InvisibilitySpell
+Command <|.. ShrinkSpell
+
+Size <--* Target
+Visibility <--* Target
+
+class Wizard{
+    undoStack:Deque<Command>
+    redoStack:Deque<Command>
+    castSpell(command:Command,target:Target)
+    undoLastSpell()
+    redoLastSpell()
+}
+
+Command <.. Wizard
+Target <.. Wizard
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+
+interface Troll
+class SimpleTroll
+class ClubbedTroll{
+    decorator:Troll
+}
+
+Troll <|.. SimpleTroll
+Troll <|.. ClubbedTroll
+
+SimpleTroll <--* ClubbedTroll
+
+@enduml

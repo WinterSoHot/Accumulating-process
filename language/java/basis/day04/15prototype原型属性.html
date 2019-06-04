@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prototype</title>
+    <script>
+        /*
+         需求：想把getMax与searchEle方法添加 到数组对象中。
+
+         function Array(){
+         this.prototype = new Object();
+
+         this.getMax = function(){
+
+         }
+         }
+         Prototype注意的细节：
+         1.	prototype是函数(function)的一个必备属性(书面一点的说法是"保留属性")(只要是function,就一定有一个prototype属性)
+         2.	prototype的值是一个对象
+         3.	可以任意修改函数的prototype属性的值。
+         4.	一个对象会自动拥有prototype的所有成员属性和方法。
+
+         */
+
+        Array.prototype.getMin = function () {
+            var min = this[0];
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] < min) {
+                    min = this[i];
+                }
+            }
+            return min;
+        }
+
+        Array.prototype.searchTarge = function (target) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == target) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        var arr = [11, 50, 100, 2];
+        document.write("最小值：" + arr.getMin() + "<br>");
+        document.write("索引是：" + arr.searchTarge(10) + "<br>");
+
+        /*
+         练习： 给字符串对象添加一个toCharArray的方法，然后再添加一个reverse(翻转)的 方法
+         */
+        String.prototype.toCharArray = function () {
+            var arr = new Array();
+            for (var index=0; index < this.length; index++) {
+                arr[index] = this.charAt(index);
+            }
+            return arr;
+        }
+        String.prototype.reverse = function () {
+            var charArray = this.toCharArray();
+            var ts = charArray.reverse();
+            return ts.join("");
+        }
+        var str = "你们厉害啊";
+        var charArr = str.toCharArray();
+        document.write("数组的元素："+charArr.join(","));
+
+        str = str.reverse();
+        document.write("<br/>翻转后的字符串："+str);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

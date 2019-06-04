@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通过关系找标签</title>
+
+</head>
+<body>
+<input type="text" id="userName"/><img src="user.png"/>
+<script>
+    /*
+     通过关系(父子关系、兄弟关系)找标签。
+     parentNode	获取当前元素的父节点。
+     childNodes	获取当前元素的所有下一级子元素。
+     firstChild	获取当前节点的第一个子节点。
+     lastChild	获取当前节点的最后一个子节点。
+     ------------------------------------------------------------
+     nextSibling		获取当前节点的下一个节点。（兄节点）
+     previousSibling	获取当前节点的上一个节点。（弟节点）
+
+     我们可以通过标签的类型进行判断筛选：
+
+     文本节点的类型： 3
+     注释的节点类型： 8
+     标签节点的类型： 1
+
+     */
+
+    var bodyNode = document.getElementsByTagName("body")[0];
+    /*
+     查看父节点。
+     var parentNode = bodyNode.parentNode;
+     alert("父节点的名称："+parentNode.nodeName);
+     //找子节点:childNodes 获取所有的子节点，返回的是一个数 组。 注意： 获取子节点的时 候是包括了空文本或者是注释。
+     var children = bodyNode.childNodes;
+     for(var i = 0 ; i<children.length ; i++){
+     //if(children[i].nodeType==1){
+     alert("节点的名字："+children[i].nodeName+" 对象的类型:"+children[i].nodeType);
+     //}
+     }
+     alert("第一个子节点："+bodyNode.firstChild.nodeName);
+     alert("最后一个子节点："+bodyNode.lastChild.nodeName);
+     //找兄弟节点
+     */
+    var inputNode = document.getElementById("userName");
+    alert("下个兄弟节点：" + inputNode.nextSibling.nodeName); //下一个兄弟节点。
+    alert("上一个兄弟节点：" + inputNode.previousSibling.nodeName);
+</script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定位</title>
+    <style>
+        /*
+css的定位：
+
+	相对定位： 相对定位是相对于元素原本的位置进行移动的。
+
+	使用方式：	position:relative;
+
+
+	绝对定位： 绝对定位是相对于整个页面而言。
+		position:absolute;
+		top:200px;
+		left:380px;
+
+	固定定位：
+		position:fixed; /* 固定定位: 固定定位是相对于整个浏览器而已的。
+		top:380px;
+		left:1000px;
+*/
+        .ad {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            width: 300px;
+            height: 200px;
+            background-color: #CCCCCC;
+            border: solid 1px red;
+        }
+
+        .one, .three {
+            background-color: #00FF00;
+            width: 100px;
+            height: 100px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .two{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            text-align: center;
+            position: relative;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="one">one</div>
+<div class="two">two</div>
+<div class="three">three</div>
+<div class="ad">
+    <marquee scrollamount="30">刀刀暴击</marquee>
+</div>
+</body>
+</html>

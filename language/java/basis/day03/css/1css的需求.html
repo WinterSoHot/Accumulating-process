@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css和javascript</title>
+</head>
+<!--
+
+	html 在一个网页中负责的事情是一个页面的结构
+
+    css(层叠样式表) 在一个网页中主要负责了页面的数据样式。
+
+编写css代码的方式：
+
+    第一种： 在style标签中编写css代码。   只能用于本页面中，复用性不强。
+
+        格式 ：
+
+            <style type="text\css">
+                编写css的代码。
+            </style>
+        例子：
+        	<style type="text\css">
+        	   a{
+                    color:#F00;
+                    text-decoration:none;
+				}
+     	  </style>
+
+     第二种： 可以引入外部的css文件。  推荐使用。
+
+        方式1： 使用link标签。   推荐使用...
+        	格式：
+            	<link href="css文件的路径" rel="stylesheet">
+
+            例子： <link href="1.css" rel="stylesheet"/>
+
+        方式2：使用<style>引入
+
+             格式：
+             		<style type="text/css" >
+                    	@import url("css的路径");
+                    </style>
+
+             例子：
+             	<style type="text/css" >
+					@import url("1.css");
+				</style>
+
+    第三种方式：直接在html标签使用style属性编写。    只能用于本标签中，复用性较差。 不推荐使用。
+
+          例子：
+          	<a style="color:#0F0; text-decoration:none" href="#">新闻的标题1</a>
+
+-->
+<style type="text/css">
+    /*
+        html的注释：<!-- html的注释 -->
+        css /* css的注释 ..*/
+    /*
+    */
+</style>
+<body>
+    <h3>标题</h3>
+    <a href="#" style="color: aqua;text-decoration: none">新闻标题1</a>
+    <a href="#">新闻标题2</a>
+    <a href="#">新闻标题3</a>
+    <a href="#">新闻标题4</a>
+    <a href="#">新闻标题5</a>
+</body>
+</html>

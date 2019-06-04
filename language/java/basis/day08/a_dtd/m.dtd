@@ -1,0 +1,15 @@
+<!--参数实体 主要给DTD文件使用-->
+        <!ENTITY % strs "heading | from ">
+<!ELEMENT note (title,from?,to+,heading*,body+)>
+        <!ELEMENT to      EMPTY>
+        <!ELEMENT from    (#PCDATA)>
+        <!ELEMENT heading (#PCDATA)>
+        <!ELEMENT body    (#PCDATA)>
+        <!ELEMENT title   (%strs;)>
+        <!ATTLIST to
+                id ID #REQUIRED
+                name CDATA #FIXED "name"
+                age CDATA #IMPLIED
+                >
+<!--引用实体 直接通过 &元素 主要被xml应用-->
+<!ENTITY entity "i'm an entity">

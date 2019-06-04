@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window</title>
+    <script>
+        /*
+         javascript组成部分：
+         EMCAScript（基本语法）
+         BOM( Browser Object MOdel) 浏览器对象模型.
+         浏览器对象模型中把浏览器 的各个部分都是用了一个对象进行描述，如果我们要
+         操作浏览器的一些属性，我就可以通过浏览器对象模型 的对象进行操作。
+
+         window  代表了一个新开的窗口
+         location 代表了地址栏对象。
+         screen  代表了整个屏幕的对象
+
+         window对象常用的方法：
+
+         open()   打开一个新的窗口。
+         resizeTo() 将窗口的大小更改为指定的宽度和高度值。
+         moveBy()  相对于原来的窗口移动指定的x、y值。
+         moveTo() 将窗口左上角的屏幕位置移动到指定的 x 和 y 位置。
+
+         setInterval() 每经过指定毫秒值后就会执行指定的代码。
+         clearInterval() 根据一个任务的ID取消的定时任务。
+         setTimeout() 经过指定毫秒值后执行指定 的代码一次。
+
+         注意： 使用window对象的任何属性与方法都可以省略window对象不写的。
+
+
+         */
+        function showAd() {
+            window.open("ad.html","_blank","height=400px,width=300px,toolbar=no,location=no,top=200px");
+        }
+        //不支持
+        function small() {
+            resizeTo(400,300);
+        }
+        
+        var  time = 0;
+        var  timer;
+        function start() {
+            if (timer!=undefined){
+                return;
+            }
+            timer = setInterval("changeSp()",1000);
+        }
+        function stop() {
+            clearInterval(timer);
+            timer = undefined;
+        }
+        function changeSp() {
+            var  spTime = document.getElementById("spTime");
+            spTime.innerHTML=time++;
+        }
+    </script>
+</head>
+<body>
+<button onclick="showAd()">广告</button>
+<button onclick="small()">重置大小</button>
+<button onclick="start()">开始定时</button>
+<button onclick="stop()">取消定时</button>
+<span id="spTime"></span>
+</body>
+</html>

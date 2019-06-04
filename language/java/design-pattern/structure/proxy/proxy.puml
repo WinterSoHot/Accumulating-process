@@ -1,0 +1,21 @@
+@startuml
+
+interface WizardTower{
+    void enter(wizard : Wizard)
+}
+
+class Wizard{
+    -String name
+}
+
+class IvoryTower
+class WizardTowerProxy{
+    - WizardTower wizardTower
+}
+
+WizardTower <|.. IvoryTower
+WizardTower <|.. WizardTowerProxy
+
+Wizard <.. WizardTower
+
+@enduml

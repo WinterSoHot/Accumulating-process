@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>找节点</title>
+    <script>
+        /*
+         通过html元素的标签属性找节点。
+         document.getElementById("html元素的id")
+         document.getElementsByTagName("标签名")
+         document.getElementsByName("html元素的name")
+         */
+        function showName() {
+            var  inputUserName = document.getElementById("username");
+            alert(inputUserName.value);
+        }
+        //InnerHTml是用于设置标签体的内容的。 value是用于设置标签的value属性值.
+
+        function showImage() {
+            var  images = document.getElementsByTagName("img");
+            for(var index in images){
+                images[index].src = "33.jpg";
+                images[index].width = "100";
+                images[index].height = "100";
+            }
+        }
+    </script>
+</head>
+<body>
+
+获取输入框的值:<input type="text" id="username">
+<button type="button" onclick="showName()">获取姓名</button>
+<br>
+<img src="">
+<img src="">
+<img src="">
+<button type="button" onclick="showImage()">显示图片</button>
+</body>
+</html>

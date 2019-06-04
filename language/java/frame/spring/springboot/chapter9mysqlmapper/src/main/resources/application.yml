@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/testdb?useSSL=false # 设置不适用SSL认证
+    driver-class-name: com.mysql.jdbc.Driver
+
+

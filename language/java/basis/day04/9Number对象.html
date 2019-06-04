@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Number对象</title>
+    <script>
+        /*
+         Number对象。
+
+         创建Number对象的方式：
+
+         方式1：
+         var 变量=  new Number(数字)
+
+         方式2：
+         var 变量 = 数字;
+
+         常用的方法：
+         toString()  把数字转换成指定进制形式的字符串。
+         toFixed()   指定保留小数位,而且还带四舍五入的功能。
+         */
+        var a = 10;
+        document.write("十进制："+a.toString(10));
+        document.write("八进制："+a.toString(8));
+        document.write("十六进制："+a.toString(16));
+        document.write("二进制："+a.toString(2));
+        document.write("三进制："+a.toString(3));
+
+        var  b = 3.1415926
+        document.write("保留两位小数："+b.toFixed(2));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组对象</title>
+    <script>
+        /*
+         Array数组对象:
+         创建数组的方式1：
+         var 变量名 = new Array();  创建一个长度为0的数组。
+         方式2：
+         var 变量名= new Array(长度) 创建一个指定长度的数组对象。
+         方式3：
+         var 变量名 = new Array("元素1","元素2"...);  给数组指定元素创建数组 的对象。
+         方式4：
+         var 变量名 = ["元素1","元素2"...];
+
+         数组要注意的细节：
+         1.  在javascript中数组的长度是可以发生变化的。
+         */
+
+        var arr = new Array(100);
+        arr[100] = 10;
+        var arr2 = ["12",'2312','ss'];
+        document.write("arr:"+arr.length);
+        document.write("arr2:"+arr2.length);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

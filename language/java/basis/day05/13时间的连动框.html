@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时间的联动框</title>
+
+</head>
+<body>
+年<select id="year"></select>月<select id="month"></select>日<select id="day"></select>
+<script>
+    /*
+     年份： 1900年 到今天
+     月份： 1~12
+     日： 根据每月算出对应的天数（包含有闰年）
+     */
+    var allData = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]
+
+    var date = new Date();
+    var year = date.getFullYear();
+    var yearNode = document.getElementById("year");
+    var monthNode = document.getElementById("month");
+    var dayNode = document.getElementById("day");
+    for (var i = 1900; i < year; i++){
+        var  item = document.createElement("option");
+        item.innerHTML = i;
+        yearNode.appendChild(item);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>城市联动框</title>
+    <script>
+        function showCity() {
+            //维护一个二维数组存储省份对应的城市
+            var citys = [[],["广州","佛山","湛江","中山"],["长沙","衡阳","岳阳","郴州"],["南宁","桂林","贵港","柳州"]];
+
+            var  provinceNode = document.getElementById("province");
+            //获取选择的索引
+            var selectedIndex = provinceNode.selectedIndex;
+            var cityData = citys[selectedIndex];
+
+            var cityNode = document.getElementById("city");
+            /*
+             //先清空city框所有option
+             var children = cityNode.childNodes;
+             for(var i = 0; i<children.length ; ){
+             cityNode.removeChild(children[i]);
+             }
+             */
+            cityNode.options.length = 1;
+            for(var index in  cityData){
+                var item = document.createElement("option");
+                item.innerHTML = cityData[index];
+                cityNode.appendChild(item);
+            }
+        }
+    </script>
+</head>
+<body>
+省份：<select id="province" onchange="showCity()">
+    <option>省份</option>
+    <option>广东</option>
+    <option>湖南</option>
+    <option>广西</option>
+</select>
+城市<select id="city">
+    <option>城市</option>
+</select>
+</body>
+</html>

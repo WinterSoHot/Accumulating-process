@@ -1,0 +1,28 @@
+@startuml
+
+abstract class DwarenMineWorker{
+    goToSleep()
+    wakeUp()
+    goHome()
+    goToMine()
+    {abstract} String name()
+    {abstract} void work()
+}
+
+class DwarenCartOperator
+class DwarenGoldDigger
+class DwarenTunneDigger
+
+DwarenMineWorker <|-- DwarenCartOperator
+DwarenMineWorker <|-- DwarenGoldDigger
+DwarenMineWorker <|-- DwarenTunneDigger
+
+class DwarenGoldmineFacade{
+    Collection<DwarenMineWorker> worker
+    -{static} makeAction(worker:Collection<DwarenMineWorker>,actions)
+    +startNewDay()
+    +digOutMine()
+    +endDay()
+}
+
+@enduml

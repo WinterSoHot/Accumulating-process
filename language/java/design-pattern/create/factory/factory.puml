@@ -1,0 +1,53 @@
+@startuml
+
+enum WeaponType{
+    SHORT_SWORD
+    SPEAR
+    AXE
+}
+
+interface Weapon{
+    WeaponType:getWeaponType()
+}
+
+interface Blacksmith{
+    Weapon:manufactureWeapon(type:WeaponType)
+}
+
+class ElfBlacksmith{
+    Weapon:manufactureWeapon(type:WeaponType)
+}
+
+class OrcBlacksmith{
+    Weapon:manufactureWeapon(type:WeaponType)
+}
+
+class ElfWeapon{
+    weaponType:WeaponType
+    getWeaponType()
+}
+
+class OrcWeapon{
+    weaponType:WeaponType
+    getWeaponType()
+}
+
+class App{
+    Blacksmith:blacksmith
+    manufactureWeapon(type:WeaponType)
+}
+
+Weapon <|.. ElfWeapon
+Weapon <|.. OrcWeapon
+Blacksmith <|.. ElfBlacksmith
+Blacksmith <|.. OrcBlacksmith
+
+App *-- Blacksmith
+
+WeaponType <.. App
+WeaponType <.. Blacksmith
+WeaponType <.. Weapon
+
+
+
+@enduml

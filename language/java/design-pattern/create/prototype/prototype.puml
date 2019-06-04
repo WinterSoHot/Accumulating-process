@@ -1,0 +1,18 @@
+@startuml
+
+abstract class ProtoType{
+    Object:copy()
+}
+
+abstract class Beast{
+    Beast:copy()
+}
+
+class OrcBeast{
+    Beast:copy()
+}
+
+ProtoType <|-- Beast
+Beast <|-- OrcBeast
+
+@enduml

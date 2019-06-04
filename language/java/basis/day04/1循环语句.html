@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环语句</title>
+    <script type="text/javascript">
+        /*
+         if
+
+         switch
+
+         switch语句的特殊之处: case后面可以跟常量与变量或者是表达式。
+
+         循环语句：
+
+         while
+
+         格式：
+         while(判断的条件){
+         循环体内容
+         }
+
+
+
+
+         var count = 0 ;
+         while(count<5){
+         document.write("hello world<br/>");
+         count++;
+         }
+
+         需求： 计算1~100的总和。
+
+         var num = 1;
+         var result = 0;
+         while(num<=100){
+         result +=num;
+         num++;
+         }
+
+         document.write("结果："+result);
+
+         do-while循环语句
+
+         do{
+         循环语句；
+         }while(判断条件);
+
+         需求；计算1~100奇数的总和。
+
+         var num = 1;
+         var result = 0;
+         do{
+         if(num%2!=0){
+         result +=num;
+         }
+         num++;
+         }while(num<=100);
+
+         document.write("结果："+result);
+
+
+         for循环语句:
+
+         格式：
+         for(初始化语句; 判断的条件 ; 循环后的语句){
+         循环体语句；
+         }
+
+
+         需求；计算1~100偶数的总和。
+         */
+
+        var result = 0;
+        for(var i=0;i<=100;i++){
+            if (i%2==0){
+                result+=i;
+            }
+        }
+        document.write("结果："+result);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

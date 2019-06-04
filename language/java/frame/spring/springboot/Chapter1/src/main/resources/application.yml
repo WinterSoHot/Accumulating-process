@@ -1,0 +1,13 @@
+com:
+  springboot:
+    chapter1:
+      name: 谷东先
+      mean: ${com.springboot.chapter1.name}学习springboot
+      value: ${random.value}
+      number: ${random.int}
+      bignumber: ${random.long}
+      test: ${random.int(10)}
+
+spring:
+  profiles:
+    active: dev

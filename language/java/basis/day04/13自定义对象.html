@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义对象</title>
+</head>
+<body>
+<script>
+    /*
+     自定义对象:
+
+     在javascript没有类的概念，只要有函数即可创建对象。
+     自定义对象的方式1： 使用无参的函数创建对象。
+     例子：
+
+     function Person(){}
+     var p = new Person(); //创建了一个Person对象了
+     p.id = 110;
+     p.name = "狗娃";
+
+     方式2：使用带参的函数创建对象。
+
+     function Person(id,name){
+     this.id = id;
+     this.name = name;
+     this.say = function(){
+     alert(name+"呵呵");
+     }
+     }
+
+     var p = new Person(110,"狗剩");	//创建对象
+
+
+     方式3： 使用Object函数创建对象
+     var p = new Object();
+     p.id = 110;
+     p.name = "铁蛋";
+
+     方式4：使用字面量的方式创建.
+     var p = {
+     id:110,
+     name:"狗娃",
+     say:function(){
+     alert(this.name+"呵呵");
+     }
+     }		。
+     */
+
+    var p = {
+        id:110,
+        name:"狗娃",
+        say:function(){
+            alert(this.name+"呵呵");
+        }
+    }
+
+
+    document.write("编号："+ p.id+" 姓名："+ p.name);
+    p.say();
+</script>
+</body>
+</html>

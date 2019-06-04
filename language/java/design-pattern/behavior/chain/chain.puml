@@ -1,0 +1,30 @@
+@startuml
+
+class Request
+abstract class RequestHandler{
+    RequestHandler next
+    void handleRequest(req:Request)
+}
+
+class OrcCommander
+class OrcOfficer
+class OrcSoldier
+
+RequestHandler <|-- OrcCommander
+RequestHandler <|-- OrcOfficer
+RequestHandler <|-- OrcSoldier
+
+enum RequestType
+
+class OrcKing{
+    RequestHandler chain
+    makeRequest(req:Request)
+}
+
+RequestHandler <--* OrcKing
+Request <-- OrcKing
+Request <-- RequestHandler
+RequestType <--* Request
+
+
+@enduml

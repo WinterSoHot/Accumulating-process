@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mm  命名名称 通过这个名称引用命名空间的元素 schemaLocation schema 指向约束文件 第一个是命名空间 空格 文件名 -->
+<mm:书架 xmlns:mm="http://gdxlym.cn"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.itcast.cn book.xsd">
+    <mm:书>
+        <mm:书名>你自以为的努力并不是</mm:书名>
+        <mm:作者>gg</mm:作者>
+        <mm:售价>12</mm:售价>
+    </mm:书>
+
+</mm:书架>

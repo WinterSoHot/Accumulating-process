@@ -1,0 +1,16 @@
+<?xml version='1.0' ?>
+<!DOCTYPE note SYSTEM 'm.dtd'>
+<!--dtd 约束 标签要和定义的顺序一致-->
+<note>
+    <title>
+        <heading>aa</heading>
+    </title>
+    <to id="aa" name="name" age="12"></to>
+    <to id="ss1" name="name"></to>
+    <to id="ss"  age="&entity;"></to>
+    <heading>ss</heading>
+    <heading>ss</heading>
+    <heading>ss</heading>
+    <body>sss</body>
+    <body>ss</body>
+</note>

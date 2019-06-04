@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.spring.ioc.Part4aop.MyPerform"/>
+    <bean class="com.spring.ioc.Part4aop.CirticEngie" id="cirticEngie">
+        <property name="pool">
+            <list>
+                <value>Good</value>
+                <value>Bad</value>
+                <value>Normal</value>
+                <value>Very Good</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="com.spring.ioc.Part4aop.CirticAspect" factory-method="aspectOf">
+        <property name="engie" ref="cirticEngie"/>
+    </bean>
+</beans>

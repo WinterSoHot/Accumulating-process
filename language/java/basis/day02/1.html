@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="xxx"/>
+    <title>Title</title>
+</head>
+<body>
+<font size="30px" color="red">我的第一个网页</font>
+<img width="100px" height="50px" style="background-color: red"/>
+<h1>标题1</h1>
+<h2>标题2</h2>
+<h3>标题3</h3>
+<h4>标题4</h4>
+<h5>标题5</h5>
+<h6>标题6</h6>
+<hr/>
+水的化学式H<sub>2</sub>O<br>
+2的16次方2<sup>16</sup>
+<pre>
+                                静夜思
+                    床前明月光，疑是地上霜。
+                    举头看屏幕，低头写代码。
+</pre>
+今晚吃什么
+<ul type="square">
+    <li>烤鱼</li>
+    <li>烤肉</li>
+    <li>火锅</li>
+</ul>
+<ol type="a">
+    <li>烤鱼</li>
+    <li>烤肉</li>
+    <li>火锅</li>
+</ol>
+公司的组织结构：
+<dl>
+    <dt>项目经理</dt>
+    <dd>码农一号</dd>
+    <dd>码农二号</dd>
+    <dd>码农三号</dd>
+</dl>
+<h3>实体标签</h3>
+<hr/>
+&nbsp;&nbsp;&nbsp;&nbsp;段落标签是使用&lt;p&gt;标"签"<br/>
+毛衣价格：&yen 100
+版权：&copy me
+商标：&reg 传智播客
+<h3>媒体标签</h3>
+<!--<embed src="1.mp3" ></embed>-->
+<!--
+媒体标签：
+	<embed></embed>
+    	hidden ： 设置隐藏插件是否隐藏。
+        src ：用于指定音乐的路径
+
+   <embed src="1.mp3" ></embed>
+
+   <marquee> 飘动标签
+   		direction : 指定飘动的方向
+        scrollamount : 指定飘动的速度。
+        loop   :指定飘动的次数
+
+	-->
+<marquee loop="-1" scrollamount="30" direction="right"><font size="+6" color="red"> 我飞起来了...</font></marquee>
+<h3>超链接标签</h3>
+<hr/>
+<!--
+ <a> 超链接标签
+
+ a标签常用的属性：
+ 	href  : 用于指定链接的资源
+    target: 设置打开新资源的目标。    _Blank 在独立的窗口上打开新资源   _self 在当前窗口打开新资源
+
+file: file协议（文件协议）这种协议主要是用于搜索本地机器的资源文件的。
+
+格式：
+	file:\\\f:\美女\1.jpg
+
+a标签的原理：
+	1. a标签的href属性值如果是以http开头的，那么浏览器会马上启动http解释器去解释该网址，首先
+    会在本地机器去找一个hosts文件， 如果在hosts文件上该域名没有对应的主机，那么浏览器就去到对应的
+    dns服务器去寻找该域名对应的主机号。如果找到了对应的主机，那么该请求就会发给对应的主机。
+
+
+    2. 如果a标签的href属性值没有以任何协议开头，那么浏览就会启动file协议解释器去解释该资源路径。
+
+    3. 如果a标签的href属性值并不是以http开始，而且其他 的一些协议，那么这时候浏览器就回去到我们本地的注册
+    表中去查找是否有处理这种协议 的应用程序，如果有，那么马上启动该应用程序处理该协议。
+
+邮件 的协议： mailTo
+迅雷的协议： thunder
+
+ 超链接标签的作用：
+ 	1. 可以用于链接资源。
+    2. 锚点点位.
+    	1. 首先编写一个锚点  锚点的格式： <a name="锚点名字"> 数据</a>
+		2. 使用a标签 的herf属性连接到锚点出。  href=”#锚点的名字“
+
+-->
+<a href="http://www.baidu.com">百度</a>
+<a href="1.html" target="_blank">打开1.html</a>
+<a href="file:\\\g:\pro.txt">pro.txt</a>
+<a href="mailTo:123456@qq.com">123456@qq.com</a>
+<a href="thunder://aabb/xx.avi">xx.avi</a>
+<a href="#top">top</a>
+
+
+<h3>图片标签</h3>
+<hr>
+<img src="11.jpg" width="400" height="300" alt="路飞" usemap="#Map">
+<map name="Map" id="map">
+    <area shape="rect" coords="171,178,304,227" href="http:\\www.baidu.com" target="_blank"/>
+    <area shape="circle" coords="189,135,27" href="2常用的标签.html" target="_blank"/>
+</map>
+<h3>表格</h3>
+<hr/>
+<!--<table>表格标签
+
+    表格使用到的标签：
+    <table> 表格
+        <tr>    行
+            <td>    单元格
+            <th>     表头   默认的样式是居中，加粗。
+                <caption>  表格的标题
+
+
+                    表格常用的属性：
+                    border  设置表格的边框
+                    width : 设置表格的宽度
+                    height: 设置表格的高度的。
+                    colspan: 设置单元格占据指定的列数。
+                    rowspan : 设置单元格占据指定的行数。
+
+                    -->
+<table width="400px" border="1px" style="text-align: center" align="center">
+    <caption>标题</caption>
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>成绩</th>
+        <th>人品</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td rowspan="2">
+            谷东先
+        </td>
+        <td>98</td>
+        <td>优秀</td>
+    </tr>
+    <tr>
+        <td>100</td>
+        <td>优秀</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            综合成绩
+        </td>
+        <td>
+            优秀
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

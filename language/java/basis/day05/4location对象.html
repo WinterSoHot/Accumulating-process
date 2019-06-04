@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>location</title>
+    <script>
+        /*
+         地址栏对象(Location)
+
+         href : 设置以及获取地址栏的对象
+         reload() 刷新当前的页面
+         */
+        function reload() {
+            location.reload();
+        }
+        function download() {
+            location.href = "http://www.baidu.com";
+        }
+    </script>
+</head>
+<body>
+    <button onclick="download()">下载电影</button>
+    <button type="button" onclick="reload()">重新加载</button>
+</body>
+</html>

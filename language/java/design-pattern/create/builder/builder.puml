@@ -1,0 +1,53 @@
+@startuml
+
+class Builder{
+    name
+    hair
+    hairColor
+    profession
+    weapon
+    Hero:build()
+}
+class Hero{
+    name
+    hair
+    hairColor
+    profession
+    weapon
+    private Hero(builder:Builder)
+}
+
+enum Hair{
+    LOGN_HAIR
+    NOT_HAIR
+    SHORT_HAIR
+}
+
+enum HairColor{
+    RED
+    BLACK
+    GREEN
+    BLUE
+}
+
+enum Profession{
+    ZHANSHI("战士")
+    FASHI("法师")
+    GONGJIANSHOU("猎人")
+    SHUSHI("术士")
+}
+
+enum Weapon{
+    SHORT_WORD("short word")
+    SPEAR("spear")
+    AXU("axu")
+}
+
+Hero o-- Hair
+Hero o-- Profession
+Hero o-- HairColor
+Hero o-- Weapon
+
+Hero <.. Builder
+
+@enduml

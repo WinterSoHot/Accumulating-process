@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function checkAll(allNode) {
+            var  all = document.getElementsByName("item");
+            for(var index in all){
+                all[index].checked = allNode.checked;
+            }
+        }
+
+        function getSum() {
+            var  all = document.getElementsByName("item");
+            var  sum = 0;
+            for(var index=0; index < all.length;index++){
+                if (all[index].checked)
+                sum += parseInt(all[index].value);
+                console.log(sum);
+            }
+            document.getElementById("sumid").innerHTML = ("&nbsp;&nbsp;&nbsp;&yen;"+sum).fontcolor("green");
+        }
+    </script>
+</head>
+<body>
+<div>商品列表</div>
+<input type="checkbox" name="item" value="3000"/>笔记本电脑3000元<br/>
+<input type="checkbox" name="item" value="1800"/>笔记本电脑1800元<br/>
+<input type="checkbox" name="item" value="300"/>笔记本电脑300元<br/>
+<input type="checkbox" name="item" value="3000"/>笔记本电脑3000元<br/>
+<input type="checkbox" name="item" value="3000"/>笔记本电脑3000元<br/>
+<input type="checkbox" name="item" value="3000"/>笔记本电脑3000元<br/>
+<input type="checkbox" name="all" onclick="checkAll(this)"/> 全选<br/>
+<input type="button" value="总金额：" onclick="getSum()"/><span id="sumid"></span>
+</body>
+</html>
