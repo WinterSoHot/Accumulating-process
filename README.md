@@ -1,3 +1,3 @@
-# Note
+# Accumulating Process
 
-平时学习整理的笔记
+The notes or codes in natural study.
