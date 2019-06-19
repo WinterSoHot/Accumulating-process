@@ -1,0 +1,385 @@
+" vundle 环境设置
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'kshenoy/vim-signature'
+Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
+Plugin 'vim-scripts/indexer.tar.gz'
+Plugin 'vim-scripts/DfrankUtil'
+Plugin 'vim-scripts/vimprj'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'vim-scripts/DrawIt'
+Plugin 'derekwyatt/vim-protodef'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'sjl/gundo.vim'
+Plugin 'Lokaltog/vim-easymotion'
+
+" File navigation
+Plugin 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+"Taglist
+Plugin 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
+
+" Undo Tree
+Plugin 'mbbill/undotree'
+
+" Git
+Plugin 'rhysd/conflict-marker.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'mhinz/vim-signify'
+Plugin 'gisphm/vim-gitignore' 
+
+" HTML CSS JS JSON MarkDown etc.
+Plugin 'elzr/vim-json'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'godlygeek/tabular' " type ;Tabularize /= to align the =
+Plugin 'plasticboy/vim-markdown'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'iamcco/markdown-preview.nvim', { 'do':  { -> mkdp#util#install() } }
+Plugin 'pangloss/vim-javascript'
+Plugin 'mattn/emmet-vim'
+
+"python sytax checker
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'scrooloose/syntastic'
+
+"auto-completion stuff
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ervandew/supertab'
+
+"code folding
+"Plugin 'tmhedberg/SimpylFold'
+
+"Colors!!!
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'connorholyday/vim-snazzy'
+Plugin 'tomasr/molokai'
+Plugin 'vim-scripts/phd'
+Plugin 'jnurmine/Zenburn'
+Plugin 'lilydjwg/fcitx.vim'
+Plugin 'honza/vim-snippets'
+Plugin 'https://github.com/bling/vim-airline'
+
+Plugin 'Chiel92/vim-autoformat'
+
+" Other useful utilities
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'junegunn/goyo.vim' " distraction free writing mode
+Plugin 'tpope/vim-surround' " type ysks' to wrap the word with '' or type cs'` to change 'word' to `word`
+Plugin 'gcmt/wildfire.vim' " in Visual mode, type i' to select all text in '', or type i) i] i} ip
+Plugin 'scrooloose/nerdcommenter' " in <space>cc to comment a line
+
+" Dependencies
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'kana/vim-textobj-user'
+Plugin 'fadein/vim-FIGlet'
+" 插件列表结束
+
+call vundle#end()
+
+" Setting
+filetype plugin indent on
+
+let g:SimpylFold_docstring_preview = 1
+
+let mapleader=" "
+filetype on
+filetype plugin on
+
+" 定义快捷键到行首和行尾
+nmap LB 0
+nmap LE $
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+" 定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <Leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+nmap <Leader>WQ :wa<CR>:q<CR>
+" 不做任何保存，直接退出 vim
+nmap <Leader>Q :qa!<CR>
+" 依次遍历子窗口
+nnoremap nw <C-W><C-W>
+" 跳转至右方的窗口
+nnoremap <Leader>lw <C-W>l
+" 跳转至左方的窗口
+nnoremap <Leader>hw <C-W>h
+" 跳转至上方的子窗口
+nnoremap <Leader>kw <C-W>k
+" 跳转至下方的子窗口
+nnoremap <Leader>jw <C-W>j
+" 定义快捷键在结对符之间跳转
+nmap <Leader>M %
+
+"imap <Leader>i <Esc>
+
+" 让配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+" 开启实时搜索功能
+set incsearch
+" 搜索时大小写不敏感
+set ignorecase
+" 关闭兼容模式
+set nocompatible
+" vim 自身命令行模式智能补全
+set wildmenu
+""autocomplete
+"let g:ycm_autoclose_preview_window_after_completion=1
+" YouCompleteMe
+set runtimepath+=~/.vim/bundle/YouCompleteMe
+let g:ycm_collect_identifiers_from_tags_files = 1           " 开启 YCM 基于标签引擎
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释与字符串中的内容也用于补全
+let g:syntastic_ignore_files=[".*\.py$"]
+let g:ycm_seed_identifiers_with_syntax = 1                  " 语法关键字补全
+let g:ycm_complete_in_comments = 1
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']  " 映射按键, 没有这个会拦截掉tab, 导致其他插件的tab不能用.
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+let g:ycm_complete_in_comments = 1                          " 在注释输入中也能补全
+let g:ycm_complete_in_strings = 1                           " 在字符串输入中也能补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_show_diagnostics_ui = 0                           " 禁用语法检查
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |            " 回车即选中当前项
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|     " 跳转到定义处
+"let g:ycm_min_num_of_chars_for_completion=2                 " 从第2个键入字符就开始罗列匹配
+
+"custom keys
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"
+call togglebg#map("<F5>")
+"colorscheme zenburn
+"set guifont=Monaco:h14
+
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+"I don't like swap files
+set noswapfile
+
+"turn on numbering
+set number
+
+"it would be nice to set tag files by the active virtualenv here
+":set tags=~/mytags "tags for ctags and taglist
+"omnicomplete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+"------------Start Python PEP 8 stuff----------------
+" Number of spaces that a pre-existing tab is equal to.
+au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
+
+"spaces for indents
+au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
+au BufRead,BufNewFile *.py,*.pyw set expandtab
+au BufRead,BufNewFile *.py set softtabstop=4
+
+"se the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" Wrap text after a certain number of characters
+au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
+
+" Use UNIX (\n) line endings.
+au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+
+" Set the default file encoding to UTF-8:
+set encoding=utf-8
+
+" For full syntax highlighting:
+syntax on
+
+" Keep indentation level from previous line:
+autocmd FileType python set autoindent
+
+" make backspaces more powerfull
+set backspace=indent,eol,start
+
+
+"Folding based on indentation:
+autocmd FileType python set foldmethod=indent
+"use space to open folds
+nnoremap <space> za 
+"----------Stop python PEP 8 stuff--------------
+
+"js stuff"
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+
+
+" 配色方案
+set background=dark
+colorscheme solarized
+"colorscheme molokai
+"colorscheme phd
+
+
+" 禁止光标闪烁
+set gcr=a:block-blinkon0
+" 禁止显示滚动条
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+" 禁止显示菜单和工具条
+set guioptions-=m
+set guioptions-=T
+
+" 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
+fun! ToggleFullscreen()
+    call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
+endf
+" 全屏开/关快捷键
+map <silent> <F11> :call ToggleFullscreen()<CR>
+" 启动 vim 时自动全屏
+" autocmd VimEnter * call ToggleFullscreen()
+
+" 总是显示状态栏
+set laststatus=2
+" 显示光标当前位置
+set ruler
+" 高亮显示当前行/列
+set cursorline
+" set cursorcolumn
+" 高亮显示搜索结果
+set hlsearch
+
+" 设置 gvim 显示字体
+set guifont=YaHei\ Consolas\ Hybrid\ 11.5
+
+" 禁止折行
+set nowrap
+
+" 设置状态栏主题风格
+let g:Powerline_colorscheme='solarized256'
+
+" 自适应不同语言的智能缩进
+filetype indent on
+" 将制表符扩展为空格
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 让 vim 把连续数量的空格视为一个制表符
+set softtabstop=4
+
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+
+" 基于缩进或语法进行代码折叠
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+
+let g:SnazzyTransparent = 1
+color snazzy
+
+" ===
+" === NERDTree
+" ===
+map tt :NERDTreeToggle<CR>
+let NERDTreeMapOpenExpl = ""
+let NERDTreeMapUpdir = ""
+let NERDTreeMapUpdirKeepOpen = "l"
+let NERDTreeMapOpenSplit = ""
+let NERDTreeOpenVSplit = ""
+let NERDTreeMapActivateNode = "i"
+let NERDTreeMapOpenInTab = "o"
+let NERDTreeMapPreview = ""
+let NERDTreeMapCloseDir = "n"
+let NERDTreeMapChangeRoot = "y"
+
+" ==
+" == NERDTree-git
+" ==
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+" markdoown setting
+"let g:instant_markdown_slow = 1
+"let g:instant_markdown_autostart = 0
+"let g:instant_markdown_open_to_the_world = 1 
+"let g:instant_markdown_allow_unsafe_content = 1
+"let g:instant_markdown_allow_external_content = 0
+"let g:instant_markdown_mathjax = 1
+
+" F5 自动执行代码
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+        exec "w"
+        if &filetype == 'c'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'cpp'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'java'
+                exec "!javac %"
+                exec "!time java %<"
+        elseif &filetype == 'sh'
+                :!time bash %
+        elseif &filetype == 'python'
+                exec "!clear"
+                exec "!time python3 %"
+        elseif &filetype == 'html'
+                exec "!chrome % &"
+        elseif &filetype == 'go'
+                " exec "!go build %<"
+                exec "!time go run %"
+        elseif &filetype == 'mkd'
+                exec "!~/.vim/markdown.pl % > %.html &"
+                exec "!firefox %.html &"
+        endif
+endfunc
+
+" Python 的特殊配置
+let python_highlight_all=1
+au Filetype python set tabstop=4
+au Filetype python set softtabstop=4
+au Filetype python set shiftwidth=4
+au Filetype python set textwidth=79
+au Filetype python set expandtab
+au Filetype python set autoindent
+au Filetype python set fileformat=unix
+autocmd Filetype python set foldmethod=indent
+autocmd Filetype python set foldlevel=99
+
+nnoremap <F6> :Autoformat<CR>
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
+
+let g:SuperTabDefaultCompletionType = 'context'
