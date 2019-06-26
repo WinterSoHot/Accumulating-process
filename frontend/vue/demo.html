@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vue 基础</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1></h1>
+      <ul>
+        <li v-for="product in products">
+          {{ product.name }} - {{ product.quantity }}
+          <input type="number" v-model.number="product.quantity" min="0" />
+          <span v-if="product.quantity === 0">
+            已经售罄
+          </span>
+          <button @click="product.quantity +=1">增加库存</button>
+        </li>
+      </ul>
+      <h2>{{ totalQuantity }}</h2>
+    </div>
+    <div id="app2">
+      <h2>库存信息</h2>
+      <ul>
+        <li v-for="product in products">
+          {{ product.name }} - {{ product.quantity }}
+          <span v-if="product.quantity === 0">
+            已经售罄
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          products: [
+            { id: 1, name: "iPhone X", quantity: 20 },
+            { id: 2, name: "华为 Mate20", quantity: 0 },
+            { id: 3, name: "小米 Mix3", quantity: 50 }
+          ]
+        },
+        computed: {
+          totalQuantity() {
+            return this.products.reduce((sum, product) => {
+              return sum + product.quantity;
+            }, 0);
+          }
+        }
+      });
+      const app2 = new Vue({
+        el: "#app2",
+        data: {
+          products: []
+        },
+        created() {
+          fetch("http://127.0.0.1:8000/")
+            .then(response => response.json())
+            .then(json => {
+              this.products = json;
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
