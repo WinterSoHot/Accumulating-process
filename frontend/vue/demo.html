@@ -58,7 +58,7 @@
           products: []
         },
         created() {
-          fetch("http://127.0.0.1:8000/")
+          fetch("")
             .then(response => response.json())
             .then(json => {
               this.products = json;
