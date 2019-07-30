@@ -2043,9 +2043,9 @@ GList::~GList()
                 }
                 return 0;
             }
-             ```
+            ```
 
-        2. 非递归算法
+            2. 非递归算法
 
             ```C++
             void BinaryTree::PreOrderTraverse()
@@ -2684,7 +2684,7 @@ k_i\ge k_{2i+1}\end{cases}$$
     
    ** 搞清执行过程**
 
-    ![Dijkstra算法](./imgs/Dijkstra算法.png)
+![Dijkstra算法](./imgs/Dijkstra算法.png)
 
 - 每对顶点间的最短路径
     求各个顶点之间最短路径的$Floyd$算法，其时间复杂度也是$O(n^3)$：
@@ -2777,7 +2777,7 @@ k_i\ge k_{2i+1}\end{cases}$$
         ```
     
     - 构造折半查找判定树
-        
+      
         1. 确定下标范围：0-10
         2. L[(0+10)/2]=5 --> 根结点为6 左子树的下标为0-4 右子树的下标范围为 6-10
         3. L[(0+4)/2]=2 ,.....
