@@ -76,7 +76,6 @@ print(cnn)  # net architecture
 
 optimizer = torch.optim.Adam(cnn.parameters(), lr=LR)   # optimize all cnn parameters
 loss_func = nn.CrossEntropyLoss()                       # the target label is not one-hotted
-
 # following function (plot_with_labels) is for visualization, can be ignored if not interested
 from matplotlib import cm
 try: from sklearn.manifold import TSNE; HAS_SK = True
