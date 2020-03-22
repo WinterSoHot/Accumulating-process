@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue组件系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- 因为 AJAX 库和通用工具的生态已经相当丰富，Vue 核心代码没有重复 -->
+    <!-- 提供这些功能以保持精简。这也可以让你自由选择自己更熟悉的工具。 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+</head>
+
+<body>
+
+    <h3>组件属性</h3>
+    <div id="example1">
+        <blog-post v-bind:title="title"></blog-post>
+    </div>
+    <h3>非Prop的Attribute</h3>
+    <div id="example2">
+        <base-input v-for="item in baseInputs" 
+        :value="item.value" :label="item.value" v-model="item.value" v-bind:key="item.id" required :placeholder="'Enter your content:' + item.id"></base-input>
+    </div>
+    <h3>父组件和子组件双向绑定</h3>
+    <div id="example3">
+        <text-document v-bind:title.sync="myTitle" :content="myContent"></text-document>
+    </div>
+    <h3>在插槽中使用数据</h3>
+    <div id="example4">
+        <navigation-link :url="myUrl">
+            {{ myUrl }}
+            无法访问当前url
+        </navigation-link>
+    </div>
+    <h3>具名插槽</h3>
+    <div id="example5">
+        <base-layout>
+            <template v-slot:header>
+                <h1>This is header</h1>
+            </template>
+            <template v-slot:default>
+                <p>This is main content.</p>
+            </template>
+            <template v-slot:footer>
+                <p>This is contact info.</p>
+            </template>
+        </base-layout>
+
+    </div>
+    <h3></h3>
+    <div id="example6"></div>
+    <h3></h3>
+    <div id="example7"></div>
+    <h3></h3>
+    <div id="example8"></div>
+
+
+    <script>
+        let blogPost = {
+            props: ['title'],
+            template: `
+                <div>
+                    <h1> {{ title }}</h1>
+                    <p></p>             
+                </div>
+            `
+        }
+        let vm1 = new Vue({
+            el: "#example1",
+            data: {
+                title: "Test Title"
+            },
+            components: {
+                'blog-post': blogPost
+            }
+        });
+
+        let baseInput = {
+            inheritAttrs: false,
+            props: ['label', 'value'],
+            template: `
+                <label>
+                    {{ label }}
+                    <input v-bind="$attrs" v-bind:value="value" v-on:input="$emit('input',$event.target.value)">
+                </label>
+            `
+        };
+        let vm2 = new Vue({
+            el: "#example2",
+            components: {
+                'base-input': baseInput
+            },
+            data: {
+                baseInputs : [
+                   {id: 1, value: '1234'},
+                   {id: 2, value: '1234'},
+                   {id: 3, value: '1234'},
+                   {id: 4, value: ''}
+                ]
+            }
+        })
+
+        let textDocument = {
+            props: ['title','content'],
+            template: `
+                <div>
+                    <h3>{{ title }}</h3>
+                    <p> {{ content }} </p>
+                    修改标题<input v-model='title'>
+                </div>
+            `
+        };
+        let vm3 = new Vue({
+            el: "#example3",
+            components: {
+                'text-document': textDocument
+            },
+            data: {
+                myTitle: 'Initial Title',
+                myContent: 'Initial Content'
+            }
+        })
+
+        let navigationLink = {
+            props: {'url':String},
+            template: `
+            <a v-bind:href="url" class="nav-link">
+                <slot></slot>
+            </a>
+            `
+        }
+        let vm4 = new Vue({
+            el: "#example4",
+            components: {
+                'navigation-link': navigationLink
+            },
+            data: {
+                myUrl: "http://dongxiangu.github.io"
+            }
+        })
+
+        let baseLayout = {
+            template: `
+<div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+            `
+        }
+        let vm5 = new Vue({
+          el: "#example5",
+          components:{
+              "base-layout": baseLayout
+          }  
+        })
+    </script>
+</body>
+
+</html>
