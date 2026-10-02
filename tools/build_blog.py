@@ -1,3 +1,4 @@
+import argparse
 import html
 import json
 import re
@@ -6,6 +7,7 @@ from urllib.parse import quote, unquote, urlsplit
 
 
 KINDS = {".md": "markdown", ".html": "html", ".ipynb": "notebook"}
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def discover_records(root: Path) -> list[Path]:
@@ -14,7 +16,7 @@ def discover_records(root: Path) -> list[Path]:
         if not path.is_file() or path.suffix.lower() not in KINDS:
             continue
         relative = path.relative_to(root)
-        if ".git" in relative.parts or relative.parts[:2] == ("docs", "superpowers"):
+        if ".git" in relative.parts or ".superpowers" in relative.parts or relative.parts[:2] == ("docs", "superpowers"):
             continue
         if relative == Path("index.html"):
             continue
@@ -364,3 +366,53 @@ if(location.hash)showArticle(decodeURIComponent(location.hash.slice(1)));
 
 def build_site(root: Path) -> str:
     return render_site([extract_record(path, root) for path in discover_records(root)], root)
+
+
+def validation_errors(page: str, expected_count: int) -> list[str]:
+    errors = []
+    data_match = re.search(
+        r'<script id="blog-data" type="application/json">(.*?)</script>',
+        page,
+        re.DOTALL,
+    )
+    try:
+        page_count = len(json.loads(data_match.group(1))) if data_match else -1
+    except json.JSONDecodeError:
+        page_count = -1
+    if page_count != expected_count:
+        errors.append(f"记录数量不匹配：页面 {page_count}，扫描 {expected_count}")
+    remote_source = re.search(
+        r'<(?:script|img|source|iframe)\b[^>]*\bsrc=["\']https?://|<link\b[^>]*\bhref=["\']https?://',
+        page,
+        re.IGNORECASE,
+    )
+    if remote_source:
+        errors.append("页面包含远程运行时资源")
+    return errors
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="生成离线仓库博客")
+    parser.add_argument("--check", action="store_true", help="验证 index.html 是否为最新离线快照")
+    args = parser.parse_args(argv)
+    records = discover_records(REPO_ROOT)
+    page = render_site([extract_record(path, REPO_ROOT) for path in records], REPO_ROOT)
+    errors = validation_errors(page, len(records))
+    output = REPO_ROOT / "index.html"
+    if args.check:
+        if not output.exists() or output.read_text(encoding="utf-8") != page:
+            errors.append("index.html 不是最新生成结果")
+    if errors:
+        for error in errors:
+            print(f"错误：{error}")
+        return 1
+    if not args.check:
+        output.write_text(page, encoding="utf-8")
+        print(f"已生成 {output.name}，共 {len(records)} 篇记录")
+    else:
+        print(f"检查通过：index.html 包含 {len(records)} 篇离线记录")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

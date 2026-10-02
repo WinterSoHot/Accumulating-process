@@ -1,15 +1,20 @@
 import json
+import io
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 from tools.build_blog import (
     build_site,
     discover_records,
     extract_notebook,
     extract_record,
+    main,
     render_markdown,
     render_site,
+    validation_errors,
 )
 
 
@@ -37,6 +42,7 @@ class BlogBuilderTest(unittest.TestCase):
         self.write("notes.txt", "ignored")
         self.write("index.html", "generated")
         self.write(".git/hidden.md", "ignored")
+        self.write(".superpowers/progress.md", "ignored")
         self.write("docs/superpowers/plan.md", "ignored")
 
         paths = discover_records(self.root)
@@ -226,6 +232,61 @@ class BlogBuilderTest(unittest.TestCase):
         self.assertIn("共 2 篇记录", page)
         self.assertIn("Home", page)
         self.assertIn("Demo", page)
+
+    def test_repository_contains_180_original_records(self):
+        root = Path(__file__).resolve().parents[1]
+        records = discover_records(root)
+
+        self.assertEqual(len(records), 180)
+        self.assertEqual(
+            {suffix: sum(path.suffix == suffix for path in records) for suffix in (".md", ".html", ".ipynb")},
+            {".md": 38, ".html": 124, ".ipynb": 18},
+        )
+
+    def test_cli_generates_idempotent_site_and_check_passes(self):
+        self.write("README.md", "# Home")
+        self.write("demo.html", "<title>Demo</title>")
+
+        with patch("tools.build_blog.REPO_ROOT", self.root):
+            output = io.StringIO()
+            with redirect_stdout(output):
+                first_result = main([])
+            first_page = (self.root / "index.html").read_bytes()
+            with redirect_stdout(io.StringIO()):
+                second_result = main([])
+            second_page = (self.root / "index.html").read_bytes()
+            with redirect_stdout(io.StringIO()):
+                check_result = main(["--check"])
+
+        self.assertEqual(first_result, 0)
+        self.assertEqual(second_result, 0)
+        self.assertEqual(check_result, 0)
+        self.assertIn("2 篇记录", output.getvalue())
+        self.assertEqual(first_page, second_page)
+        self.assertEqual(len(discover_records(self.root)), 2)
+
+    def test_cli_check_rejects_stale_output(self):
+        self.write("README.md", "# Home")
+
+        with patch("tools.build_blog.REPO_ROOT", self.root):
+            with redirect_stdout(io.StringIO()):
+                main([])
+            (self.root / "index.html").write_text("stale", encoding="utf-8")
+            with redirect_stdout(io.StringIO()):
+                result = main(["--check"])
+
+        self.assertEqual(result, 1)
+
+    def test_validation_rejects_remote_assets_and_count_mismatch(self):
+        page = render_site([], self.root).replace(
+            "</body>",
+            '<script src="https://example.com/app.js"></script><img src="https://example.com/a.png"></body>',
+        )
+
+        errors = validation_errors(page, expected_count=1)
+
+        self.assertIn("记录数量不匹配：页面 0，扫描 1", errors)
+        self.assertIn("页面包含远程运行时资源", errors)
 
 
 if __name__ == "__main__":
