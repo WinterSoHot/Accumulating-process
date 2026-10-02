@@ -1,7 +1,9 @@
 import argparse
+import base64
 import html
 import json
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit
 
@@ -25,7 +27,13 @@ def discover_records(root: Path) -> list[Path]:
 
 
 def _source(value) -> str:
-    return "".join(value) if isinstance(value, list) else str(value or "")
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, list) and all(isinstance(item, str) for item in value):
+        return "".join(value)
+    raise ValueError("source must be a string or list of strings")
 
 
 def _plain_text(value: str) -> str:
@@ -41,14 +49,35 @@ def _output_text(output: dict) -> str:
         traceback = output.get("traceback") or []
         return "\n".join(traceback) or f"{output.get('ename', '')}: {output.get('evalue', '')}".strip(": ")
     data = output.get("data") or {}
+    if not isinstance(data, dict):
+        raise ValueError("notebook output data must be an object")
     return _source(data.get("text/plain"))
+
+
+def _output_image(output: dict) -> str:
+    data = output.get("data") or {}
+    if not isinstance(data, dict) or "image/png" not in data:
+        return ""
+    encoded = "".join(_source(data["image/png"]).split())
+    try:
+        base64.b64decode(encoded, validate=True)
+    except ValueError:
+        return ""
+    return encoded
 
 
 def extract_notebook(path: Path) -> tuple[str, str]:
     notebook = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(notebook, dict):
+        raise ValueError("notebook root must be an object")
+    cells = notebook.get("cells", [])
+    if not isinstance(cells, list):
+        raise ValueError("notebook cells must be a list")
     sections = []
     search_parts = []
-    for cell in notebook.get("cells", []):
+    for cell in cells:
+        if not isinstance(cell, dict):
+            raise ValueError("notebook cell must be an object")
         source = _source(cell.get("source"))
         if cell.get("cell_type") == "markdown":
             sections.append(source)
@@ -58,11 +87,19 @@ def extract_notebook(path: Path) -> tuple[str, str]:
             continue
         sections.append(f"```python\n{source}\n```")
         search_parts.append(_plain_text(source))
-        for output in cell.get("outputs", []):
+        outputs = cell.get("outputs", [])
+        if not isinstance(outputs, list):
+            raise ValueError("notebook outputs must be a list")
+        for output in outputs:
+            if not isinstance(output, dict):
+                raise ValueError("notebook output must be an object")
             output_text = _output_text(output)
             if output_text:
                 sections.append(f"```text\n{output_text}\n```")
                 search_parts.append(_plain_text(output_text))
+            output_image = _output_image(output)
+            if output_image:
+                sections.append(f"![Notebook output](data:image/png;base64,{output_image})")
     return "\n\n".join(sections), " ".join(part for part in search_parts if part)
 
 
@@ -71,11 +108,45 @@ def _title_from_markdown(content: str, fallback: str) -> str:
     return _plain_text(match.group(1)) if match else fallback
 
 
+def _record_id(relative: str) -> str:
+    return f"record-{quote(relative, safe='')}"
+
+
+class _HTMLValidator(HTMLParser):
+    tracked_tags = {"script", "style", "title"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.open_tags = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.tracked_tags:
+            self.open_tags.append(tag)
+
+    def handle_endtag(self, tag):
+        if tag not in self.tracked_tags:
+            return
+        if not self.open_tags or self.open_tags[-1] != tag:
+            raise ValueError(f"unexpected closing tag: {tag}")
+        self.open_tags.pop()
+
+    def close(self):
+        super().close()
+        if self.open_tags:
+            raise ValueError(f"unclosed tag: {self.open_tags[-1]}")
+
+
+def _validate_html(source: str) -> None:
+    validator = _HTMLValidator()
+    validator.feed(source)
+    validator.close()
+
+
 def extract_record(path: Path, root: Path) -> dict[str, object]:
     relative = path.relative_to(root).as_posix()
     kind = KINDS[path.suffix.lower()]
     record = {
-        "id": re.sub(r"[^0-9A-Za-z\u0080-\uffff]+", "-", relative).strip("-").lower(),
+        "id": _record_id(relative),
         "title": path.stem,
         "path": relative,
         "kind": kind,
@@ -106,7 +177,11 @@ def extract_record(path: Path, root: Path) -> dict[str, object]:
                     content=html.escape(source, quote=False),
                     text=_plain_text(source),
                 )
-    except (OSError, UnicodeError, json.JSONDecodeError, TypeError) as error:
+                try:
+                    _validate_html(source)
+                except ValueError as error:
+                    record["error"] = f"ValueError: {error}"
+    except (OSError, UnicodeError, json.JSONDecodeError, TypeError, ValueError) as error:
         record["error"] = f"{type(error).__name__}: {error}"
     return record
 
@@ -126,18 +201,28 @@ def _local_url(target: str, source_path: Path, root: Path) -> str:
     return f"{url}{separator}{quote(fragment)}" if separator else url
 
 
-def _url(target: str, source_path: Path, root: Path) -> tuple[str, bool]:
-    scheme = urlsplit(target).scheme.lower()
+def _heading_slug(value: str) -> str:
+    slug = re.sub(r"[^0-9A-Za-z\u0080-\uffff]+", "-", _plain_text(unquote(value)).lower()).strip("-")
+    return slug or "section"
+
+
+def _url(target: str, source_path: Path, root: Path, scope: str = "") -> tuple[str, bool]:
+    parsed = urlsplit(target)
+    scheme = parsed.scheme.lower()
+    if scheme == "data" and target.startswith("data:image/png;base64,"):
+        return target, False
+    if parsed.netloc:
+        return target, True
     if scheme in {"http", "https", "mailto"}:
         return target, True
     if scheme:
         return "#", True
     if target.startswith("#"):
-        return target, True
+        return f"#{scope}--{_heading_slug(target[1:])}" if scope else target, True
     return _local_url(target, source_path, root), False
 
 
-def _render_inline(text: str, source_path: Path, root: Path) -> str:
+def _render_inline(text: str, source_path: Path, root: Path, scope: str = "") -> str:
     pattern = re.compile(
         r"!\[([^\]]*)\]\(([^)]+)\)|"
         r"\[([^\]]+)\]\(([^)]+)\)|"
@@ -154,7 +239,7 @@ def _render_inline(text: str, source_path: Path, root: Path) -> str:
         groups = match.groups()
         if groups[0] is not None:
             alt, target = groups[0], groups[1]
-            url, remote = _url(target, source_path, root)
+            url, remote = _url(target, source_path, root, scope)
             if remote:
                 output.append(
                     f'<a href="{html.escape(url, quote=True)}">远程图片：{html.escape(alt)}</a>'
@@ -165,7 +250,7 @@ def _render_inline(text: str, source_path: Path, root: Path) -> str:
                 )
         elif groups[2] is not None:
             label, target = groups[2], groups[3]
-            url, _ = _url(target, source_path, root)
+            url, _ = _url(target, source_path, root, scope)
             output.append(
                 f'<a href="{html.escape(url, quote=True)}">{html.escape(label)}</a>'
             )
@@ -194,10 +279,15 @@ def render_markdown(text: str, source_path: Path, root: Path) -> str:
     output = []
     paragraph = []
     list_tag = ""
+    heading_counts = {}
+    try:
+        scope = _record_id(source_path.relative_to(root).as_posix())
+    except ValueError:
+        scope = _record_id(source_path.name)
 
     def flush_paragraph():
         if paragraph:
-            output.append(f"<p>{_render_inline(' '.join(paragraph), source_path, root)}</p>")
+            output.append(f"<p>{_render_inline(' '.join(paragraph), source_path, root, scope)}</p>")
             paragraph.clear()
 
     def close_list():
@@ -233,9 +323,9 @@ def render_markdown(text: str, source_path: Path, root: Path) -> str:
             while index < len(lines) and "|" in lines[index] and lines[index].strip():
                 rows.append(_table_cells(lines[index]))
                 index += 1
-            head = "".join(f"<th>{_render_inline(cell, source_path, root)}</th>" for cell in headers)
+            head = "".join(f"<th>{_render_inline(cell, source_path, root, scope)}</th>" for cell in headers)
             body = "".join(
-                "<tr>" + "".join(f"<td>{_render_inline(cell, source_path, root)}</td>" for cell in row) + "</tr>"
+                "<tr>" + "".join(f"<td>{_render_inline(cell, source_path, root, scope)}</td>" for cell in row) + "</tr>"
                 for row in rows
             )
             output.append(f"<div class=\"table-wrap\"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>")
@@ -248,7 +338,11 @@ def render_markdown(text: str, source_path: Path, root: Path) -> str:
                 flush_paragraph()
                 close_list()
                 level = len(heading.group(1))
-                output.append(f"<h{level}>{_render_inline(heading.group(2), source_path, root)}</h{level}>")
+                slug = _heading_slug(heading.group(2))
+                heading_counts[slug] = heading_counts.get(slug, 0) + 1
+                suffix = f"-{heading_counts[slug]}" if heading_counts[slug] > 1 else ""
+                heading_id = f"{scope}--{slug}{suffix}"
+                output.append(f'<h{level} id="{html.escape(heading_id, quote=True)}">{_render_inline(heading.group(2), source_path, root, scope)}</h{level}>')
             elif unordered or ordered:
                 flush_paragraph()
                 tag = "ul" if unordered else "ol"
@@ -257,11 +351,11 @@ def render_markdown(text: str, source_path: Path, root: Path) -> str:
                     output.append(f"<{tag}>")
                     list_tag = tag
                 item = (unordered or ordered).group(1)
-                output.append(f"<li>{_render_inline(item, source_path, root)}</li>")
+                output.append(f"<li>{_render_inline(item, source_path, root, scope)}</li>")
             elif stripped.startswith(">"):
                 flush_paragraph()
                 close_list()
-                output.append(f"<blockquote>{_render_inline(stripped[1:].strip(), source_path, root)}</blockquote>")
+                output.append(f"<blockquote>{_render_inline(stripped[1:].strip(), source_path, root, scope)}</blockquote>")
             elif re.fullmatch(r"[-*_]{3,}", stripped):
                 flush_paragraph()
                 close_list()
@@ -276,16 +370,19 @@ def render_markdown(text: str, source_path: Path, root: Path) -> str:
 
 
 def _article_body(record: dict[str, object], root: Path) -> str:
+    error = ""
     if record["error"]:
-        return f'<div class="error"><strong>无法解析此文件</strong><p>{html.escape(str(record["error"]))}</p></div>'
+        error = f'<div class="error"><strong>无法解析此文件</strong><p>{html.escape(str(record["error"]))}</p></div>'
+        if not record["content"]:
+            return error
     if record["kind"] == "html":
         url = quote(str(record["path"]), safe="/%:@?=&")
-        return (
+        return error + (
             f'<p><a class="demo-link" href="{url}">打开原示例 ↗</a></p>'
             f'<pre><code class="language-html">{record["content"]}</code></pre>'
         )
     source_path = root / str(record["path"])
-    return render_markdown(str(record["content"]), source_path, root)
+    return error + render_markdown(str(record["content"]), source_path, root)
 
 
 def render_site(records: list[dict[str, object]], root: Path) -> str:
@@ -352,12 +449,12 @@ def render_site(records: list[dict[str, object]], root: Path) -> str:
 <script id="blog-data" type="application/json">{search_data}</script>
 <script>
 const records=JSON.parse(document.getElementById('blog-data').textContent);const links=[...document.querySelectorAll('.article-link')];const articles=[...document.querySelectorAll('.article')];const home=document.getElementById('home');const byId=new Map(records.map(record=>[String(record.id),record]));
-function showArticle(id){{const article=document.getElementById('article-'+id);if(!article)return;home.hidden=true;articles.forEach(item=>item.hidden=item!==article);links.forEach(link=>link.classList.toggle('active',link.dataset.target===id));document.body.classList.remove('menu-open');history.replaceState(null,'','#'+encodeURIComponent(id));window.scrollTo(0,0)}}
+function showArticle(id,updateHash=true){{const article=document.getElementById('article-'+id);if(!article)return;home.hidden=true;articles.forEach(item=>item.hidden=item!==article);links.forEach(link=>link.classList.toggle('active',link.dataset.target===id));document.body.classList.remove('menu-open');if(updateHash)history.replaceState(null,'','#'+encodeURIComponent(id));window.scrollTo(0,0)}}
 links.forEach(link=>link.addEventListener('click',()=>showArticle(link.dataset.target)));
 document.getElementById('search').addEventListener('input',event=>{{const query=event.target.value.trim().toLocaleLowerCase();links.forEach(link=>{{const record=byId.get(link.dataset.target);link.hidden=!!query&&!`${{record.title}} ${{record.path}} ${{record.text}}`.toLocaleLowerCase().includes(query)}});document.querySelectorAll('.nav-group').forEach(group=>group.hidden=![...group.querySelectorAll('.article-link')].some(link=>!link.hidden))}});
 document.getElementById('menu-toggle').addEventListener('click',()=>document.body.classList.toggle('menu-open'));
 const root=document.documentElement;try{{root.dataset.theme=localStorage.getItem('blog-theme')||''}}catch(error){{root.dataset.theme=''}}document.getElementById('theme-toggle').addEventListener('click',()=>{{root.dataset.theme=root.dataset.theme==='dark'?'':'dark';try{{localStorage.setItem('blog-theme',root.dataset.theme)}}catch(error){{}}}});
-if(location.hash)showArticle(decodeURIComponent(location.hash.slice(1)));
+if(location.hash){{const target=decodeURIComponent(location.hash.slice(1));showArticle(target.split('--')[0],false);document.getElementById(target)?.scrollIntoView()}}
 </script>
 </body>
 </html>
@@ -382,7 +479,7 @@ def validation_errors(page: str, expected_count: int) -> list[str]:
     if page_count != expected_count:
         errors.append(f"记录数量不匹配：页面 {page_count}，扫描 {expected_count}")
     remote_source = re.search(
-        r'<(?:script|img|source|iframe)\b[^>]*\bsrc=["\']https?://|<link\b[^>]*\bhref=["\']https?://',
+        r'<(?:script|img|source|iframe)\b[^>]*\bsrc=["\'](?:https?:)?//|<link\b[^>]*\bhref=["\'](?:https?:)?//',
         page,
         re.IGNORECASE,
     )

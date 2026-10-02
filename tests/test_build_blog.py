@@ -62,7 +62,7 @@ class BlogBuilderTest(unittest.TestCase):
         markdown_record = extract_record(markdown, self.root)
         html_record = extract_record(html_file, self.root)
 
-        self.assertEqual(markdown_record["id"], "notes-介绍-md")
+        self.assertEqual(markdown_record["id"], "record-notes%2F%E4%BB%8B%E7%BB%8D.md")
         self.assertEqual(markdown_record["title"], "介绍")
         self.assertEqual(markdown_record["path"], "notes/介绍.md")
         self.assertEqual(markdown_record["kind"], "markdown")
@@ -89,7 +89,10 @@ class BlogBuilderTest(unittest.TestCase):
                                 {"output_type": "stream", "text": ["hello\n"]},
                                 {
                                     "output_type": "execute_result",
-                                    "data": {"text/plain": ["'result'"]},
+                                    "data": {
+                                        "text/plain": ["'result'"],
+                                        "image/png": "iVBORw0KGgo=",
+                                    },
                                 },
                             ],
                         },
@@ -103,6 +106,7 @@ class BlogBuilderTest(unittest.TestCase):
         self.assertLess(content.index("# Heading"), content.index("print('hello')"))
         self.assertLess(content.index("print('hello')"), content.index("hello"))
         self.assertLess(content.index("hello"), content.index("'result'"))
+        self.assertIn("data:image/png;base64,iVBORw0KGgo=", content)
         self.assertEqual(search_text, "Heading intro print('hello') hello 'result'")
 
     def test_extract_record_returns_error_for_malformed_input(self):
@@ -119,6 +123,32 @@ class BlogBuilderTest(unittest.TestCase):
         self.assertEqual(notebook_record["content"], "")
         self.assertEqual(markdown_record["content"], "")
 
+    def test_record_ids_are_unique_for_paths_that_normalize_the_same(self):
+        upper = self.write("language/C++/C++.md", "# C++")
+        lower = self.write("language/c/C.md", "# C")
+
+        upper_record = extract_record(upper, self.root)
+        lower_record = extract_record(lower, self.root)
+
+        self.assertNotEqual(upper_record["id"], lower_record["id"])
+
+    def test_extract_record_isolates_structurally_invalid_notebook(self):
+        notebook = self.write("broken.ipynb", "[]")
+
+        record = extract_record(notebook, self.root)
+
+        self.assertEqual(record["kind"], "notebook")
+        self.assertIn("ValueError", record["error"])
+        self.assertEqual(record["content"], "")
+
+    def test_extract_record_reports_malformed_html_and_preserves_source(self):
+        html_file = self.write("broken.html", "<title>Broken")
+
+        record = extract_record(html_file, self.root)
+
+        self.assertIn("ValueError", record["error"])
+        self.assertEqual(record["content"], "&lt;title&gt;Broken")
+
     def test_render_markdown_supports_readable_safe_content(self):
         source_path = self.write("notes/介绍.md", "")
         self.write("notes/images/图 +#.png", b"", binary=True)
@@ -128,6 +158,12 @@ class BlogBuilderTest(unittest.TestCase):
 
 ![本地图](images/图 +#.png)
 ![远程图](https://example.com/image.png)
+![协议图](//example.com/image.png)
+
+[跳转](#标题)
+
+## 标题
+## 标题
 
 ```html
 </script><b>code</b>
@@ -145,7 +181,10 @@ class BlogBuilderTest(unittest.TestCase):
 
         rendered = render_markdown(markdown, source_path, self.root)
 
-        self.assertIn("<h1>标题</h1>", rendered)
+        self.assertIn(
+            '<h1 id="record-notes%2F%E4%BB%8B%E7%BB%8D.md--标题">标题</h1>',
+            rendered,
+        )
         self.assertIn("<strong>加粗</strong>", rendered)
         self.assertIn("<em>强调</em>", rendered)
         self.assertIn('href="README.md"', rendered)
@@ -155,6 +194,24 @@ class BlogBuilderTest(unittest.TestCase):
         )
         self.assertNotIn('<img src="https://', rendered)
         self.assertIn('href="https://example.com/image.png"', rendered)
+        self.assertNotIn('<img src="//', rendered)
+        self.assertIn('href="//example.com/image.png"', rendered)
+        self.assertIn(
+            'href="#record-notes%2F%E4%BB%8B%E7%BB%8D.md--标题"',
+            rendered,
+        )
+        self.assertIn(
+            'id="record-notes%2F%E4%BB%8B%E7%BB%8D.md--标题"',
+            rendered,
+        )
+        self.assertIn(
+            'id="record-notes%2F%E4%BB%8B%E7%BB%8D.md--标题-2"',
+            rendered,
+        )
+        self.assertIn(
+            'id="record-notes%2F%E4%BB%8B%E7%BB%8D.md--标题-3"',
+            rendered,
+        )
         self.assertIn("&lt;/script&gt;&lt;b&gt;code&lt;/b&gt;", rendered)
         self.assertIn("<ul>", rendered)
         self.assertIn("<blockquote>引用</blockquote>", rendered)
@@ -280,7 +337,7 @@ class BlogBuilderTest(unittest.TestCase):
     def test_validation_rejects_remote_assets_and_count_mismatch(self):
         page = render_site([], self.root).replace(
             "</body>",
-            '<script src="https://example.com/app.js"></script><img src="https://example.com/a.png"></body>',
+            '<script src="//example.com/app.js"></script><img src="//example.com/a.png"></body>',
         )
 
         errors = validation_errors(page, expected_count=1)
