@@ -11,7 +11,8 @@
 - Notebook 渲染 Markdown 单元、代码单元及已有输出，不执行代码。
 - HTML 文件展示源码，并提供打开原文件的入口。
 - 图片和原 HTML 文件继续使用仓库相对路径，不嵌入 Base64。
-- 收录扫描到的全部 38 个 Markdown、124 个 HTML 和 18 个 Notebook 文件；仅忽略 `.git` 内部文件。
+- 收录初始仓库中的全部 38 个 Markdown、124 个 HTML 和 18 个 Notebook 文件。
+- 仅忽略 `.git`、`docs/superpowers` 设计过程文档和生成后的根目录 `index.html`，避免站点收录自身生成物。
 
 ## 架构
 
